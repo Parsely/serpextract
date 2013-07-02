@@ -62,7 +62,9 @@ Python
 Tests
 -----
 
-TODO: Tests!
+There are some basic tests for popular search engines, but more are required::
+
+    python tests/test_serps.py
 
 Caching
 -------
