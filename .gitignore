@@ -1,3 +1,4 @@
 *.pyc
 build
 dist
+serpextract.egg-info
