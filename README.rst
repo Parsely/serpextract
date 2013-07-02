@@ -1,8 +1,14 @@
 serpextract
 ===========
+
+.. image:: https://travis-ci.org/Parsely/serpextract.png?branch=master
+   :target: https://travis-ci.org/Parsely/serpextract
+
 ``serpextract`` provides easy extraction of keywords from search engine results pages (SERPs).
 
 This module is possible in large part to the very hard work of the `Piwik <http://piwik.org/>`_ team.
+Specifically, we make extensive use of their `list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_.
+
 
 Installation
 ------------
