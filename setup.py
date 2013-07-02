@@ -1,8 +1,8 @@
 import sys
 from setuptools import setup
 
-import serpextract
 
+version = '0.1.1'
 
 install_requires = ['iso3166 >= 0.4']
 if sys.version_info <= (2,7):
@@ -13,7 +13,7 @@ with open('README.rst', 'r') as f:
 
 setup(
     name='serpextract',
-    version=serpextract.__version__,
+    version=version,
     author='Mike Sukmanowsky',
     author_email='mike@parsely.com',
     packages=['serpextract',],
