@@ -29,7 +29,7 @@ Command Line
 Command-line usage, returns the engine name and keyword components separated by a
 comma and enclosed in quotes::
 
-    $ serpextract "http://www.google.ca/url?sa=t&rct=j&q=ars%20technica&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Farstechnica.com%2F&ei=pf7RUYvhO4LdyAHf9oGAAw&usg=AFQjCNHA7qjcMXhj-UX9EqSy26wZNlL9LQ&bvm=bv.48572450,d.aWc"
+    $ serpextract "http://www.google.ca/url?sa=t&rct=j&q=ars%20technica"
     "Google","ars technica"
 
 You can also print out a list of all the SearchEngineParsers currently available in
@@ -45,7 +45,9 @@ Python
     from serpextract import get_parser, extract, is_serp, get_all_query_params
     
     non_serp_url = 'http://arstechnica.com/'
-    serp_url = 'http://www.google.ca/url?sa=t&rct=j&q=ars%20technica&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Farstechnica.com%2F&ei=pf7RUYvhO4LdyAHf9oGAAw&usg=AFQjCNHA7qjcMXhj-UX9EqSy26wZNlL9LQ&bvm=bv.48572450,d.aWc'
+    serp_url = ('http://www.google.ca/url?sa=t&rct=j&q=ars%20technica&source=web&cd=1&ved=0CCsQFjAA'
+                '&url=http%3A%2F%2Farstechnica.com%2F&ei=pf7RUYvhO4LdyAHf9oGAAw&usg=AFQjCNHA7qjcMXh'
+                'j-UX9EqSy26wZNlL9LQ&bvm=bv.48572450,d.aWc')
 
     get_all_query_params()
     # ['key', 'text', 'search_for', 'searchTerm', 'qrs', 'keyword', ...]
@@ -61,7 +63,7 @@ Python
     # None
     
     extract(serp_url)
-    # ExtractResult(engine_name='Google', keyword=u'ars technica', parser=SearchEngineParser(engine_name='Google', keyword_extractor=['q'], link_macro='search?q={k}', charsets=['utf-8']))
+    # ExtractResult(engine_name='Google', keyword=u'ars technica', parser=SearchEngineParser(...))
     extract(non_serp_url)
     # None
 
@@ -70,7 +72,8 @@ Tests
 
 There are some basic tests for popular search engines, but more are required::
 
-    $ python tests/test_serps.py
+    $ pip install -r requirements.txt
+    $ nosetests
 
 Caching
 -------
@@ -81,3 +84,7 @@ which is stored in ``serpextract/search_engines.pickle``.  This isn't intended t
 module ships with a cached version.  You can manually update the local cache via::
 
     $ serpextract -u
+
+This action currently requires PHP (we know, we know).  We grab Piwik's PHP array of all search engines,
+turn it into JSON and then read in as an OrderedDict.  Eventually we should just parse the PHP script
+with a regex to eliminate the PHP requirement.
