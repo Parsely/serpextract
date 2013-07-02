@@ -86,5 +86,5 @@ module ships with a cached version.  You can manually update the local cache via
     $ serpextract -u
 
 This action currently requires PHP (we know, we know).  We grab Piwik's PHP array of all search engines,
-turn it into JSON and then read in as an OrderedDict.  Eventually we should just parse the PHP script
-with a regex to eliminate the PHP requirement.
+turn it into OrderedDict and store in pickle form.  Ideally, we would have this search engine list in a
+language-independent form like JSON.
