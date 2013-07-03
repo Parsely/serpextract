@@ -2,4 +2,3 @@
 build
 dist
 serpextract.egg-info
-serpextract/search_engines.pickle
