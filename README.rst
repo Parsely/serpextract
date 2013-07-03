@@ -81,10 +81,4 @@ Caching
 Internally, this module caches an OrderedDict representation of 
 `Piwik's list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_
 which is stored in ``serpextract/search_engines.pickle``.  This isn't intended to change that often and so this
-module ships with a cached version.  You can manually update the local cache via::
-
-    $ serpextract -u
-
-This action currently requires PHP (we know, we know).  We grab Piwik's PHP array of all search engines,
-turn it into OrderedDict and store in pickle form.  Ideally, we would have this search engine list in a
-language-independent form like JSON.
+module ships with a cached version.
