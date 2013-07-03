@@ -1,23 +1,27 @@
 """Utilities for extracting keyword information from search engine
 referrers."""
-import os
-import re
+from itertools import groupby
 import logging
-from collections import OrderedDict
 from operator import itemgetter
-import itertools
-from urllib2 import urlopen
-from subprocess import Popen, PIPE, STDOUT
-from pprint import pprint
-from urlparse import urlparse, parse_qs, ParseResult
+try:
+    import pkg_resources
+except ImportError:
+    import os
+    class pkg_resources(object):
+        """Fake pkg_resources interface which falls back to getting resources
+        inside `serpextract`'s directory. (thank you tldextract!)
+        """
+        @classmethod
+        def resource_stream(cls, package, resource_name):
+            moddir = os.path.dirname(__file__)
+            f = os.path.join(moddir, resource_name)
+            return open(f)
 try:
     import cPickle as pickle
 except ImportError:
     import pickle
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import re
+from urlparse import urlparse, parse_qs, ParseResult
 
 from iso3166 import countries
 
@@ -26,7 +30,6 @@ __all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params')
 
 log = logging.getLogger('serpextract')
 
-_here = lambda *paths: os.path.join(os.path.dirname(os.path.abspath(__file__)), *paths)
 # uk is not an official ISO-3166 country code, but it's used in top-level
 # domains so we add it to our list see
 # http://en.wikipedia.org/wiki/ISO_3166-1 for more information
@@ -148,35 +151,12 @@ class SearchEngineParser(object):
 
 
 _piwik_engines = None
-def _get_piwik_engines(fresh=False):
-    """Return the search engine dict specified by the Piwik team:
-    https://raw.github.com/piwik/piwik/master/core/DataFiles/SearchEngines.php
-
-    :param fresh: force a cache refresh of engines
-    """
+def _get_piwik_engines():
+    """Return the search engine parser definitions stored in this module"""
     global _piwik_engines
-    # TODO: Regex this instead of pipeing it through php which is a horrible
-    # dependency for a Python module
-    filename = _here('search_engines.pickle')
-
-    if not os.path.exists(filename) or fresh:
-        log.info('Grabbing fresh Piwik search engine list (requires PHP).')
-        url = urlopen('https://raw.github.com/piwik/piwik/master/core/DataFiles/SearchEngines.php')
-        php_script = url.readlines()
-        php_script.append('echo(json_encode($GLOBALS["Piwik_SearchEngines"]));\n')
-        php_script = ''.join(php_script)
-        process = Popen(['php'], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-        json_string = process.communicate(input=php_script)[0]
-        # Ordering of the dictionary from PHP matters so we keep it
-        # in an OrderedDict
-        _piwik_engines = json.loads(json_string, object_pairs_hook=OrderedDict)
-        log.info('Loaded %s Piwik search engines, updating local cache (%s).',
-                 len(_piwik_engines), filename)
-        with open(filename, 'w') as file_:
-            pickle.dump(_piwik_engines, file_)
-    else:
-        with open(filename, 'r') as file_:
-            _piwik_engines = pickle.load(file_)
+    if _piwik_engines is None:
+        with pkg_resources.resource_stream(__name__, 'search_engines.pickle') as f:
+            _piwik_engines = pickle.load(f)
 
     return _piwik_engines
 
@@ -208,7 +188,7 @@ def _get_search_engines():
     # so we group by those guys, and create our new dictionary with that
     # order
     key_func = lambda x: x[1][0]
-    grouped = itertools.groupby(piwik_engines.iteritems(), key_func)
+    grouped = groupby(piwik_engines.iteritems(), key_func)
     _params = []
     _engines = {}
 
@@ -358,17 +338,10 @@ def main():
 
     parser.add_argument('input', metavar='url', type=unicode, nargs='*',
                         help='A potential SERP URL')
-    parser.add_argument('-u', '--update', default=False, action='store_true',
-                        help=('Force fetch a new list of search engines from '
-                              'Piwik (requires PHP locally installed).'))
     parser.add_argument('-l', '--list', default=False, action='store_true',
                         help='Print a list of all the SearchEngineParsers.')
 
     args = parser.parse_args()
-
-    if args.update:
-        _get_piwik_engines(fresh=True)
-        sys.exit(0)
 
     if args.list:
         engines = _get_search_engines()
