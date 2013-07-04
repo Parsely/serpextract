@@ -4,7 +4,6 @@ import re
 import logging
 
 from itertools import groupby
-from operator import itemgetter
 from urlparse import urlparse, parse_qs, ParseResult
 from iso3166 import countries
 
@@ -217,7 +216,6 @@ def _get_search_engines():
     # order
     key_func = lambda x: x[1][0]
     grouped = groupby(piwik_engines.iteritems(), key_func)
-    _params = []
     _engines = {}
 
     for engine_name, rule_group in grouped:
@@ -261,7 +259,7 @@ def _get_search_engines():
 
 
 def _not_regex(value):
-    return not x.startswith('/') and not x.strip() == ''
+    return not value.startswith('/') and not value.strip() == ''
 
 
 def get_all_query_params():
