@@ -57,8 +57,8 @@ class ExtractResult(object):
         self.parser = parser
 
     def __repr__(self):
-        return 'ExtractResult(engine_name={!r}, keyword={!r}, parser={!r})'\
-               .format(self.engine_name, self.keyword, self.parser)
+        repr_fmt = 'ExtractResult(engine_name={!r}, keyword={!r}, parser={!r})'
+        return repr_fmt.format(self.engine_name, self.keyword, self.parser)
 
 
 class SearchEngineParser(object):
@@ -162,10 +162,13 @@ class SearchEngineParser(object):
         return ExtractResult(self.engine_name, keyword, self)
 
     def __repr__(self):
-        return """SearchEngineParser(engine_name={!r},\
- keyword_extractor={!r}, link_macro={!r}, charsets={!r})"""\
-        .format(self.engine_name, self.keyword_extractor, self.link_macro,
-                self.charsets)
+        repr_fmt = ("SearchEngineParser(engine_name={!r}, "
+                    "keyword_extractor={!r}, link_macro={!r}, charsets={!r})")
+        return repr_fmt.format(
+                        self.engine_name, 
+                        self.keyword_extractor, 
+                        self.link_macro,
+                        self.charsets)
 
 
 _piwik_engines = None
@@ -204,6 +207,7 @@ _engines = None
 def _get_search_engines():
     """Convert the OrderedDict of search engine parsers that we get from Piwik
     to a dictionary of SearchEngineParser objects.
+    
     Cache this thing by storing in the global ``_engines``.
     """
     global _engines
