@@ -111,7 +111,9 @@ class SearchEngineParser(object):
 
         :param base_url: string of format '<scheme>://<netloc>'
 
-        :param keyword: the search keyword
+        :param keyword: search keyword string
+
+        :returns: string URL of SERP
         """
         if self.link_macro is None:
             return None
@@ -125,15 +127,14 @@ class SearchEngineParser(object):
 
         :param serp_url: either a string or a `ParseResult`
 
-        :returns: a dict containing engine_name, keyword
+        :returns: An `ExtractResult` instance
         """
         if isinstance(serp_url, basestring):
             try:
                 url_parts = urlparse(serp_url)
-            except:
-                # XXX: catching ALL exceptions here?
-
-                # malformed URLs
+            except ValueError:
+                msg = "Malformed URL '{}' could not parse".format(serp_url)
+                log.debug(msg, exc_info=True)
                 return
         else:
             url_parts = serp_url
@@ -288,9 +289,9 @@ def get_parser(referring_url):
             url_parts = referring_url
         else:
             url_parts = urlparse(referring_url)
-    except:
-        # XXX: Suppressing all exceptions here?
-
+    except ValueError:
+        msg = "Malformed URL '{}' could not parse".format(referring_url)
+        log.debug(msg, exc_info=True)
         # Malformed URLs
         return
 
@@ -348,8 +349,8 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
 
     result = parser.parse(serp_url)
     if result is None:
-        msg = 'Found search engine parser for {} but was unable \
-               to extract keyword.'
+        msg = ('Found search engine parser for {} but was '
+               'unable to extract keyword.')
         log.debug(msg.format(serp_url))
         return None
 
