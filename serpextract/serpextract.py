@@ -44,7 +44,7 @@ _country_codes += ['uk']
 
 
 def _to_unicode(s):
-    """Safely convert s to a unicode."""
+    """safely decodes a string into unicode if it's not already unicode"""
     return s if isinstance(s, unicode) else s.decode("utf-8", "ignore")
 
 
@@ -207,7 +207,7 @@ _engines = None
 def _get_search_engines():
     """Convert the OrderedDict of search engine parsers that we get from Piwik
     to a dictionary of SearchEngineParser objects.
-    
+
     Cache this thing by storing in the global ``_engines``.
     """
     global _engines
@@ -218,11 +218,11 @@ def _get_search_engines():
     # Engine names are the first param of each of the search engine arrays
     # so we group by those guys, and create our new dictionary with that
     # order
-    key_func = lambda x: x[1][0]
-    grouped = groupby(piwik_engines.iteritems(), key_func)
+    get_engine_name = lambda x: x[1][0]
+    definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
     _engines = {}
 
-    for engine_name, rule_group in grouped:
+    for engine_name, rule_group in definitions_by_engine:
         defaults = {
             'extractor': None,
             'link_macro': None,
