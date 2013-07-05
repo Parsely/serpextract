@@ -12,7 +12,7 @@ TEST_SUCCESSFUL=$?
 
 if [ $TEST_SUCCESSFUL -eq 0 ];then
     echo "Tests succeeded, deploying to PyPI"
-    #python setup.py sdist
+    python setup.py sdist
 else
     echo "Tests failed, fix before deploying."
 fi
