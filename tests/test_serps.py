@@ -1,12 +1,12 @@
 import unittest
 
 try:
-    from serpextract import extract
+    from serpextract import extract, get_all_query_params
 except ImportError:
     import os, sys
     basedir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
     sys.path.append(basedir)
-    from serpextract import extract
+    from serpextract import extract, get_all_query_params
 
 
 class TestSERPs(unittest.TestCase):
@@ -63,6 +63,12 @@ class TestSERPs(unittest.TestCase):
             ('http://www.bing.com/search?q=united+states&go=&qs=n&form=QBLH&filt=all&pq=united+states&sc=8-13&sp=-1&sk=', 'Bing', u'united states'),
         )
         self.assertValidSERPs(serps)
+
+    def test_get_all_query_params(self):
+        """Ensure that get_all_query_params is a non-empty list."""
+        params = get_all_query_params()
+        self.assertIsInstance(params, list)
+        assert len(params) > 0
 
     def test_invalid_serps(self):
         invalid_serps = (
