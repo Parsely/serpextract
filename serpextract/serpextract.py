@@ -306,17 +306,9 @@ def get_parser(referring_url):
         return
 
     # First try to look up a search engine by the host name incase we have
-    # a direct entry for it
-    parser = engines.get(url_parts.netloc, 'nothing')
-    if parser == 'nothing':
-        # Now we'll try searching by lossy domain which converts
-        # things like country codes for us
-        parser = engines.get(_get_lossy_domain(url_parts.netloc),
-                             'nothing')
-
-    if parser == 'nothing':
-        # no parser found
-        return None
+    # a direct entry for it and then look up the lossy version of the domain
+    parser = engines.get(url_parts.netloc) or \
+             engines.get(_get_lossy_domain(url_parts.netloc))
 
     return parser
 
