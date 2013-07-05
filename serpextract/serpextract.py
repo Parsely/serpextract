@@ -267,6 +267,14 @@ def _get_search_engines():
 
             _engines[domain] = SearchEngineParser(*args)
 
+    # Add additional case to cover {}.search.yahoo.com which is not handled by
+    # Piwik's original list (or maybe it is handled through their additional
+    # logic)
+    _engines['{}.search.yahoo.com'] = SearchEngineParser(u'Yahoo!',
+                                                         [u'p', u'q'],
+                                                         u'search?p={k}',
+                                                         ['utf-8'])
+
     return _engines
 
 
