@@ -1,12 +1,19 @@
 """Utilities for extracting keyword information from search engine
 referrers."""
-from itertools import groupby
+import re
 import logging
-from operator import itemgetter
+
+from itertools import groupby
+from urlparse import urlparse, parse_qs, ParseResult
+from iso3166 import countries
+
+# import pkg_resources
+# with fallback for environments that lack it
 try:
     import pkg_resources
 except ImportError:
     import os
+
     class pkg_resources(object):
         """Fake pkg_resources interface which falls back to getting resources
         inside `serpextract`'s directory. (thank you tldextract!)
@@ -16,33 +23,32 @@ except ImportError:
             moddir = os.path.dirname(__file__)
             f = os.path.join(moddir, resource_name)
             return open(f)
+
+# import cPickle
+# for performance with a fallback on Python pickle
 try:
     import cPickle as pickle
 except ImportError:
     import pickle
-import re
-from urlparse import urlparse, parse_qs, ParseResult
-
-from iso3166 import countries
-
 
 __all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params')
 
 log = logging.getLogger('serpextract')
 
+_country_codes = [country.alpha2.lower()
+                  for country in countries]
 # uk is not an official ISO-3166 country code, but it's used in top-level
 # domains so we add it to our list see
 # http://en.wikipedia.org/wiki/ISO_3166-1 for more information
-_country_codes = [country.alpha2.lower() for country in countries] + ['uk']
+_country_codes += ['uk']
 
 
 def _to_unicode(s):
-    """Safely convert s to a unicode"""
+    """Safely convert s to a unicode."""
     return s if isinstance(s, unicode) else s.decode("utf-8", "ignore")
 
 
 class ExtractResult(object):
-    'ExtractResult(engine_name, keyword, parser)'
     __slots__ = ('engine_name', 'keyword', 'parser')
 
     def __init__(self, engine_name, keyword, parser):
@@ -51,37 +57,43 @@ class ExtractResult(object):
         self.parser = parser
 
     def __repr__(self):
-        'Return a nicely formatted representation string'
-        return 'ExtractResult(engine_name={!r}, keyword={!r}, parser={!r})'\
-               .format(self.engine_name, self.keyword, self.parser)
+        repr_fmt = 'ExtractResult(engine_name={!r}, keyword={!r}, parser={!r})'
+        return repr_fmt.format(self.engine_name, self.keyword, self.parser)
 
 
 class SearchEngineParser(object):
-    """A search engine parser which is mapped to a single line in Piwik's
-    list of search engines
+    """Handles persing logic for a single line in Piwik's list of search
+    engines.
+
+    Piwik's list for reference:
+
     https://raw.github.com/piwik/piwik/master/core/DataFiles/SearchEngines.php
 
     This class is not used directly since it already assumes you know the
-    exact search engine you want to use to parse a URL.  The main interface
-    for users of this module is the get_keyword method.
+    exact search engine you want to use to parse a URL. The main interface
+    for users of this module is the `get_keyword` method.
     """
-
-    # Since we instantiate many of these objects, we try to save on memory
     __slots__ = ('engine_name', 'keyword_extractor', 'link_macro', 'charsets')
 
     def __init__(self, engine_name, keyword_extractor, link_macro, charsets):
-        """New instance of a SearchEngineParser
-        :param engine_name: the friendly name of the engine (e.g. 'google')
-        :param keyword_extractor: a string or list of keyword extraction methods
-                                  for this search engine.  If a single string,
-                                  we assume we're extracting a query string
-                                  param, if it's a string that starts with '/'
-                                  then we extract from the path instead of
-                                  query string
-        :param link_macro: a string indicating how to build a link to the
-                           search engine results page for a given keyword
-        :param charsets: a string or list of charsets to use to decode the
-                         keyword
+        """New instance of a `SearchEngineParser`.
+
+        :param engine_name:         the friendly name of the engine (e.g.
+                                    'Google')
+
+        :param keyword_extractor:   a string or list of keyword extraction
+                                    methods for this search engine.  If a
+                                    single string, we assume we're extracting a
+                                    query string param, if it's a string that
+                                    starts with '/' then we extract from the
+                                    path instead of query string
+
+        :param link_macro:          a string indicating how to build a link to
+                                    the search engine results page for a given
+                                    keyword
+
+        :param charsets:            a string or list of charsets to use to
+                                    decode the keyword
         """
         self.engine_name = engine_name
         if isinstance(keyword_extractor, basestring):
@@ -93,10 +105,14 @@ class SearchEngineParser(object):
         self.charsets = [c.lower() for c in charsets]
 
     def get_serp_url(self, base_url, keyword):
-        """Get a URL to the search engine results page (SERP)
-        for a given keyword.
+        """Get a URL to the search engine results page (SERP) for a given
+        keyword.
+
         :param base_url: string of format '<scheme>://<netloc>'
-        :param keyword: the search keyword
+
+        :param keyword: search keyword string
+
+        :returns: string URL of SERP
         """
         if self.link_macro is None:
             return None
@@ -105,18 +121,20 @@ class SearchEngineParser(object):
         #link = self.decode_string(link)
         return link
 
-
     def parse(self, serp_url):
         """Parse a SERP URL to extract the search keyword.
 
-        :param serp_url: either a string or a ParseResult
-        :returns: a dict containing engine_name, keyword
+        :param serp_url: either a string or a `ParseResult`
+
+        :returns: An `ExtractResult` instance
         """
         if isinstance(serp_url, basestring):
             try:
                 url_parts = urlparse(serp_url)
-            except:
-                return # Malformed URLs
+            except ValueError:
+                msg = "Malformed URL '{}' could not parse".format(serp_url)
+                log.debug(msg, exc_info=True)
+                return
         else:
             url_parts = serp_url
         query = parse_qs(url_parts.query, keep_blank_values=True)
@@ -144,10 +162,13 @@ class SearchEngineParser(object):
         return ExtractResult(self.engine_name, keyword, self)
 
     def __repr__(self):
-        return """SearchEngineParser(engine_name={!r},\
- keyword_extractor={!r}, link_macro={!r}, charsets={!r})"""\
-        .format(self.engine_name, self.keyword_extractor, self.link_macro,
-                self.charsets)
+        repr_fmt = ("SearchEngineParser(engine_name={!r}, "
+                    "keyword_extractor={!r}, link_macro={!r}, charsets={!r})")
+        return repr_fmt.format(
+                        self.engine_name, 
+                        self.keyword_extractor, 
+                        self.link_macro,
+                        self.charsets)
 
 
 _piwik_engines = None
@@ -155,21 +176,30 @@ def _get_piwik_engines():
     """Return the search engine parser definitions stored in this module"""
     global _piwik_engines
     if _piwik_engines is None:
-        with pkg_resources.resource_stream(__name__, 'search_engines.pickle') as f:
-            _piwik_engines = pickle.load(f)
+        stream = pkg_resources.resource_stream
+        with stream(__name__, 'search_engines.pickle') as picklestream:
+            _piwik_engines = pickle.load(picklestream)
 
     return _piwik_engines
 
 
 def _get_lossy_domain(domain):
-    """A lossy version of a domain/host to use as lookup in the _engines dict."""
+    """A lossy version of a domain/host to use as lookup in the
+    `_engines` dict."""
     domain = unicode(domain)
     codes = '|'.join(_country_codes)
-    domain = re.sub(r'^(\w+[0-9]*|search)\.', '', domain)
-    domain = re.sub(r'(^|\.)m\.', r'\1', domain)
-    domain = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes), r'.{}\4', domain)
-    domain = re.sub(r'(^|\.)({})\.'.format(codes), r'\1{}.', domain)
-
+    domain = re.sub(r'^(\w+[0-9]*|search)\.',
+                    '',
+                    domain)
+    domain = re.sub(r'(^|\.)m\.',
+                    r'\1',
+                    domain)
+    domain = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
+                    r'.{}\4',
+                    domain)
+    domain = re.sub(r'(^|\.)({})\.'.format(codes),
+                    r'\1{}.',
+                    domain)
     return domain
 
 
@@ -177,6 +207,7 @@ _engines = None
 def _get_search_engines():
     """Convert the OrderedDict of search engine parsers that we get from Piwik
     to a dictionary of SearchEngineParser objects.
+    
     Cache this thing by storing in the global ``_engines``.
     """
     global _engines
@@ -189,7 +220,6 @@ def _get_search_engines():
     # order
     key_func = lambda x: x[1][0]
     grouped = groupby(piwik_engines.iteritems(), key_func)
-    _params = []
     _engines = {}
 
     for engine_name, rule_group in grouped:
@@ -232,15 +262,17 @@ def _get_search_engines():
     return _engines
 
 
+def _not_regex(value):
+    return not value.startswith('/') and not value.strip() == ''
+
+
 def get_all_query_params():
     """Return all the possible query string params for all search engines."""
     engines = _get_search_engines()
     all_params = set()
     for _, parser in engines.iteritems():
         # Find non-regex params
-        params = set(filter(lambda x: not x.startswith('/') and \
-                                      not x.strip() == '',
-                            parser.keyword_extractor))
+        params = set(filter(_not_regex, parser.keyword_extractor))
         all_params |= params
 
     return list(all_params)
@@ -259,8 +291,11 @@ def get_parser(referring_url):
             url_parts = referring_url
         else:
             url_parts = urlparse(referring_url)
-    except:
-        return # Malformed URLs
+    except ValueError:
+        msg = "Malformed URL '{}' could not parse".format(referring_url)
+        log.debug(msg, exc_info=True)
+        # Malformed URLs
+        return
 
     # First try to look up a search engine by the host name incase we have
     # a direct entry for it
@@ -272,7 +307,8 @@ def get_parser(referring_url):
                              'nothing')
 
     if parser == 'nothing':
-        return None # no parser to be found
+        # no parser found
+        return None
 
     return parser
 
@@ -305,17 +341,19 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
     :param trimmed: trim extra spaces before and after keyword
     :param collapse_whitespace: collapse 2 or more \s characters into
                                 one space ' '
-    :returns: a dict containing engine_name, keyword
+    :returns: an `ExtractResult` instance
     """
     if parser is None:
         parser = get_parser(serp_url)
     if not parser:
-        return None # Tried to get keyword from non SERP URL
+        # Tried to get keyword from non SERP URL
+        return None
 
     result = parser.parse(serp_url)
     if result is None:
-        log.debug(('Found search engine parser for {} but was unable to'
-                    ' extract keyword.').format(serp_url))
+        msg = ('Found search engine parser for {} but was '
+               'unable to extract keyword.')
+        log.debug(msg.format(serp_url))
         return None
 
     if lower_case:
