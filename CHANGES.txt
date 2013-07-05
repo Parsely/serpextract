@@ -1,1 +1,3 @@
+v0.1.2, 2013-07-05 -- Safe reading of .pickle file from package, add docs, bug fix to _get_lossy_domain, additional tests.
+v0.1.1, 2013-07-02 -- Fix import error in setup.py and use iso3166 for countries list.
 v0.1.0, 2013-07-01 -- Initial release.

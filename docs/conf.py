@@ -30,10 +30,10 @@ project = u'serpextract'
 copyright = u'2013, Parsely, Inc.'
 
 # The short X.Y version.
-version = '0.1.1'
+version = '0.1.2'
 
 # The full version, including alpha/beta/rc tags.
-release = '0.1.1'
+release = '0.1.2'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
