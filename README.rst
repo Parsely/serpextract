@@ -56,12 +56,12 @@ Python
     # True
     is_serp(non_serp_url)
     # False
-    
+
     get_parser(serp_url)
     # SearchEngineParser(engine_name='Google', keyword_extractor=['q'], link_macro='search?q={k}', charsets=['utf-8'])
     get_parser(non_serp_url)
     # None
-    
+
     extract(serp_url)
     # ExtractResult(engine_name='Google', keyword=u'ars technica', parser=SearchEngineParser(...))
     extract(non_serp_url)

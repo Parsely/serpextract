@@ -44,7 +44,7 @@ _country_codes += ['uk']
 
 
 def _to_unicode(s):
-    """safely decodes a string into unicode if it's not already unicode"""
+    """Safely decodes a string into unicode if it's not already unicode"""
     return s if isinstance(s, unicode) else s.decode("utf-8", "ignore")
 
 
@@ -105,14 +105,15 @@ class SearchEngineParser(object):
         self.charsets = [c.lower() for c in charsets]
 
     def get_serp_url(self, base_url, keyword):
-        """Get a URL to the search engine results page (SERP) for a given
-        keyword.
+        """Get a URL to a SERP for a given keyword.
 
-        :param base_url: string of format '<scheme>://<netloc>'
+        :param base_url: string of format ``'<scheme>://<netloc>'``
+        :type base_url: str
 
-        :param keyword: search keyword string
+        :param keyword: search engine keyword
+        :type keyword: str
 
-        :returns: string URL of SERP
+        :returns: a URL that links directly to a SERP for the given keyword.
         """
         if self.link_macro is None:
             return None
@@ -124,9 +125,10 @@ class SearchEngineParser(object):
     def parse(self, serp_url):
         """Parse a SERP URL to extract the search keyword.
 
-        :param serp_url: either a string or a `ParseResult`
+        :param serp_url: either a string or a :class:`urlparse.ParseResult`
+                         object
 
-        :returns: An `ExtractResult` instance
+        :returns: An :class:`ExtractResult` instance.
         """
         if isinstance(serp_url, basestring):
             try:
@@ -185,7 +187,7 @@ def _get_piwik_engines():
 
 def _get_lossy_domain(domain):
     """A lossy version of a domain/host to use as lookup in the
-    `_engines` dict."""
+    ``_engines`` dict."""
     domain = unicode(domain)
     codes = '|'.join(_country_codes)
 
@@ -283,7 +285,11 @@ def _not_regex(value):
 
 
 def get_all_query_params():
-    """Return all the possible query string params for all search engines."""
+    """Return all the possible query string params for all search engines.
+
+    :returns: a ``list`` of all the unique query string parameters that are
+              used across the search engine definitions.
+    """
     engines = _get_search_engines()
     all_params = set()
     for parser in engines.itervalues():
@@ -295,11 +301,13 @@ def get_all_query_params():
 
 
 def get_parser(referring_url):
-    """Utility function to find a parser for a referring URL
-    if it is a SERP.
+    """Utility function to find a parser for a referring URL if it is a SERP.
 
-    :param referring_url: either the referring URL as a string or ParseResult
-    :returns: SearchEngineParser object if one exists for URL, None otherwise
+    :param referring_url: suspected SERP URL
+    :type referring_url: str or urlparse.ParseResult
+
+    :returns: :class:`SearchEngineParser` object if one exists for URL,
+              ``None`` otherwise
     """
     engines = _get_search_engines()
     try:
@@ -322,9 +330,12 @@ def get_parser(referring_url):
 
 
 def is_serp(referring_url):
-    """Utility function to determine if a referring URL is a SERP URL.
+    """Utility function to determine if a referring URL is a SERP.
 
-    :returns: True if SERP, False otherwise.
+    :param referring_url: suspected SERP URL
+    :type referring_url: str or urlparse.ParseResult
+
+    :returns: ``True`` if SERP, ``False`` otherwise.
     """
     parser = get_parser(referring_url)
     if parser is None:
@@ -336,20 +347,27 @@ def is_serp(referring_url):
 
 def extract(serp_url, parser=None, lower_case=True, trimmed=True,
             collapse_whitespace=True):
-    """Parse a SERP URL and return information regarding the engine, keyword
-    and serp_link.
+    """Parse a SERP URL and return information regarding the engine name,
+    keyword and :class:`SearchEngineParser`.
 
     This is a far more basic implementation than what Piwik has done in their
     source, but right now, we don't care about all the crazy edge cases.
 
     :param serp_url: the suspected SERP URL to extract a keyword from
+    :type serp_url: str or urlparse.ParseResult
     :param parser: optionally pass in a parser if already looked up via
                    call to get_parser
+    :type parser: :class:`SearchEngineParser`
     :param lower_case: lower case the keyword
+    :type lower_case: bool
     :param trimmed: trim extra spaces before and after keyword
-    :param collapse_whitespace: collapse 2 or more \s characters into
-                                one space ' '
-    :returns: an `ExtractResult` instance
+    :type trimmed: bool
+    :param collapse_whitespace: collapse 2 or more ``\s`` characters into
+                                one space ``' '``
+    :type collapse_whitespace: bool
+
+    :returns: an :class:`ExtractResult` instance if ``serp_url`` is valid,
+              ``None`` otherwise
     """
     if parser is None:
         parser = get_parser(serp_url)
