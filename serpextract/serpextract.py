@@ -189,7 +189,7 @@ def _get_lossy_domain(domain):
     domain = unicode(domain)
     codes = '|'.join(_country_codes)
 
-    # First, strip off any www, www1, www2 domain prefix
+    # First, strip off any www., www1., www2., search. domain prefix
     domain = re.sub(r'^(w+\d*|search)\.',
                     '',
                     domain)
