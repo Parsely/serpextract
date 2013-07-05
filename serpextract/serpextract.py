@@ -188,15 +188,23 @@ def _get_lossy_domain(domain):
     `_engines` dict."""
     domain = unicode(domain)
     codes = '|'.join(_country_codes)
-    domain = re.sub(r'^(\w+[0-9]*|search)\.',
+
+    # First, strip off any www, www1, www2 domain prefix
+    domain = re.sub(r'^(w+\d*|search)\.',
                     '',
                     domain)
+    # Now remove domains that are thought of as mobile (m.something.com
+    # becomes something.com)
     domain = re.sub(r'(^|\.)m\.',
                     r'\1',
                     domain)
+    # Replace country code suffixes from domains (something.co.uk becomes
+    # something.{})
     domain = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
                     r'.{}\4',
                     domain)
+    # Replace country code prefixes from domains (ca.something.com) becomes
+    # {}.something.com
     domain = re.sub(r'(^|\.)({})\.'.format(codes),
                     r'\1{}.',
                     domain)
