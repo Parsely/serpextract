@@ -64,6 +64,15 @@ class TestSERPs(unittest.TestCase):
         )
         self.assertValidSERPs(serps)
 
+    def test_invalid_serps(self):
+        invalid_serps = (
+            'http://www.google.com/',
+            'http://www.yahoo.com/',
+            'http://www.something.com/',
+        )
+        for url in invalid_serps:
+            assert extract(url) == None
+
 
 if __name__ == '__main__':
     unittest.main()
