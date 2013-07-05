@@ -278,7 +278,7 @@ def get_all_query_params():
     """Return all the possible query string params for all search engines."""
     engines = _get_search_engines()
     all_params = set()
-    for _, parser in engines.iteritems():
+    for parser in engines.itervalues():
         # Find non-regex params
         params = set(filter(_not_regex, parser.keyword_extractor))
         all_params |= params
