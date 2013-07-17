@@ -31,6 +31,7 @@ try:
 except ImportError:
     import pickle
 
+
 __all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params')
 
 log = logging.getLogger('serpextract')
@@ -46,6 +47,135 @@ _country_codes += ['uk']
 def _to_unicode(s):
     """Safely decodes a string into unicode if it's not already unicode"""
     return s if isinstance(s, unicode) else s.decode("utf-8", "ignore")
+
+
+def _serp_query_string(parse_result):
+    """
+    Some search engines contain the search keyword in the fragment so we
+    build a version of a query string that contains the query string and
+    the fragment.
+
+    :param parse_result: a URL
+    :type parse_result: :class:`urlparse.ParseResult`
+    """
+    query = parse_result.query
+    if parse_result.fragment != '':
+        query = '{}&{}'.format(query, parse_result.fragment)
+
+    return query
+
+
+def _is_url_without_path_query_or_fragment(url_parts):
+    """
+    Determines if a URL has a blank path, query string and fragment.
+
+    :param url_parts: the URL
+    :type url_parts: :class:`urlparse.ParseResult`
+    """
+    return url_parts.path.strip('/') == '' and url_parts.query == '' \
+           and url_parts.fragment == ''
+
+_engines = None
+def _get_search_engines():
+   """Convert the OrderedDict of search engine parsers that we get from Piwik
+   to a dictionary of SearchEngineParser objects.
+
+   Cache this thing by storing in the global ``_engines``.
+   """
+   global _engines
+   if _engines:
+       return _engines
+
+   piwik_engines = _get_piwik_engines()
+   # Engine names are the first param of each of the search engine arrays
+   # so we group by those guys, and create our new dictionary with that
+   # order
+   get_engine_name = lambda x: x[1][0]
+   definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
+   _engines = {}
+
+   for engine_name, rule_group in definitions_by_engine:
+       defaults = {
+           'extractor': None,
+           'link_macro': None,
+           'charsets': ['utf-8']
+       }
+
+       for i, rule in enumerate(rule_group):
+           domain = rule[0]
+           rule = rule[1][1:]
+           if i == 0:
+               defaults['extractor'] = rule[0]
+               if len(rule) >= 2:
+                   defaults['link_macro'] = rule[1]
+               if len(rule) >= 3:
+                   defaults['charsets'] = rule[2]
+
+               _engines[domain] = SearchEngineParser(engine_name,
+                                                     defaults['extractor'],
+                                                     defaults['link_macro'],
+                                                     defaults['charsets'])
+               continue
+
+           # Default args for SearchEngineParser
+           args = [engine_name, defaults['extractor'],
+                   defaults['link_macro'], defaults['charsets']]
+           if len(rule) >= 1:
+               args[1] = rule[0]
+
+           if len(rule) >= 2:
+               args[2] = rule[1]
+
+           if len(rule) == 3:
+               args[3] = rule[2]
+
+           _engines[domain] = SearchEngineParser(*args)
+
+   return _engines
+
+
+def _not_regex(value):
+   return not value.startswith('/') and not value.strip() == ''
+
+
+_piwik_engines = None
+def _get_piwik_engines():
+   """Return the search engine parser definitions stored in this module"""
+   global _piwik_engines
+   if _piwik_engines is None:
+       stream = pkg_resources.resource_stream
+       with stream(__name__, 'search_engines.pickle') as picklestream:
+           _piwik_engines = pickle.load(picklestream)
+
+   return _piwik_engines
+
+
+def _get_lossy_domain(domain):
+   """A lossy version of a domain/host to use as lookup in the
+   ``_engines`` dict."""
+   domain = unicode(domain)
+   codes = '|'.join(_country_codes)
+
+   # First, strip off any www., www1., www2., search. domain prefix
+   domain = re.sub(r'^(w+\d*|search)\.',
+                   '',
+                   domain)
+   # Now remove domains that are thought of as mobile (m.something.com
+   # becomes something.com)
+   domain = re.sub(r'(^|\.)m\.',
+                   r'\1',
+                   domain)
+   # Replace country code suffixes from domains (something.co.uk becomes
+   # something.{})
+   domain = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
+                   r'.{}\4',
+                   domain)
+   # Replace country code prefixes from domains (ca.something.com) becomes
+   # {}.something.com
+   domain = re.sub(r'(^|\.)({})\.'.format(codes),
+                   r'\1{}.',
+                   domain)
+   return domain
 
 
 class ExtractResult(object):
@@ -125,8 +255,9 @@ class SearchEngineParser(object):
     def parse(self, serp_url):
         """Parse a SERP URL to extract the search keyword.
 
-        :param serp_url: either a string or a :class:`urlparse.ParseResult`
-                         object
+        :param serp_url: the SERP URL
+        :type serp_url: either a string or a :class:`urlparse.ParseResult`
+                        object
 
         :returns: An :class:`ExtractResult` instance.
         """
@@ -136,12 +267,69 @@ class SearchEngineParser(object):
             except ValueError:
                 msg = "Malformed URL '{}' could not parse".format(serp_url)
                 log.debug(msg, exc_info=True)
-                return
+                return None
         else:
             url_parts = serp_url
-        query = parse_qs(url_parts.query, keep_blank_values=True)
+        original_query = _serp_query_string(url_parts)
+        query = parse_qs(original_query, keep_blank_values=True)
 
         keyword = None
+        engine_name = self.engine_name
+        if self.engine_name == 'Google Images' or \
+           (self.engine_name == 'Google' and '/imgres' in serp_url):
+            # When using Google's image preview mode, it hides the keyword
+            # within the prev query string param
+            engine_name = 'Google Images'
+            if 'prev' in query:
+                keyword = parse_qs(urlparse(query['prev'][0]).query)\
+                          .get('q')[0]
+        elif self.engine_name == 'Google' and 'as_' in original_query:
+            # Google has many different ways to filter results.  When some of
+            # these filters are applied, we can no longer just look for the q
+            # parameter so we look at additional query string arguments and
+            # construct a keyword manually
+            keys = []
+
+            # Results should contain all of the words entered
+            # Search Operator: None (same as normal search)
+            key = query.get('as_q')
+            if key:
+              keys.append(key[0])
+            # Results should contain any of these words
+            # Search Operator: <keyword> [OR <keyword>]+
+            key = query.get('as_oq')
+            if key:
+              key = key[0].replace('+', ' OR ')
+              keys.append(key)
+            # Results should match the exact phrase
+            # Search Operator: "<keyword>"
+            key = query.get('as_epq')
+            if key:
+              keys.append(u'"{}"'.format(key[0]))
+            # Results should contain none of these words
+            # Search Operator: -<keyword>
+            key = query.get('as_eq')
+            if key:
+              keys.append(u'-{}'.format(key[0]))
+
+            keyword = u' '.join(keys).strip()
+
+        if self.engine_name == 'Google':
+            # Check for usage of Google's top bar menu
+            tbm = query.get('tbm', [None])[0]
+            if tbm == 'isch':
+                engine_name = 'Google Images'
+            elif tbm == 'vid':
+                engine_name = 'Google Video'
+            elif tbm == 'shop':
+                engine_name = 'Google Shopping'
+
+        if keyword is not None:
+            # Edge case found a keyword, exit quickly
+            keyword = _to_unicode(keyword)
+            return ExtractResult(engine_name, keyword, self)
+
+        # Otherwise we keep looking through the defined extractors
         for extractor in self.keyword_extractor:
             if extractor.startswith('/'):
                 # Regular expression extractor
@@ -152,136 +340,35 @@ class SearchEngineParser(object):
                     keyword = match.group(1)
                     break
             else:
+                # Search for keywords in query string
                 if extractor in query:
-                    keyword = query[extractor][0]
-                    break
+                    # Take the last param in the qs because it should be the
+                    # most recent
+                    keyword = query[extractor][-1]
 
-        if keyword is None:
-            return
+                # Now we have to check for a tricky case where it is a SERP
+                # but just with no keyword as can be the case with Google
+                # Images or DuckDuckGo
+                if keyword is None and extractor == 'q' and \
+                   engine_name in ('Google Images', 'DuckDuckGo'):
+                    keyword = ''
+                elif keyword is None and extractor == 'q' and \
+                     engine_name == 'Google' and \
+                     _is_url_without_path_query_or_fragment(url_parts):
+                    keyword = ''
 
-        keyword = _to_unicode(keyword)
-
-        return ExtractResult(self.engine_name, keyword, self)
+        if keyword is not None:
+            keyword = _to_unicode(keyword)
+            return ExtractResult(self.engine_name, keyword, self)
 
     def __repr__(self):
         repr_fmt = ("SearchEngineParser(engine_name={!r}, "
                     "keyword_extractor={!r}, link_macro={!r}, charsets={!r})")
         return repr_fmt.format(
-                        self.engine_name, 
-                        self.keyword_extractor, 
+                        self.engine_name,
+                        self.keyword_extractor,
                         self.link_macro,
                         self.charsets)
-
-
-_piwik_engines = None
-def _get_piwik_engines():
-    """Return the search engine parser definitions stored in this module"""
-    global _piwik_engines
-    if _piwik_engines is None:
-        stream = pkg_resources.resource_stream
-        with stream(__name__, 'search_engines.pickle') as picklestream:
-            _piwik_engines = pickle.load(picklestream)
-
-    return _piwik_engines
-
-
-def _get_lossy_domain(domain):
-    """A lossy version of a domain/host to use as lookup in the
-    ``_engines`` dict."""
-    domain = unicode(domain)
-    codes = '|'.join(_country_codes)
-
-    # First, strip off any www., www1., www2., search. domain prefix
-    domain = re.sub(r'^(w+\d*|search)\.',
-                    '',
-                    domain)
-    # Now remove domains that are thought of as mobile (m.something.com
-    # becomes something.com)
-    domain = re.sub(r'(^|\.)m\.',
-                    r'\1',
-                    domain)
-    # Replace country code suffixes from domains (something.co.uk becomes
-    # something.{})
-    domain = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
-                    r'.{}\4',
-                    domain)
-    # Replace country code prefixes from domains (ca.something.com) becomes
-    # {}.something.com
-    domain = re.sub(r'(^|\.)({})\.'.format(codes),
-                    r'\1{}.',
-                    domain)
-    return domain
-
-
-_engines = None
-def _get_search_engines():
-    """Convert the OrderedDict of search engine parsers that we get from Piwik
-    to a dictionary of SearchEngineParser objects.
-
-    Cache this thing by storing in the global ``_engines``.
-    """
-    global _engines
-    if _engines:
-        return _engines
-
-    piwik_engines = _get_piwik_engines()
-    # Engine names are the first param of each of the search engine arrays
-    # so we group by those guys, and create our new dictionary with that
-    # order
-    get_engine_name = lambda x: x[1][0]
-    definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
-    _engines = {}
-
-    for engine_name, rule_group in definitions_by_engine:
-        defaults = {
-            'extractor': None,
-            'link_macro': None,
-            'charsets': ['utf-8']
-        }
-
-        for i, rule in enumerate(rule_group):
-            domain = rule[0]
-            rule = rule[1][1:]
-            if i == 0:
-                defaults['extractor'] = rule[0]
-                if len(rule) >= 2:
-                    defaults['link_macro'] = rule[1]
-                if len(rule) >= 3:
-                    defaults['charsets'] = rule[2]
-
-                _engines[domain] = SearchEngineParser(engine_name,
-                                                      defaults['extractor'],
-                                                      defaults['link_macro'],
-                                                      defaults['charsets'])
-                continue
-
-            # Default args for SearchEngineParser
-            args = [engine_name, defaults['extractor'],
-                    defaults['link_macro'], defaults['charsets']]
-            if len(rule) >= 1:
-                args[1] = rule[0]
-
-            if len(rule) >= 2:
-                args[2] = rule[1]
-
-            if len(rule) == 3:
-                args[3] = rule[2]
-
-            _engines[domain] = SearchEngineParser(*args)
-
-    # Add additional case to cover {}.search.yahoo.com which is not handled by
-    # Piwik's original list (or maybe it is handled through their additional
-    # logic)
-    _engines['{}.search.yahoo.com'] = SearchEngineParser(u'Yahoo!',
-                                                         [u'p', u'q'],
-                                                         u'search?p={k}',
-                                                         ['utf-8'])
-
-    return _engines
-
-
-def _not_regex(value):
-    return not value.startswith('/') and not value.strip() == ''
 
 
 def get_all_query_params():
@@ -319,14 +406,44 @@ def get_parser(referring_url):
         msg = "Malformed URL '{}' could not parse".format(referring_url)
         log.debug(msg, exc_info=True)
         # Malformed URLs
-        return
+        return None
 
-    # First try to look up a search engine by the host name incase we have
-    # a direct entry for it and then look up the lossy version of the domain
-    parser = engines.get(url_parts.netloc) or \
-             engines.get(_get_lossy_domain(url_parts.netloc))
+    query = _serp_query_string(url_parts)
 
-    return parser
+    lossy_domain = _get_lossy_domain(url_parts.netloc)
+    engine_key = url_parts.netloc
+
+    # Try to find a parser in the engines list.  We go from most specific to
+    # least specific order:
+    # 1. <domain><path>
+    # 2. <lossy_domain><path>
+    # 3. <lossy_domain>
+    # 4. <domain>
+    # The final case has some special exceptions for things like Google custom
+    # search engines, yahoo and yahoo images
+    if '{}{}'.format(url_parts.netloc, url_parts.path) in engines:
+        engine_key = '{}{}'.format(url_parts.netloc, url_parts.path)
+    elif '{}{}'.format(lossy_domain, url_parts.path) in engines:
+        engine_key = '{}{}'.format(lossy_domain, url_parts.path)
+    elif lossy_domain in engines:
+        engine_key = lossy_domain
+    elif url_parts.netloc not in engines:
+        if query[:14] == 'cx=partner-pub':
+            # Google custom search engine
+            engine_key = 'google.com/cse'
+        elif url_parts.path[:28] == '/pemonitorhosted/ws/results/':
+            # private-label search powered by InfoSpace Metasearch
+            engine_key = 'wsdsold.infospace.com'
+        elif '.images.search.yahoo.com' in url_parts.netloc:
+            # Yahoo! Images
+            engine_key = 'images.search.yahoo.com'
+        elif '.search.yahoo.com' in url_parts.netloc:
+            # Yahoo!
+            engine_key = 'search.yahoo.com'
+        else:
+            return None
+
+    return engines.get(engine_key)
 
 
 def is_serp(referring_url):
@@ -369,17 +486,15 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
     :returns: an :class:`ExtractResult` instance if ``serp_url`` is valid,
               ``None`` otherwise
     """
+    url_parts = urlparse(serp_url)
     if parser is None:
-        parser = get_parser(serp_url)
+        parser = get_parser(url_parts)
     if not parser:
-        # Tried to get keyword from non SERP URL
-        return None
+        return None  # Tried to get keyword from non SERP URL
 
     result = parser.parse(serp_url)
+
     if result is None:
-        msg = ('Found search engine parser for {} but was '
-               'unable to extract keyword.')
-        log.debug(msg.format(serp_url))
         return None
 
     if lower_case:
