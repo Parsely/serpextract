@@ -2,7 +2,7 @@ import sys
 from setuptools import setup
 
 
-version = '0.2.0'
+version = '0.2.1'
 
 install_requires = ['iso3166 >= 0.4']
 if sys.version_info <= (2,7):

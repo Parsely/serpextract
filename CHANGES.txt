@@ -1,3 +1,4 @@
+v0.2.1, 2013-07-17 -- Quick fix for engine lookup bug.
 v0.2.0, 2013-07-17 -- Add missing edge cases found in Piwik's Common.php for search engines.  Significantly changes detection of SERPs (Google in particular).
 v0.1.2, 2013-07-05 -- Safe reading of .pickle file from package, add docs, bug fix to _get_lossy_domain, additional tests.
 v0.1.1, 2013-07-02 -- Fix import error in setup.py and use iso3166 for countries list.
