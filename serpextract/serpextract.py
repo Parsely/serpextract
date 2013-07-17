@@ -421,9 +421,9 @@ def get_parser(referring_url):
     # 4. <domain>
     # The final case has some special exceptions for things like Google custom
     # search engines, yahoo and yahoo images
-    if '{}{}'.format(url_parts.netloc, url_parts.path) in engines:
+    if u'{}{}'.format(url_parts.netloc, url_parts.path) in engines:
         engine_key = '{}{}'.format(url_parts.netloc, url_parts.path)
-    elif '{}{}'.format(lossy_domain, url_parts.path) in engines:
+    elif u'{}{}'.format(lossy_domain, url_parts.path) in engines:
         engine_key = '{}{}'.format(lossy_domain, url_parts.path)
     elif lossy_domain in engines:
         engine_key = lossy_domain
