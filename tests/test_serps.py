@@ -25,8 +25,8 @@ class TestSERPs(unittest.TestCase):
     def assertValidSERPs(self, expected_serps):
         for url, engine_name, keyword in expected_serps:
             res = extract(url)
-            assert res.keyword == keyword
-            assert res.engine_name == engine_name
+            self.assertEqual(res.keyword, keyword)
+            self.assertEqual(res.engine_name, engine_name)
 
     def test_google(self):
         serps = (
@@ -37,7 +37,7 @@ class TestSERPs(unittest.TestCase):
             ('http://www.google.ca/url?sa=i&rct=j&q=%22justin+timberlake%22&source=images&cd=&docid=mPgs-1UiH9v_-M&tbnid=Zkq86Kfj5IWYxM:&ved=0CAEQjxw&url=http%3A%2F%2Fwww.salon.com%2F2013%2F01%2F10%2Fis_justin_timberlake_releasing_a_new_album%2F&ei=ZuDmUaOlEaTk4AOE_4GgCQ&bvm=bv.49405654,d.dmg&psig=AFQjCNEX5ylDUbWb68msE2VIYZw-ObWtNg&ust=1374171617895913', 'Google', u'"justin timberlake"'),
             ('https://www.google.com/', 'Google', u''),
             ('https://www.google.co.uk', 'Google', u''),
-            ('http://www.google.ca/search?hl=en&site=imghp&tbm=isch&source=hp&biw=1436&bih=508&q=lenovo&oq=lenovo&gs_l=img.3..0l10.2042.2539.0.2755.6.5.0.1.1.0.99.382.5.5.0....0.0..1ac.1.20.img.zuc4SkaG3pk#q=lenovo&hl=en&site=imghp&tbs=isz:l,qdr:d,itp:photo&tbm=isch&source=lnt&sa=X&ei=chbnUcwB88fgA9GdgdgD&ved=0CD0QpwUoAg&bav=on.2,or.r_qf.&bvm=bv.49405654%2Cd.dmg%2Cpv.xjs.s.en_US.QXiTEk6XjhM.O&fp=74e28ccdf351cc74&biw=1436&bih=508&facrc=_&imgdii=_&imgrc=PWcY9IoUsS8fqM%3A%3BLXHKDtPubm1b_M%3Bhttp%253A%252F%252Fmy.kyozou.com%252Fpictures%252F_15%252F14595%252F14594417.jpg%3Bhttp%253A%252F%252Fwww.ebay.com%252Fitm%252FLENOVO-X200-LAPTOP-CORE-2-DUO-1-86GHz-4GB-160GB-WIRELESS-%252F221252458890%253Fpt%253DLaptops_Nov05%2526hash%253Ditem3383ac998a%3B1600%3B1200', 'Google', u'lenovo'),
+            ('http://www.google.ca/search?hl=en&site=imghp&tbm=isch&source=hp&biw=1436&bih=508&q=lenovo&oq=lenovo&gs_l=img.3..0l10.2042.2539.0.2755.6.5.0.1.1.0.99.382.5.5.0....0.0..1ac.1.20.img.zuc4SkaG3pk#q=lenovo&hl=en&site=imghp&tbs=isz:l,qdr:d,itp:photo&tbm=isch&source=lnt&sa=X&ei=chbnUcwB88fgA9GdgdgD&ved=0CD0QpwUoAg&bav=on.2,or.r_qf.&bvm=bv.49405654%2Cd.dmg%2Cpv.xjs.s.en_US.QXiTEk6XjhM.O&fp=74e28ccdf351cc74&biw=1436&bih=508&facrc=_&imgdii=_&imgrc=PWcY9IoUsS8fqM%3A%3BLXHKDtPubm1b_M%3Bhttp%253A%252F%252Fmy.kyozou.com%252Fpictures%252F_15%252F14595%252F14594417.jpg%3Bhttp%253A%252F%252Fwww.ebay.com%252Fitm%252FLENOVO-X200-LAPTOP-CORE-2-DUO-1-86GHz-4GB-160GB-WIRELESS-%252F221252458890%253Fpt%253DLaptops_Nov05%2526hash%253Ditem3383ac998a%3B1600%3B1200', 'Google Images', u'lenovo'),
             # TODO: More google edge cases
         )
         self.assertValidSERPs(serps)

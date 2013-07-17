@@ -275,15 +275,15 @@ class SearchEngineParser(object):
 
         keyword = None
         engine_name = self.engine_name
-        if self.engine_name == 'Google Images' or \
-           (self.engine_name == 'Google' and '/imgres' in serp_url):
+        if engine_name == 'Google Images' or \
+           (engine_name == 'Google' and '/imgres' in serp_url):
             # When using Google's image preview mode, it hides the keyword
             # within the prev query string param
             engine_name = 'Google Images'
             if 'prev' in query:
                 keyword = parse_qs(urlparse(query['prev'][0]).query)\
                           .get('q')[0]
-        elif self.engine_name == 'Google' and 'as_' in original_query:
+        elif engine_name == 'Google' and 'as_' in original_query:
             # Google has many different ways to filter results.  When some of
             # these filters are applied, we can no longer just look for the q
             # parameter so we look at additional query string arguments and
@@ -314,7 +314,7 @@ class SearchEngineParser(object):
 
             keyword = u' '.join(keys).strip()
 
-        if self.engine_name == 'Google':
+        if engine_name == 'Google':
             # Check for usage of Google's top bar menu
             tbm = query.get('tbm', [None])[0]
             if tbm == 'isch':
@@ -359,7 +359,7 @@ class SearchEngineParser(object):
 
         if keyword is not None:
             keyword = _to_unicode(keyword)
-            return ExtractResult(self.engine_name, keyword, self)
+            return ExtractResult(engine_name, keyword, self)
 
     def __repr__(self):
         repr_fmt = ("SearchEngineParser(engine_name={!r}, "
