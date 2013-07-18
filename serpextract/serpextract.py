@@ -81,73 +81,73 @@ def _is_url_without_path_query_or_fragment(url_parts):
 
 _engines = None
 def _get_search_engines():
-   """Convert the OrderedDict of search engine parsers that we get from Piwik
-   to a dictionary of SearchEngineParser objects.
+    """Convert the OrderedDict of search engine parsers that we get from Piwik
+    to a dictionary of SearchEngineParser objects.
 
-   Cache this thing by storing in the global ``_engines``.
-   """
-   global _engines
-   if _engines:
-       return _engines
+    Cache this thing by storing in the global ``_engines``.
+    """
+    global _engines
+    if _engines:
+        return _engines
 
-   piwik_engines = _get_piwik_engines()
-   # Engine names are the first param of each of the search engine arrays
-   # so we group by those guys, and create our new dictionary with that
-   # order
-   get_engine_name = lambda x: x[1][0]
-   definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
-   _engines = {}
+    piwik_engines = _get_piwik_engines()
+    # Engine names are the first param of each of the search engine arrays
+    # so we group by those guys, and create our new dictionary with that
+    # order
+    get_engine_name = lambda x: x[1][0]
+    definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
+    _engines = {}
 
-   for engine_name, rule_group in definitions_by_engine:
-       defaults = {
-           'extractor': None,
-           'link_macro': None,
-           'charsets': ['utf-8']
-       }
+    for engine_name, rule_group in definitions_by_engine:
+        defaults = {
+            'extractor': None,
+            'link_macro': None,
+            'charsets': ['utf-8']
+        }
 
-       for i, rule in enumerate(rule_group):
-           domain = rule[0]
-           rule = rule[1][1:]
-           if i == 0:
-               defaults['extractor'] = rule[0]
-               if len(rule) >= 2:
-                   defaults['link_macro'] = rule[1]
-               if len(rule) >= 3:
-                   defaults['charsets'] = rule[2]
+        for i, rule in enumerate(rule_group):
+            domain = rule[0]
+            rule = rule[1][1:]
+            if i == 0:
+                defaults['extractor'] = rule[0]
+                if len(rule) >= 2:
+                    defaults['link_macro'] = rule[1]
+                if len(rule) >= 3:
+                    defaults['charsets'] = rule[2]
 
-               _engines[domain] = SearchEngineParser(engine_name,
-                                                     defaults['extractor'],
-                                                     defaults['link_macro'],
-                                                     defaults['charsets'])
-               continue
+                _engines[domain] = SearchEngineParser(engine_name,
+                                                      defaults['extractor'],
+                                                      defaults['link_macro'],
+                                                      defaults['charsets'])
+                continue
 
-           # Default args for SearchEngineParser
-           args = [engine_name, defaults['extractor'],
-                   defaults['link_macro'], defaults['charsets']]
-           if len(rule) >= 1:
-               args[1] = rule[0]
+            # Default args for SearchEngineParser
+            args = [engine_name, defaults['extractor'],
+                    defaults['link_macro'], defaults['charsets']]
+            if len(rule) >= 1:
+                args[1] = rule[0]
 
-           if len(rule) >= 2:
-               args[2] = rule[1]
+            if len(rule) >= 2:
+                args[2] = rule[1]
 
-           if len(rule) == 3:
-               args[3] = rule[2]
+            if len(rule) == 3:
+                args[3] = rule[2]
 
-           _engines[domain] = SearchEngineParser(*args)
+            _engines[domain] = SearchEngineParser(*args)
 
-   return _engines
+    return _engines
 
 
 _piwik_engines = None
 def _get_piwik_engines():
-   """Return the search engine parser definitions stored in this module"""
-   global _piwik_engines
-   if _piwik_engines is None:
+    """Return the search engine parser definitions stored in this module"""
+    global _piwik_engines
+    if _piwik_engines is None:
        stream = pkg_resources.resource_stream
        with stream(__name__, 'search_engines.pickle') as picklestream:
            _piwik_engines = pickle.load(picklestream)
 
-   return _piwik_engines
+    return _piwik_engines
 
 
 def _get_lossy_domain(domain):
