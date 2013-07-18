@@ -273,11 +273,12 @@ class SearchEngineParser(object):
                 return None
         else:
             url_parts = serp_url
+
         original_query = _serp_query_string(url_parts)
         query = parse_qs(original_query, keep_blank_values=True)
-
         keyword = None
         engine_name = self.engine_name
+
         if engine_name == 'Google Images' or \
            (engine_name == 'Google' and '/imgres' in serp_url):
             # When using Google's image preview mode, it hides the keyword
