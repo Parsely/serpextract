@@ -23,6 +23,10 @@ class TestSERPs(unittest.TestCase):
     country case and the keywords with crazy characters case.
     """
 
+    def assertInvalidSERP(self, url):
+        self.assertIsNone(extract(url))
+        self.assertFalse(is_serp(url))
+
     def assertValidSERP(self, url, expected_engine_name, expected_keyword):
         # Test both the URL and a parsed URL version
         for url in (url, urlparse(url)):
@@ -93,12 +97,15 @@ class TestSERPs(unittest.TestCase):
     def test_invalid_serps(self):
         invalid_serps = (
             'http://www.google.com/reader',
+            'http://www.google.com/ig',
+            'http://plus.url.google.com/url?sa=z&n=1374157226744&url=http%3A%2F%2Ftgam.ca%2FDsyz&usg=CSc5XfUHV6imxjYmxocn-G-rPyg',
+            'http://news.google.com/',
             'http://www.yahoo.com/',
             'http://www.something.com/',
+            'http://www.reddit.com/',
         )
         for url in invalid_serps:
-            self.assertIsNone(extract(url))
-            self.assertFalse(is_serp(url))
+            self.assertInvalidSERP(url)
 
 
 if __name__ == '__main__':
