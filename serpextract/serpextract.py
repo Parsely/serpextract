@@ -150,40 +150,30 @@ def _get_piwik_engines():
     return _piwik_engines
 
 
+_get_lossy_domain_regex = None
 def _get_lossy_domain(domain):
     """A lossy version of a domain/host to use as lookup in the
     ``_engines`` dict."""
-    global _domain_cache
+    global _domain_cache, _get_lossy_domain_regex
 
     if domain in _domain_cache:
-       return _domain_cache[domain]
+        return _domain_cache[domain]
 
-    codes = '|'.join(_country_codes)
+    if not _get_lossy_domain_regex:
+        codes = '|'.join(_country_codes)
+        _get_lossy_domain_regex = re.compile(
+                r'^' # start of string
+                r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
+                r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
+                r'(?P<domain>.*?)' + # domain
+                r'(\.(?P<tld>com|org|net|co|it|edu))?' + # tld
+                r'(\.(?P<tldcc>{}))?'.format(codes) + # country-code tld
+                r'$') # all done
 
-    res = _to_unicode(domain)
-    # First, strip off any www., www1., www2., search. domain prefix
-    res = re.sub(r'^(w+\d*|search)\.',
-                 '',
-                 res)
-    # Now remove domains that are thought of as mobile (m.something.com
-    # becomes something.com)
-    res = re.sub(r'(^|\.)m\.',
-                 r'\1',
-                 res)
-    # Replace country code suffixes from domains (something.co.uk becomes
-    # something.{})
-    res = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
-                 r'.{}\4',
-                 res)
-    # Replace country code prefixes from domains (ca.something.com) becomes
-    # {}.something.com
-    res = re.sub(r'(^|\.)({})\.'.format(codes),
-                 r'\1{}.',
-                 res)
-
-    _domain_cache[domain] = res  # Add to LRU cache
-
-    return res
+    res = _get_lossy_domain_regex.match(domain).groupdict()
+    output = '%s%s.{}' % ('{}.' if res['ccsub'] else '', domain)
+    _domain_cache[domain] = output # Add to LRU cache
+    return domain
 
 
 class ExtractResult(object):
