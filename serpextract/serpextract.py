@@ -149,7 +149,7 @@ def _get_piwik_engines():
 def _get_lossy_domain(domain):
    """A lossy version of a domain/host to use as lookup in the
    ``_engines`` dict."""
-   domain = unicode(domain)
+   domain = _to_unicode(domain)
    codes = '|'.join(_country_codes)
 
    # First, strip off any www., www1., www2., search. domain prefix
@@ -413,6 +413,8 @@ def get_parser(referring_url):
 
     query = _serp_query_string(url_parts)
 
+    domain = _to_unicode(url_parts.netloc)
+    path = _to_unicode(url_parts.path)
     lossy_domain = _get_lossy_domain(url_parts.netloc)
     engine_key = url_parts.netloc
 
@@ -424,13 +426,13 @@ def get_parser(referring_url):
     # 4. <domain>
     # The final case has some special exceptions for things like Google custom
     # search engines, yahoo and yahoo images
-    if u'{}{}'.format(url_parts.netloc, url_parts.path) in engines:
-        engine_key = '{}{}'.format(url_parts.netloc, url_parts.path)
-    elif u'{}{}'.format(lossy_domain, url_parts.path) in engines:
-        engine_key = '{}{}'.format(lossy_domain, url_parts.path)
+    if u'{}{}'.format(domain, path) in engines:
+        engine_key = '{}{}'.format(domain, path)
+    elif u'{}{}'.format(lossy_domain, path) in engines:
+        engine_key = '{}{}'.format(lossy_domain, path)
     elif lossy_domain in engines:
         engine_key = lossy_domain
-    elif url_parts.netloc not in engines:
+    elif domain not in engines:
         if query[:14] == 'cx=partner-pub':
             # Google custom search engine
             engine_key = 'google.com/cse'
