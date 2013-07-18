@@ -1,12 +1,12 @@
 import unittest
 
 try:
-    from serpextract import extract, get_all_query_params
+    from serpextract import extract, is_serp, get_all_query_params
 except ImportError:
     import os, sys
     basedir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
     sys.path.append(basedir)
-    from serpextract import extract, get_all_query_params
+    from serpextract import extract, is_serp, get_all_query_params
 
 
 class TestSERPs(unittest.TestCase):
@@ -27,6 +27,7 @@ class TestSERPs(unittest.TestCase):
             res = extract(url)
             self.assertEqual(res.keyword, keyword)
             self.assertEqual(res.engine_name, engine_name)
+            self.assertTrue(is_serp(url))
 
     def test_google(self):
         serps = (
@@ -90,7 +91,8 @@ class TestSERPs(unittest.TestCase):
             'http://www.something.com/',
         )
         for url in invalid_serps:
-            assert extract(url) == None
+            self.assertIsNone(extract(url))
+            self.assertFalse(is_serp(url))
 
 
 if __name__ == '__main__':
