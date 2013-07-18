@@ -50,9 +50,6 @@ class TestSERPExtractUtilityFunctions(unittest.TestCase):
         url = 'search.a.com'
         self.assertEqual(get_lossy_domain(url), expected)
 
-        url = 'blah.m.a.com'
-        self.assertEqual(get_lossy_domain(url), 'blah.a.com')
-
         url = 'a.co.uk'
         self.assertEqual(get_lossy_domain(url), 'a.{}')
 
@@ -61,4 +58,4 @@ class TestSERPExtractUtilityFunctions(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()      
+    unittest.main()

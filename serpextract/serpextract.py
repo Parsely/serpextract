@@ -166,14 +166,16 @@ def _get_lossy_domain(domain):
                 r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
                 r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
                 r'(?P<domain>.*?)' + # domain
-                r'(\.(?P<tld>com|org|net|co|it|edu))?' + # tld
-                r'(\.(?P<tldcc>{}))?'.format(codes) + # country-code tld
+                r'(?P<tld>\.(com|org|net|co|it|edu))?' + # tld
+                r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
                 r'$') # all done
 
     res = _get_lossy_domain_regex.match(domain).groupdict()
-    output = '%s%s.{}' % ('{}.' if res['ccsub'] else '', domain)
+    output = '%s%s%s' % ('{}.' if res['ccsub'] else '',
+                          res['domain'],
+                          '.{}' if res['tldcc'] else res['tld'] or '')
     _domain_cache[domain] = output # Add to LRU cache
-    return domain
+    return output
 
 
 class ExtractResult(object):
