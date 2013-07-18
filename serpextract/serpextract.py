@@ -134,10 +134,6 @@ def _get_search_engines():
    return _engines
 
 
-def _not_regex(value):
-   return not value.startswith('/') and not value.strip() == ''
-
-
 _piwik_engines = None
 def _get_piwik_engines():
    """Return the search engine parser definitions stored in this module"""
@@ -228,7 +224,14 @@ class SearchEngineParser(object):
         self.engine_name = engine_name
         if isinstance(keyword_extractor, basestring):
             keyword_extractor = [keyword_extractor]
-        self.keyword_extractor = keyword_extractor
+        self.keyword_extractor = keyword_extractor[:]
+        for i, extractor in enumerate(self.keyword_extractor):
+            # Pre-compile all the regular expressions
+            if extractor.startswith('/'):
+                extractor = extractor.strip('/')
+                extractor = re.compile(extractor)
+                self.keyword_extractor[i] = extractor
+
         self.link_macro = link_macro
         if isinstance(charsets, basestring):
             charsets = [charsets]
@@ -331,11 +334,9 @@ class SearchEngineParser(object):
 
         # Otherwise we keep looking through the defined extractors
         for extractor in self.keyword_extractor:
-            if extractor.startswith('/'):
+            if not isinstance(extractor, basestring):
                 # Regular expression extractor
-                extractor = extractor.strip('/')
-                regex = re.compile(extractor)
-                match = regex.search(url_parts.path)
+                match = extractor.search(url_parts.path)
                 if match:
                     keyword = match.group(1)
                     break
@@ -379,6 +380,7 @@ def get_all_query_params():
     """
     engines = _get_search_engines()
     all_params = set()
+    _not_regex = lambda x: isinstance(x, basestring)
     for parser in engines.itervalues():
         # Find non-regex params
         params = set(filter(_not_regex, parser.keyword_extractor))

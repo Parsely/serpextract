@@ -69,6 +69,14 @@ class TestSERPs(unittest.TestCase):
         )
         self.assertValidSERPs(serps)
 
+    def test_path_engines(self):
+        """Tests for search engines that contain keywords within their paths
+        and require regex extraction."""
+        serps = (
+            ('http://www.123people.ca/s/michael+sukmanowsky', '123people', u'michael sukmanowsky'),
+            ('http://www.1.cz/s/ars-technica/', '1.cz', u'ars-technica'),  # These guys do not properly URL encode their keywords
+        )
+
     def test_get_all_query_params(self):
         """Ensure that get_all_query_params is a non-empty list."""
         params = get_all_query_params()
