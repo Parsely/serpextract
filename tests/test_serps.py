@@ -1,4 +1,5 @@
 import unittest
+from urlparse import urlparse
 
 try:
     from serpextract import extract, is_serp, get_all_query_params
@@ -22,8 +23,17 @@ class TestSERPs(unittest.TestCase):
     country case and the keywords with crazy characters case.
     """
 
+    def assertValidSERP(self, url, expected_engine_name, expected_keyword):
+        # Test both the URL and a parsed URL version
+        for url in (url, urlparse(url)):
+            res = extract(url)
+            self.assertEqual(res.keyword, expected_keyword)
+            self.assertEqual(res.engine_name, expected_engine_name)
+            self.assertTrue(is_serp(url))
+
     def assertValidSERPs(self, expected_serps):
         for url, engine_name, keyword in expected_serps:
+            self.assertValidSERP(url, engine_name, keyword)
             res = extract(url)
             self.assertEqual(res.keyword, keyword)
             self.assertEqual(res.engine_name, engine_name)
@@ -77,6 +87,7 @@ class TestSERPs(unittest.TestCase):
             ('http://www.123people.ca/s/michael+sukmanowsky', '123people', u'michael sukmanowsky'),
             ('http://www.1.cz/s/ars-technica/', '1.cz', u'ars-technica'),  # These guys do not properly URL encode their keywords
         )
+
 
     def test_get_all_query_params(self):
         """Ensure that get_all_query_params is a non-empty list."""
