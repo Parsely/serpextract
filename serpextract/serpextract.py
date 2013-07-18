@@ -2,10 +2,11 @@
 referrers."""
 import re
 import logging
-
 from itertools import groupby
 from urlparse import urlparse, parse_qs, ParseResult
+
 from iso3166 import countries
+import pylru
 
 # import pkg_resources
 # with fallback for environments that lack it
@@ -42,6 +43,9 @@ _country_codes = [country.alpha2.lower()
 # domains so we add it to our list see
 # http://en.wikipedia.org/wiki/ISO_3166-1 for more information
 _country_codes += ['uk']
+
+# A LRUCache of domains to save us from having to do lots of regex matches
+_domain_cache = pylru.lrucache(500)
 
 
 def _to_unicode(s):
@@ -147,31 +151,39 @@ def _get_piwik_engines():
 
 
 def _get_lossy_domain(domain):
-   """A lossy version of a domain/host to use as lookup in the
-   ``_engines`` dict."""
-   domain = _to_unicode(domain)
-   codes = '|'.join(_country_codes)
+    """A lossy version of a domain/host to use as lookup in the
+    ``_engines`` dict."""
+    global _domain_cache
 
-   # First, strip off any www., www1., www2., search. domain prefix
-   domain = re.sub(r'^(w+\d*|search)\.',
+    if domain in _domain_cache:
+       return _domain_cache[domain]
+
+    codes = '|'.join(_country_codes)
+
+    res = _to_unicode(domain)
+    # First, strip off any www., www1., www2., search. domain prefix
+    res = re.sub(r'^(w+\d*|search)\.',
                    '',
                    domain)
-   # Now remove domains that are thought of as mobile (m.something.com
-   # becomes something.com)
-   domain = re.sub(r'(^|\.)m\.',
+    # Now remove domains that are thought of as mobile (m.something.com
+    # becomes something.com)
+    res = re.sub(r'(^|\.)m\.',
                    r'\1',
-                   domain)
-   # Replace country code suffixes from domains (something.co.uk becomes
-   # something.{})
-   domain = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
+                   res)
+    # Replace country code suffixes from domains (something.co.uk becomes
+    # something.{})
+    res = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
                    r'.{}\4',
-                   domain)
-   # Replace country code prefixes from domains (ca.something.com) becomes
-   # {}.something.com
-   domain = re.sub(r'(^|\.)({})\.'.format(codes),
+                   res)
+    # Replace country code prefixes from domains (ca.something.com) becomes
+    # {}.something.com
+    res = re.sub(r'(^|\.)({})\.'.format(codes),
                    r'\1{}.',
-                   domain)
-   return domain
+                   res)
+
+    _domain_cache[domain] = res  # Add to LRU cache
+
+    return res
 
 
 class ExtractResult(object):
@@ -427,9 +439,9 @@ def get_parser(referring_url):
     # The final case has some special exceptions for things like Google custom
     # search engines, yahoo and yahoo images
     if u'{}{}'.format(domain, path) in engines:
-        engine_key = '{}{}'.format(domain, path)
+        engine_key = u'{}{}'.format(domain, path)
     elif u'{}{}'.format(lossy_domain, path) in engines:
-        engine_key = '{}{}'.format(lossy_domain, path)
+        engine_key = u'{}{}'.format(lossy_domain, path)
     elif lossy_domain in engines:
         engine_key = lossy_domain
     elif domain not in engines:
