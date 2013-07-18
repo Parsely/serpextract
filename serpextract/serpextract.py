@@ -164,7 +164,7 @@ def _get_lossy_domain(domain):
     # First, strip off any www., www1., www2., search. domain prefix
     res = re.sub(r'^(w+\d*|search)\.',
                  '',
-                 domain)
+                 res)
     # Now remove domains that are thought of as mobile (m.something.com
     # becomes something.com)
     res = re.sub(r'(^|\.)m\.',
