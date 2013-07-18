@@ -138,14 +138,14 @@ def _get_search_engines():
     return _engines
 
 
-_piwik_engines = None
 def _get_piwik_engines():
-    """Return the search engine parser definitions stored in this module"""
-    global _piwik_engines
-    if _piwik_engines is None:
-       stream = pkg_resources.resource_stream
-       with stream(__name__, 'search_engines.pickle') as picklestream:
-           _piwik_engines = pickle.load(picklestream)
+    """Return the search engine parser definitions stored in this module.
+    We don't cache this result since it's only supposed to be called
+    once.
+    """
+    stream = pkg_resources.resource_stream
+    with stream(__name__, 'search_engines.pickle') as picklestream:
+        _piwik_engines = pickle.load(picklestream)
 
     return _piwik_engines
 
