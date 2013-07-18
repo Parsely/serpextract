@@ -34,10 +34,6 @@ class TestSERPs(unittest.TestCase):
     def assertValidSERPs(self, expected_serps):
         for url, engine_name, keyword in expected_serps:
             self.assertValidSERP(url, engine_name, keyword)
-            res = extract(url)
-            self.assertEqual(res.keyword, keyword)
-            self.assertEqual(res.engine_name, engine_name)
-            self.assertTrue(is_serp(url))
 
     def test_google(self):
         serps = (
@@ -87,7 +83,6 @@ class TestSERPs(unittest.TestCase):
             ('http://www.123people.ca/s/michael+sukmanowsky', '123people', u'michael sukmanowsky'),
             ('http://www.1.cz/s/ars-technica/', '1.cz', u'ars-technica'),  # These guys do not properly URL encode their keywords
         )
-
 
     def test_get_all_query_params(self):
         """Ensure that get_all_query_params is a non-empty list."""
