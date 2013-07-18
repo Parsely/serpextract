@@ -92,7 +92,7 @@ class TestSERPs(unittest.TestCase):
         """Ensure that get_all_query_params is a non-empty list."""
         params = get_all_query_params()
         self.assertIsInstance(params, list)
-        assert len(params) > 0
+        self.assertGreater(len(params), 0)
 
     def test_invalid_serps(self):
         invalid_serps = (
