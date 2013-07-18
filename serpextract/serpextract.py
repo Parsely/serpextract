@@ -163,23 +163,23 @@ def _get_lossy_domain(domain):
     res = _to_unicode(domain)
     # First, strip off any www., www1., www2., search. domain prefix
     res = re.sub(r'^(w+\d*|search)\.',
-                   '',
-                   domain)
+                 '',
+                 domain)
     # Now remove domains that are thought of as mobile (m.something.com
     # becomes something.com)
     res = re.sub(r'(^|\.)m\.',
-                   r'\1',
-                   res)
+                 r'\1',
+                 res)
     # Replace country code suffixes from domains (something.co.uk becomes
     # something.{})
     res = re.sub(r'(\.(com|org|net|co|it|edu))?\.({})(\/|$)'.format(codes),
-                   r'.{}\4',
-                   res)
+                 r'.{}\4',
+                 res)
     # Replace country code prefixes from domains (ca.something.com) becomes
     # {}.something.com
     res = re.sub(r'(^|\.)({})\.'.format(codes),
-                   r'\1{}.',
-                   res)
+                 r'\1{}.',
+                 res)
 
     _domain_cache[domain] = res  # Add to LRU cache
 
