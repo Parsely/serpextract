@@ -488,7 +488,16 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
     :returns: an :class:`ExtractResult` instance if ``serp_url`` is valid,
               ``None`` otherwise
     """
-    url_parts = urlparse(serp_url)
+    if isinstance(serp_url, basestring):
+        try:
+            url_parts = urlparse(serp_url)
+        except ValueError:
+            msg = "Malformed URL '{}' could not parse".format(serp_url)
+            log.debug(msg, exc_info=True)
+            return None
+    else:
+        url_parts = serp_url
+
     if parser is None:
         parser = get_parser(url_parts)
     if not parser:
