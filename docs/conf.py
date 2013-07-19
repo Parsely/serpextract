@@ -33,7 +33,7 @@ copyright = u'2013, Parsely, Inc.'
 version = '0.2'
 
 # The full version, including alpha/beta/rc tags.
-release = '0.2.2'
+release = '0.2.3'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

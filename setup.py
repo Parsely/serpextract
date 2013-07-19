@@ -2,7 +2,7 @@ import sys
 from setuptools import setup
 
 
-version = '0.2.2'
+version = '0.2.3'
 
 install_requires = ['iso3166 >= 0.4', 'pylru >= 1.0.3']
 if sys.version_info <= (2,7):

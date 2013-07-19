@@ -1,3 +1,4 @@
+v0.2.3, 2013-07-19 -- Unicode fixes and minor bug fix in parser.parse.
 v0.2.2, 2013-07-18 -- Improvements to test cases and major performance optimizations when using serpextract for a large number of SERP URLs.
 v0.2.1, 2013-07-17 -- Quick fix for engine lookup bug.
 v0.2.0, 2013-07-17 -- Add missing edge cases found in Piwik's Common.php for search engines.  Significantly changes detection of SERPs (Google in particular).
