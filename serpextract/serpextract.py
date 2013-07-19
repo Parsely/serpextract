@@ -48,9 +48,57 @@ _country_codes += ['uk']
 _domain_cache = pylru.lrucache(500)
 
 
-def _to_unicode(s):
-    """Safely decodes a string into unicode if it's not already unicode"""
-    return s if isinstance(s, unicode) else s.decode("utf-8", "ignore")
+def _unicode_parse_qs(qs, **kwargs):
+    """
+    A wrapper around ``urlparse.parse_qs`` that converts unicode strings to
+    UTF-8 to prevent ``urlparse.unquote`` from performing it's default decoding
+    to latin-1 see http://hg.python.org/cpython/file/2.7/Lib/urlparse.py
+
+    :param qs: percent-encoded query string to be parsed
+    :type qs: ``basestring``
+    :param **kwargs: other keyword args passed onto ``parse_qs``
+    """
+    if isinstance(qs, str):
+        # Nothing to do
+        return parse_qs(qs, **kwargs)
+
+    query = parse_qs(qs.encode('utf-8', 'ignore'), **kwargs)
+    unicode_query = {}
+    for key in query:
+        key = key.decode('utf-8', 'ignore')
+        unicode_query[key] = [p.decode('utf-8', 'ignore') for p in query[key]]
+    return unicode_query
+
+
+def _unicode_urlparse(url, encoding='utf-8', errors='ignore'):
+    """
+    Safely parse a URL into a :class:`urlparse.ParseResult` ensuring that
+    all elements of the parse result are unicode.
+
+    :param url: a URL
+    :type url: ``str``, ``unicode`` or :class:`urlparse.ParseResult`
+    :param encoding: the string encoding assumed in the underlying ``str`` or
+                     :class:`urlparse.ParseResult` (default is utf-8)
+    :type encoding: ``str``
+    :param errors: response from ``decode`` if string cannot be converted to
+                   unicode given encoding (default is ignore).
+    """
+    if isinstance(url, str):
+        url = url.decode(encoding, errors)
+    elif isinstance(url, ParseResult):
+        # Ensure every part is unicode because we can't rely on clients to do so
+        parts = list(url)
+        for i in range(len(parts)):
+            if isinstance(parts[i], str):
+                parts[i] = parts[i].decode(encoding, errors)
+        return ParseResult(*parts)
+
+    try:
+        return urlparse(url)
+    except ValueError:
+        msg = u'Malformed URL "{}" could not parse'.format(url)
+        log.debug(msg, exc_info=True)
+        return None
 
 
 def _serp_query_string(parse_result):
@@ -64,7 +112,7 @@ def _serp_query_string(parse_result):
     """
     query = parse_result.query
     if parse_result.fragment != '':
-        query = '{}&{}'.format(query, parse_result.fragment)
+        query = u'{}&{}'.format(query, parse_result.fragment)
 
     return query
 
@@ -171,7 +219,7 @@ def _get_lossy_domain(domain):
                 r'$') # all done
 
     res = _get_lossy_domain_regex.match(domain).groupdict()
-    output = '%s%s%s' % ('{}.' if res['ccsub'] else '',
+    output = u'%s%s%s' % ('{}.' if res['ccsub'] else '',
                           res['domain'],
                           '.{}' if res['tldcc'] else res['tld'] or '')
     _domain_cache[domain] = output # Add to LRU cache
@@ -256,41 +304,33 @@ class SearchEngineParser(object):
             return None
 
         link = u'{}/{}'.format(base_url, self.link_macro.format(k=keyword))
-        #link = self.decode_string(link)
         return link
 
-    def parse(self, serp_url):
+    def parse(self, url_parts):
         """Parse a SERP URL to extract the search keyword.
 
         :param serp_url: the SERP URL
-        :type serp_url: either a string or a :class:`urlparse.ParseResult`
-                        object
+        :type serp_url: a :class:`urlparse.ParseResult` with all elements
+                        as unicode
 
         :returns: An :class:`ExtractResult` instance.
         """
-        if isinstance(serp_url, basestring):
-            try:
-                url_parts = urlparse(serp_url)
-            except ValueError:
-                msg = "Malformed URL '{}' could not parse".format(serp_url)
-                log.debug(msg, exc_info=True)
-                return None
-        else:
-            url_parts = serp_url
-
         original_query = _serp_query_string(url_parts)
-        query = parse_qs(original_query, keep_blank_values=True)
+        query = _unicode_parse_qs(original_query, keep_blank_values=True)
+
         keyword = None
         engine_name = self.engine_name
 
         if engine_name == 'Google Images' or \
-           (engine_name == 'Google' and '/imgres' in serp_url):
+           (engine_name == 'Google' and '/imgres' in original_query):
             # When using Google's image preview mode, it hides the keyword
-            # within the prev query string param
+            # within the prev query string param which itself contains a
+            # path and query string
+            # e.g. &prev=/search%3Fq%3Dimages%26sa%3DX%26biw%3D320%26bih%3D416%26tbm%3Disch
             engine_name = 'Google Images'
             if 'prev' in query:
-                keyword = parse_qs(urlparse(query['prev'][0]).query)\
-                          .get('q')[0]
+                prev_query = _unicode_parse_qs(urlparse(query['prev'][0]).query)
+                keyword = prev_query.get('q', [None])[0]
         elif engine_name == 'Google' and 'as_' in original_query:
             # Google has many different ways to filter results.  When some of
             # these filters are applied, we can no longer just look for the q
@@ -334,7 +374,6 @@ class SearchEngineParser(object):
 
         if keyword is not None:
             # Edge case found a keyword, exit quickly
-            keyword = _to_unicode(keyword)
             return ExtractResult(engine_name, keyword, self)
 
         # Otherwise we keep looking through the defined extractors
@@ -364,7 +403,6 @@ class SearchEngineParser(object):
                     keyword = ''
 
         if keyword is not None:
-            keyword = _to_unicode(keyword)
             return ExtractResult(engine_name, keyword, self)
 
     def __repr__(self):
@@ -404,21 +442,14 @@ def get_parser(referring_url):
               ``None`` otherwise
     """
     engines = _get_search_engines()
-    try:
-        if isinstance(referring_url, ParseResult):
-            url_parts = referring_url
-        else:
-            url_parts = urlparse(referring_url)
-    except ValueError:
-        msg = "Malformed URL '{}' could not parse".format(referring_url)
-        log.debug(msg, exc_info=True)
-        # Malformed URLs
+    url_parts = _unicode_urlparse(referring_url)
+    if url_parts is None:
         return None
 
     query = _serp_query_string(url_parts)
 
-    domain = _to_unicode(url_parts.netloc)
-    path = _to_unicode(url_parts.path)
+    domain = url_parts.netloc
+    path = url_parts.path
     lossy_domain = _get_lossy_domain(url_parts.netloc)
     engine_key = url_parts.netloc
 
@@ -463,10 +494,11 @@ def is_serp(referring_url):
 
     :returns: ``True`` if SERP, ``False`` otherwise.
     """
-    parser = get_parser(referring_url)
+    url_parts = _unicode_urlparse(referring_url)
+    parser = get_parser(url_parts)
     if parser is None:
         return False
-    result = parser.parse(referring_url)
+    result = parser.parse(url_parts)
 
     return result is not None
 
@@ -495,22 +527,18 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
     :returns: an :class:`ExtractResult` instance if ``serp_url`` is valid,
               ``None`` otherwise
     """
-    if isinstance(serp_url, basestring):
-        try:
-            url_parts = urlparse(serp_url)
-        except ValueError:
-            msg = "Malformed URL '{}' could not parse".format(serp_url)
-            log.debug(msg, exc_info=True)
-            return None
-    else:
-        url_parts = serp_url
+    # Software should only work with Unicode strings internally, converting
+    # to a particular encoding on output.
+    url_parts = _unicode_urlparse(serp_url)
+    if url_parts is None:
+        return None
 
     if parser is None:
         parser = get_parser(url_parts)
     if not parser:
         return None  # Tried to get keyword from non SERP URL
 
-    result = parser.parse(serp_url)
+    result = parser.parse(url_parts)
 
     if result is None:
         return None
