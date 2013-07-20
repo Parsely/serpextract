@@ -105,7 +105,7 @@ If one of these are found, a keyword is extracted and an ``ExtractResult`` is co
 
 In the event that you have a custom search engine that you'd like to track which is not currently
 supported by Piwik/``serpextract``, you can create your own instance of
-:class:`serpextract.serpextract.SearchEngineParser` and either pass it explicitly to either
+``serpextract.SearchEngineParser`` and either pass it explicitly to either
 ``serpextract.is_serp`` or ``serpextract.extract`` or add it
 to the internal list of parsers.
 
