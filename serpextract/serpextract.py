@@ -33,7 +33,8 @@ except ImportError:
     import pickle
 
 
-__all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params')
+__all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params',
+           'add_custom_parser', 'SearchEngineParser')
 
 log = logging.getLogger('serpextract')
 
@@ -47,6 +48,10 @@ _country_codes += ['uk']
 # A LRUCache of domains to save us from having to do lots of regex matches
 _domain_cache = pylru.lrucache(500)
 
+# Naive search engine detection.  Look for \.?search\. in the netloc and then
+# try to extract using common query params
+_naive_re = re.compile(r'\.?search\.')
+_naive_params = ('q', 'query', 'k', 'keyword', 'term',)
 
 def _unicode_parse_qs(qs, **kwargs):
     """
@@ -54,9 +59,10 @@ def _unicode_parse_qs(qs, **kwargs):
     UTF-8 to prevent ``urlparse.unquote`` from performing it's default decoding
     to latin-1 see http://hg.python.org/cpython/file/2.7/Lib/urlparse.py
 
-    :param qs: percent-encoded query string to be parsed
-    :type qs: ``basestring``
-    :param **kwargs: other keyword args passed onto ``parse_qs``
+    :param qs:       Percent-encoded query string to be parsed.
+    :type qs:        ``basestring``
+
+    :param kwargs:   Other keyword args passed onto ``parse_qs``.
     """
     if isinstance(qs, str):
         # Nothing to do
@@ -75,13 +81,16 @@ def _unicode_urlparse(url, encoding='utf-8', errors='ignore'):
     Safely parse a URL into a :class:`urlparse.ParseResult` ensuring that
     all elements of the parse result are unicode.
 
-    :param url: a URL
-    :type url: ``str``, ``unicode`` or :class:`urlparse.ParseResult`
-    :param encoding: the string encoding assumed in the underlying ``str`` or
-                     :class:`urlparse.ParseResult` (default is utf-8)
-    :type encoding: ``str``
-    :param errors: response from ``decode`` if string cannot be converted to
-                   unicode given encoding (default is ignore).
+    :param url:      A URL.
+    :type url:       ``str``, ``unicode`` or :class:`urlparse.ParseResult`
+
+    :param encoding: The string encoding assumed in the underlying ``str`` or
+                     :class:`urlparse.ParseResult` (default is utf-8).
+    :type encoding:  ``str``
+
+    :param errors:   response from ``decode`` if string cannot be converted to
+                     unicode given encoding (default is ignore).
+    :type errors:    ``str``
     """
     if isinstance(url, str):
         url = url.decode(encoding, errors)
@@ -107,8 +116,8 @@ def _serp_query_string(parse_result):
     build a version of a query string that contains the query string and
     the fragment.
 
-    :param parse_result: a URL
-    :type parse_result: :class:`urlparse.ParseResult`
+    :param parse_result: A URL.
+    :type parse_result:  :class:`urlparse.ParseResult`
     """
     query = parse_result.query
     if parse_result.fragment != '':
@@ -121,15 +130,16 @@ def _is_url_without_path_query_or_fragment(url_parts):
     """
     Determines if a URL has a blank path, query string and fragment.
 
-    :param url_parts: the URL
-    :type url_parts: :class:`urlparse.ParseResult`
+    :param url_parts: A URL.
+    :type url_parts:  :class:`urlparse.ParseResult`
     """
     return url_parts.path.strip('/') == '' and url_parts.query == '' \
            and url_parts.fragment == ''
 
 _engines = None
 def _get_search_engines():
-    """Convert the OrderedDict of search engine parsers that we get from Piwik
+    """
+    Convert the OrderedDict of search engine parsers that we get from Piwik
     to a dictionary of SearchEngineParser objects.
 
     Cache this thing by storing in the global ``_engines``.
@@ -187,9 +197,9 @@ def _get_search_engines():
 
 
 def _get_piwik_engines():
-    """Return the search engine parser definitions stored in this module.
-    We don't cache this result since it's only supposed to be called
-    once.
+    """
+    Return the search engine parser definitions stored in this module. We don't
+    cache this result since it's only supposed to be called once.
     """
     stream = pkg_resources.resource_stream
     with stream(__name__, 'search_engines.pickle') as picklestream:
@@ -200,8 +210,13 @@ def _get_piwik_engines():
 
 _get_lossy_domain_regex = None
 def _get_lossy_domain(domain):
-    """A lossy version of a domain/host to use as lookup in the
-    ``_engines`` dict."""
+    """
+    A lossy version of a domain/host to use as lookup in the ``_engines``
+    dict.
+
+    :param domain: A string that is the ``netloc`` portion of a URL.
+    :type domain:  ``str``
+    """
     global _domain_cache, _get_lossy_domain_regex
 
     if domain in _domain_cache:
@@ -249,12 +264,12 @@ class SearchEngineParser(object):
 
     This class is not used directly since it already assumes you know the
     exact search engine you want to use to parse a URL. The main interface
-    for users of this module is the `get_keyword` method.
+    for users of this module is the :func:`extract` method.
     """
     __slots__ = ('engine_name', 'keyword_extractor', 'link_macro', 'charsets')
 
     def __init__(self, engine_name, keyword_extractor, link_macro, charsets):
-        """New instance of a `SearchEngineParser`.
+        """New instance of a :class:`SearchEngineParser`.
 
         :param engine_name:         the friendly name of the engine (e.g.
                                     'Google')
@@ -290,13 +305,14 @@ class SearchEngineParser(object):
         self.charsets = [c.lower() for c in charsets]
 
     def get_serp_url(self, base_url, keyword):
-        """Get a URL to a SERP for a given keyword.
+        """
+        Get a URL to a SERP for a given keyword.
 
-        :param base_url: string of format ``'<scheme>://<netloc>'``
-        :type base_url: str
+        :param base_url: String of format ``'<scheme>://<netloc>'``.
+        :type base_url:  ``str``
 
-        :param keyword: search engine keyword
-        :type keyword: str
+        :param keyword:  Search engine keyword.
+        :type keyword:   ``str``
 
         :returns: a URL that links directly to a SERP for the given keyword.
         """
@@ -307,11 +323,12 @@ class SearchEngineParser(object):
         return link
 
     def parse(self, url_parts):
-        """Parse a SERP URL to extract the search keyword.
+        """
+        Parse a SERP URL to extract the search keyword.
 
-        :param serp_url: the SERP URL
-        :type serp_url: a :class:`urlparse.ParseResult` with all elements
-                        as unicode
+        :param serp_url: The SERP URL
+        :type serp_url:  A :class:`urlparse.ParseResult` with all elements
+                         as unicode
 
         :returns: An :class:`ExtractResult` instance.
         """
@@ -415,8 +432,29 @@ class SearchEngineParser(object):
                         self.charsets)
 
 
+def add_custom_parser(match_rule, parser):
+    """
+    Add a custom search engine parser to the cached ``_engines`` list.
+
+    :param match_rule: A match rule which is used by :func:`get_parser` to look
+                       up a parser for a given domain/path.
+    :type match_rule:  ``unicode``
+
+    :param parser:     A custom parser.
+    :type parser:      :class:`SearchEngineParser`
+    """
+    assert isinstance(match_rule, unicode)
+    assert isinstance(parser, SearchEngineParser)
+
+    global _engines
+    _get_search_engines()  # Ensure that the default engine list is loaded
+
+    _engines[match_rule] = parser
+
+
 def get_all_query_params():
-    """Return all the possible query string params for all search engines.
+    """
+    Return all the possible query string params for all search engines.
 
     :returns: a ``list`` of all the unique query string parameters that are
               used across the search engine definitions.
@@ -433,13 +471,14 @@ def get_all_query_params():
 
 
 def get_parser(referring_url):
-    """Utility function to find a parser for a referring URL if it is a SERP.
+    """
+    Utility function to find a parser for a referring URL if it is a SERP.
 
-    :param referring_url: suspected SERP URL
-    :type referring_url: str or urlparse.ParseResult
+    :param referring_url: Suspected SERP URL.
+    :type referring_url:  ``str`` or :class:`urlparse.ParseResult`
 
     :returns: :class:`SearchEngineParser` object if one exists for URL,
-              ``None`` otherwise
+              ``None`` otherwise.
     """
     engines = _get_search_engines()
     url_parts = _unicode_urlparse(referring_url)
@@ -486,43 +525,59 @@ def get_parser(referring_url):
     return engines.get(engine_key)
 
 
-def is_serp(referring_url):
-    """Utility function to determine if a referring URL is a SERP.
+def is_serp(referring_url, parser=None, use_naive_method=False):
+    """
+    Utility function to determine if a referring URL is a SERP.
 
-    :param referring_url: suspected SERP URL
-    :type referring_url: str or urlparse.ParseResult
+    :param referring_url:    Suspected SERP URL.
+    :type referring_url:     str or urlparse.ParseResult
+
+    :param parser:           A search engine parser.
+    :type parser:            :class:`SearchEngineParser` instance or
+                             ``None``.
+
+    :param use_naive_method: Whether or not to use a naive method of search
+                             engine detection in the event that a parser does
+                             not exist for the given ``referring_url``.  See
+                             :func:`extract` for more information.
+    :type use_naive_method:  ``True`` or ``False``
 
     :returns: ``True`` if SERP, ``False`` otherwise.
     """
-    url_parts = _unicode_urlparse(referring_url)
-    parser = get_parser(url_parts)
-    if parser is None:
-        return False
-    result = parser.parse(url_parts)
-
-    return result is not None
+    res = extract(referring_url, parser=parser,
+                  use_naive_method=use_naive_method)
+    return res is not None
 
 
 def extract(serp_url, parser=None, lower_case=True, trimmed=True,
-            collapse_whitespace=True):
-    """Parse a SERP URL and return information regarding the engine name,
+            collapse_whitespace=True, use_naive_method=False):
+    """
+    Parse a SERP URL and return information regarding the engine name,
     keyword and :class:`SearchEngineParser`.
 
-    This is a far more basic implementation than what Piwik has done in their
-    source, but right now, we don't care about all the crazy edge cases.
+    :param serp_url:            Suspected SERP URL to extract a keyword from.
+    :type serp_url:             ``str`` or :class:`urlparse.ParseResult`
 
-    :param serp_url: the suspected SERP URL to extract a keyword from
-    :type serp_url: str or urlparse.ParseResult
-    :param parser: optionally pass in a parser if already looked up via
-                   call to get_parser
-    :type parser: :class:`SearchEngineParser`
-    :param lower_case: lower case the keyword
-    :type lower_case: bool
-    :param trimmed: trim extra spaces before and after keyword
-    :type trimmed: bool
-    :param collapse_whitespace: collapse 2 or more ``\s`` characters into
-                                one space ``' '``
-    :type collapse_whitespace: bool
+    :param parser:              Optionally pass in a parser if already
+                                determined via call to get_parser.
+    :type parser:               :class:`SearchEngineParser`
+
+    :param lower_case:          Lower case the keyword.
+    :type lower_case:           ``True`` or ``False``
+
+    :param trimmed:             Trim keyword leading and trailing whitespace.
+    :type trimmed:              ``True`` or ``False``
+
+    :param collapse_whitespace: Collapse 2 or more ``\s`` characters into one
+                                space ``' '``.
+    :type collapse_whitespace:  ``True`` or ``False``
+
+    :param use_naive_method:    In the event that a parser doesn't exist for
+                                the given ``serp_url``, attempt to find an
+                                instance of ``_naive_re_pattern`` in the netloc
+                                of the ``serp_url``.  If found, try to extract
+                                a keyword using ``_naive_params``.
+    :type use_naive_method:     ``True`` or ``False``
 
     :returns: an :class:`ExtractResult` instance if ``serp_url`` is valid,
               ``None`` otherwise
@@ -533,10 +588,26 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
     if url_parts is None:
         return None
 
+    result = None
     if parser is None:
         parser = get_parser(url_parts)
-    if not parser:
-        return None  # Tried to get keyword from non SERP URL
+
+    if parser is None:
+        if not use_naive_method:
+            return None  # Tried to get keyword from non SERP URL
+
+        # Try to use naive method of detection
+        if _naive_re.search(url_parts.netloc):
+            query = _unicode_parse_qs(url_parts.query, keep_blank_values=True)
+            for param in _naive_params:
+                if param in query:
+                    import tldextract
+                    tld_res = tldextract.extract(url_parts.netloc)
+                    return ExtractResult(tld_res.domain,
+                                         query[param][0],
+                                         None)
+
+        return None  # Naive method could not detect a keyword either
 
     result = parser.parse(url_parts)
 
