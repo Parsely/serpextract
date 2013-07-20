@@ -4,7 +4,7 @@ serpextract
 .. image:: https://travis-ci.org/Parsely/serpextract.png?branch=master
    :target: https://travis-ci.org/Parsely/serpextract
 
-:mod:`serpextract.serpextract` provides easy extraction of keywords from search engine results pages (SERPs).
+``serpextract`` provides easy extraction of keywords from search engine results pages (SERPs).
 
 This module is possible in large part to the very hard work of the `Piwik <http://piwik.org/>`_ team.
 Specifically, we make extensive use of their `list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_.
@@ -69,13 +69,13 @@ Python
 
 **Naive Detection**
 
-The list of search engine parsers that Piwik and therefore :mod:`serpextract.serpextract` uses is far from
-exhaustive.  If you want :mod:`serpextract.serpextract` to attempt to guess if a given referring URL is a SERP,
-you can specify ``use_naive_method=True`` to :func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract`.
+The list of search engine parsers that Piwik and therefore ``serpextract`` uses is far from
+exhaustive.  If you want ``serpextract`` to attempt to guess if a given referring URL is a SERP,
+you can specify ``use_naive_method=True`` to ``serpextract.is_serp`` or ``serpextract.extract``.
 By default, the naive method is disabled.
 
 Naive search engine detection tries to find an instance of ``r'\.?search\.'`` in the ``netloc``
-of a URL.  If found, :mod:`serpextract.serpextract` will then try to find a keyword in the ``query`` portion of
+of a URL.  If found, ``serpextract`` will then try to find a keyword in the ``query`` portion of
 the URL by looking for the following params in order::
 
     _naive_params = ('q', 'query', 'k', 'keyword', 'term',)
@@ -104,9 +104,9 @@ If one of these are found, a keyword is extracted and an ``ExtractResult`` is co
 **Custom Parsers**
 
 In the event that you have a custom search engine that you'd like to track which is not currently
-supported by Piwik/:mod:`serpextract.serpextract`, you can create your own instance of
+supported by Piwik/``serpextract``, you can create your own instance of
 :class:`serpextract.serpextract.SearchEngineParser` and either pass it explicitly to either
-:func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract` or add it
+``serpextract.is_serp`` or ``serpextract.extract`` or add it
 to the internal list of parsers.
 
 .. code-block:: python
@@ -134,8 +134,8 @@ to the internal list of parsers.
 
 
 You can also permanently add a custom parser to the internal list of parsers that
-:mod:`serpextract.serpextract` maintains so that you no longer have to explicitly pass a parser
-object to :func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract`.
+``serpextract`` maintains so that you no longer have to explicitly pass a parser
+object to ``serpextract.is_serp`` or ``serpextract.extract``.
 
 .. code-block:: python
 
