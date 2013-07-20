@@ -2,12 +2,14 @@ import unittest
 from urlparse import urlparse
 
 try:
-    from serpextract import extract, is_serp, get_all_query_params
+    from serpextract import SearchEngineParser, extract, is_serp,\
+                            get_all_query_params, add_custom_parser
 except ImportError:
     import os, sys
     basedir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
     sys.path.append(basedir)
-    from serpextract import extract, is_serp, get_all_query_params
+    from serpextract import SearchEngineParser, extract, is_serp,\
+                            get_all_query_params, add_custom_parser
 
 
 class TestSERPs(unittest.TestCase):
@@ -23,21 +25,26 @@ class TestSERPs(unittest.TestCase):
     country case and the keywords with crazy characters case.
     """
 
-    def assertInvalidSERP(self, url):
-        self.assertIsNone(extract(url))
-        self.assertFalse(is_serp(url))
+    def setUp(self):
+        self.custom_serp_url = 'http://search.piccshare.com/search.php?cat=web&channel=main&hl=en&q=test'
+        self.custom_parser = SearchEngineParser(u'PiccShare', u'q',
+                                                u'/search.php?q={k}',u'utf-8')
 
-    def assertValidSERP(self, url, expected_engine_name, expected_keyword):
+    def assertInvalidSERP(self, url, **kwargs):
+        self.assertIsNone(extract(url, **kwargs))
+        self.assertFalse(is_serp(url, **kwargs))
+
+    def assertValidSERP(self, url, expected_engine_name, expected_keyword, **kwargs):
         # Test both the URL and a parsed URL version
         for url in (url, urlparse(url)):
-            res = extract(url)
+            res = extract(url, **kwargs)
             self.assertEqual(res.keyword, expected_keyword)
             self.assertEqual(res.engine_name, expected_engine_name)
-            self.assertTrue(is_serp(url))
+            self.assertTrue(is_serp(url, **kwargs))
 
-    def assertValidSERPs(self, expected_serps):
+    def assertValidSERPs(self, expected_serps, **kwargs):
         for url, engine_name, keyword in expected_serps:
-            self.assertValidSERP(url, engine_name, keyword)
+            self.assertValidSERP(url, engine_name, keyword, **kwargs)
 
     def test_google(self):
         serps = (
@@ -87,6 +94,26 @@ class TestSERPs(unittest.TestCase):
             ('http://www.123people.ca/s/michael+sukmanowsky', '123people', u'michael sukmanowsky'),
             ('http://www.1.cz/s/ars-technica/', '1.cz', u'ars-technica'),  # These guys do not properly URL encode their keywords
         )
+
+    def test_custom_parser_explicit(self):
+        self.assertInvalidSERP(self.custom_serp_url)
+        self.assertValidSERP(self.custom_serp_url,
+                             self.custom_parser.engine_name,
+                             u'test',
+                             parser=self.custom_parser)
+
+    def test_custom_parser_implicit(self):
+        from serpextract.serpextract import _get_search_engines, _engines
+        self.assertInvalidSERP(self.custom_serp_url)
+        add_custom_parser(u'search.piccshare.com', self.custom_parser)
+        self.assertValidSERP(self.custom_serp_url,
+                             self.custom_parser.engine_name,
+                             u'test')
+        del _engines[u'search.piccshare.com']
+
+    def test_naive_detection(self):
+        self.assertInvalidSERP(self.custom_serp_url)
+        self.assertValidSERP(self.custom_serp_url, u'piccshare', u'test', use_naive_method=True)
 
     def test_get_all_query_params(self):
         """Ensure that get_all_query_params is a non-empty list."""
