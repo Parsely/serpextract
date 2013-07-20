@@ -1,16 +1,16 @@
 serpextract Package
 ===================
 
-:mod:`serpextract` Package
---------------------------
+:mod:`serpextract.serpextract` Package
+--------------------------------------
 
 .. automodule:: serpextract.__init__
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`serpextract` Module
--------------------------
+:mod:`serpextract.serpextract` Module
+-------------------------------------
 
 .. automodule:: serpextract.serpextract
     :members:

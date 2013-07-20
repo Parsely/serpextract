@@ -62,6 +62,94 @@ your local cache via::
 
     $ serpextract -l
 
+Naive Detection
+---------------
+
+The list of search engine parsers that Piwik and therefore :mod:`serpextract.serpextract` uses is far from
+exhaustive.  If you want :mod:`serpextract.serpextract` to attempt to guess if a given referring URL is a SERP,
+you can specify ``use_naive_method=True`` to :func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract`.
+By default, the naive method is disabled.
+
+Naive search engine detection tries to find an instance of ``r'\.?search\.'`` in the ``netloc``
+of a URL.  If found, :mod:`serpextract.serpextract` will then try to find a keyword in the ``query`` portion of
+the URL by looking for the following params in order::
+
+    _naive_params = ('q', 'query', 'k', 'keyword', 'term',)
+
+If one of these are found, a keyword is extracted and an ``ExtractResult`` is constructed as::
+
+    ExtractResult(domain, keyword, None)  # No parser, but engine name and keyword
+
+.. code-block:: python
+
+    # Not a recognized search engine by serpextract
+    serp_url = 'http://search.piccshare.com/search.php?cat=web&channel=main&hl=en&q=test'
+
+    is_serp(serp_url)
+    # False
+
+    extract(serp_url)
+    # None
+
+    is_serp(serp_url, use_naive_method=True)
+    # True
+
+    extract(serp_url, use_naive_method=True)
+    # ExtractResult(engine_name=u'piccshare', keyword=u'test', parser=None)
+
+Custom Parsers
+--------------
+
+In the event that you have a custom search engine that you'd like to track which is not currently
+supported by Piwik/:mod:`serpextract.serpextract`, you can create your own instance of
+:class:`serpextract.serpextract.SearchEngineParser` and either pass it explicitly to either
+:func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract` or add it
+to the internal list of parsers.
+
+.. code-block:: python
+
+    # Create a parser for PiccShare
+    from serpextract import SearchEngineParser, is_serp, extract
+
+    my_parser = SearchEngineParser(u'PiccShare',          # Engine name
+                                   u'q',                  # Keyword extractor
+                                   u'/search.php?q={k}',  # Link macro
+                                   u'utf-8')              # Charset
+    serp_url = 'http://search.piccshare.com/search.php?cat=web&channel=main&hl=en&q=test'
+
+    is_serp(serp_url)
+    # False
+
+    extract(serp_url)
+    # None
+
+    is_serp(serp_url, parser=my_parser)
+    # True
+
+    extract(serp_url, parser=my_parser)
+    # ExtractResult(engine_name=u'PiccShare', keyword=u'test', parser=SearchEngineParser(engine_name=u'PiccShare', keyword_extractor=[u'q'], link_macro=u'/search.php?q={k}', charsets=[u'utf-8']))
+
+You can also permanently add a custom parser to the internal list of parsers that
+:mod:`serpextract.serpextract` maintains so that you no longer have to explicitly pass a parser
+object to :func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract`.
+
+.. code-block:: python
+
+    from serpextract import SearchEngineParser, add_custom_parser, is_serp, extract
+
+    my_parser = SearchEngineParser(u'PiccShare',          # Engine name
+                                   u'q',                  # Keyword extractor
+                                   u'/search.php?q={k}',  # Link macro
+                                   u'utf-8')              # Charset
+    add_custom_parser(u'search.piccshare.com', my_parser)
+
+    serp_url = 'http://search.piccshare.com/search.php?cat=web&channel=main&hl=en&q=test'
+    is_serp(serp_url)
+    # True
+
+    extract(serp_url)
+    # ExtractResult(engine_name=u'PiccShare', keyword=u'test', parser=SearchEngineParser(engine_name=u'PiccShare', keyword_extractor=[u'q'], link_macro=u'/search.php?q={k}', charsets=[u'utf-8']))
+
 Indices and tables
 ==================
 
