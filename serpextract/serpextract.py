@@ -68,11 +68,16 @@ def _unicode_parse_qs(qs, **kwargs):
         # Nothing to do
         return parse_qs(qs, **kwargs)
 
-    query = parse_qs(qs.encode('utf-8', 'ignore'), **kwargs)
+    qs = qs.encode('utf-8', 'ignore')
+    query = parse_qs(qs, **kwargs)
     unicode_query = {}
     for key in query:
-        key = key.decode('utf-8', 'ignore')
-        unicode_query[key] = [p.decode('utf-8', 'ignore') for p in query[key]]
+        uni_key = key.decode('utf-8', 'ignore')
+        if uni_key == '':
+            # because we ignore decode errors and only support utf-8 right now,
+            # we could end up with a blank string which we ignore
+            continue
+        unicode_query[uni_key] = [p.decode('utf-8', 'ignore') for p in query[key]]
     return unicode_query
 
 
