@@ -114,6 +114,10 @@ class TestSERPs(unittest.TestCase):
     def test_naive_detection(self):
         self.assertInvalidSERP(self.custom_serp_url)
         self.assertValidSERP(self.custom_serp_url, u'piccshare', u'test', use_naive_method=True)
+        url = 'http://www.yahoo.com/#/%C2%BF??;%C2%AB99555$&&&4&'
+        urlp = urlparse(url)
+        self.assertInvalidSERP(urlparse(url), use_naive_method=True)
+        self.assertInvalidSERP(url, use_naive_method=True)
 
     def test_get_all_query_params(self):
         """Ensure that get_all_query_params is a non-empty list."""
