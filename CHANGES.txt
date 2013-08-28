@@ -1,3 +1,4 @@
+v0.2.5, 2013-08-28 -- Fix small bug in _unicode_parse_qs
 v0.2.4, 2013-07-20 -- Add support for custom parsers and naive search engine detection/keyword extraction.
 v0.2.3, 2013-07-19 -- Unicode fixes and minor bug fix in parser.parse.
 v0.2.2, 2013-07-18 -- Improvements to test cases and major performance optimizations when using serpextract for a large number of SERP URLs.
