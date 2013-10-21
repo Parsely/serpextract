@@ -1,3 +1,4 @@
+v0.2.6, 2013-10-21 -- Fixed a bug in _get_lossy domain that prevented google.it from being picked up as a search engine
 v0.2.5, 2013-08-28 -- Fix small bug in _unicode_parse_qs
 v0.2.4, 2013-07-20 -- Add support for custom parsers and naive search engine detection/keyword extraction.
 v0.2.3, 2013-07-19 -- Unicode fixes and minor bug fix in parser.parse.
