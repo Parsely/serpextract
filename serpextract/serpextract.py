@@ -234,7 +234,7 @@ def _get_lossy_domain(domain):
                 r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
                 r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
                 r'(?P<domain>.*?)' + # domain
-                r'(?P<tld>\.(com|org|net|co|it|edu))?' + # tld
+                r'(?P<tld>\.(com|org|net|co|edu))?' + # tld
                 r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
                 r'$') # all done
 
