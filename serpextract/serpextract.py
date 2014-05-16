@@ -2,6 +2,8 @@
 referrers."""
 import re
 import logging
+
+from collections import OrderedDict
 from itertools import groupby
 from urlparse import urlparse, parse_qs, ParseResult
 
@@ -31,6 +33,8 @@ try:
     import cPickle as pickle
 except ImportError:
     import pickle
+
+from additional_search_engines import ADDITIONAL_SEARCH_ENGINES
 
 
 __all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params',
@@ -153,12 +157,14 @@ def _get_search_engines():
     if _engines:
         return _engines
 
-    piwik_engines = _get_piwik_engines()
+    search_engines = _import_engines()
+
+
     # Engine names are the first param of each of the search engine arrays
     # so we group by those guys, and create our new dictionary with that
     # order
     get_engine_name = lambda x: x[1][0]
-    definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
+    definitions_by_engine = groupby(search_engines.iteritems(), get_engine_name)
     _engines = {}
 
     for engine_name, rule_group in definitions_by_engine:
@@ -211,6 +217,23 @@ def _get_piwik_engines():
         _piwik_engines = pickle.load(picklestream)
 
     return _piwik_engines
+
+def _import_engines(custom_se_precedence = True):
+    search_engines = _get_piwik_engines()
+
+    # Merge with serpextract-specific search engines. Care has to be taken
+    # to correctly merge into OrderedDictionary.
+    for name, engine in ADDITIONAL_SEARCH_ENGINES.iteritems():
+        if custom_se_precedence or name not in search_engines:
+            search_engines[name] = engine
+
+    search_engines_list = list(search_engines.iteritems())
+    search_engines_list.sort(key = lambda x: x[1][0])
+    search_engines = OrderedDict()
+    for k, v in search_engines_list:
+        search_engines[k] = v
+    return search_engines
+
 
 
 _get_lossy_domain_regex = None
