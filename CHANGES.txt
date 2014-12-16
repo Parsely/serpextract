@@ -1,3 +1,4 @@
+v0.2.7, 2014-12-16 -- Fixed bug that prevented classification of r.search.yahoo.com and updated search engines list
 v0.2.6, 2013-10-21 -- Fixed a bug in _get_lossy domain that prevented google.it from being picked up as a search engine
 v0.2.5, 2013-08-28 -- Fix small bug in _unicode_parse_qs
 v0.2.4, 2013-07-20 -- Add support for custom parsers and naive search engine detection/keyword extraction.

@@ -2,7 +2,7 @@ import sys
 from setuptools import setup
 
 
-version = '0.2.6'
+version = '0.2.7'
 
 install_requires = [
     'iso3166 >= 0.4',
