@@ -414,14 +414,17 @@ class SearchEngineParser(object):
                     keyword = query[extractor][-1]
 
                 # Now we have to check for a tricky case where it is a SERP
-                # but just with no keyword as can be the case with Google
-                # Images or DuckDuckGo
+                # but just with no keyword as can be the case with Google,
+                # DuckDuckGo or Yahoo!
                 if keyword is None and extractor == 'q' and \
                    engine_name in ('Google Images', 'DuckDuckGo'):
                     keyword = ''
                 elif keyword is None and extractor == 'q' and \
                      engine_name == 'Google' and \
                      _is_url_without_path_query_or_fragment(url_parts):
+                    keyword = ''
+                elif keyword is None and engine_name == 'Yahoo!' and \
+                     url_parts.netloc.lower() == 'r.search.yahoo.com':
                     keyword = ''
 
         if keyword is not None:
