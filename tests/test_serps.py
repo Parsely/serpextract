@@ -72,6 +72,7 @@ class TestSERPs(unittest.TestCase):
         serps = (
             ('http://ca.search.yahoo.com/search;_ylt=At9vKXZDJTDsQ6o7bDQPLBUt17V_;_ylc=X1MDMjE0MjYyMzUzMwRfcgMyBGZyA3lmcC10LTcxNQRuX2dwcwMxMARvcmlnaW4DY2EueWFob28uY29tBHF1ZXJ5A2hlbGxvBHNhbwMx?p=hello&toggle=1&cop=mss&ei=UTF-8&fr=yfp-t-715', 'Yahoo!', u'hello'),
             ('http://search.yahoo.com/search;_ylt=AnQcoCW29caK.8RLkGgSiqGbvZx4?p=united+states&toggle=1&cop=mss&ei=UTF-8&fr=yfp-t-900', 'Yahoo!', u'united states'),
+            ('http://r.search.yahoo.com/_ylt=A0LEVy5UeJBUUzgAR2FXNyoA;_ylu=X3oDMTEzaGpsYTZuBHNlYwNzcgRwb3MDMgRjb2xvA2JmMQR2dGlkA1ZJUDU1OF8x/RV=2/RE=1418782933/RO=10/RU=http%3a%2f%2fen.wikipedia.org%2fwiki%2fToronto/RK=0/RS=cUOWJ12k59iqbScMA1r6sQedikc-', 'Yahoo!', u''),
         )
         self.assertValidSERPs(serps)
 
