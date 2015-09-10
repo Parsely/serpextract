@@ -187,13 +187,13 @@ def _get_search_engines():
             # Default args for SearchEngineParser
             args = [engine_name, defaults['extractor'],
                     defaults['link_macro'], defaults['charsets']]
-            if len(rule) >= 1:
+            if len(rule) >= 1 and rule[0]:
                 args[1] = rule[0]
 
-            if len(rule) >= 2:
+            if len(rule) >= 2 and rule[1]:
                 args[2] = rule[1]
 
-            if len(rule) == 3:
+            if len(rule) == 3 and rule[2]:
                 args[3] = rule[2]
 
             _engines[domain] = SearchEngineParser(*args)
