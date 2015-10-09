@@ -1,8 +1,12 @@
+import re
 import sys
 from setuptools import setup
 
-from serpextract import __version__ as version
-
+# Get version without importing, which avoids dependency issues
+def get_version():
+    with open('serpextract/__init__.py') as version_file:
+        return re.search(r"""__version__\s+=\s+(['"])(?P<version>.+?)\1""",
+                         version_file.read()).group('version')
 
 install_requires = [
     'iso3166 >= 0.4',
@@ -17,7 +21,7 @@ with open('README.rst', 'r') as f:
 
 setup(
     name='serpextract',
-    version=version,
+    version=get_version(),
     author='Mike Sukmanowsky',
     author_email='mike@parsely.com',
     packages=['serpextract',],
