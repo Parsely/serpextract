@@ -11,7 +11,7 @@ def get_version():
 install_requires = [
     'iso3166 >= 0.4',
     'pylru >= 1.0.3',
-    'tldextract==1.2',
+    'tldextract >= 1.2',
 ]
 if sys.version_info <= (2,7):
     install_requires.append("argparse >= 1.2.1")
