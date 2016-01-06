@@ -1,4 +1,4 @@
 recursive-exclude tests *
 include *.txt
 include *.rst
-include serpextract/search_engines.pickle
+include serpextract/search_engines.pickle*

@@ -1,15 +1,10 @@
-import unittest
-from urlparse import urlparse
+from __future__ import absolute_import
 
-try:
-    from serpextract import SearchEngineParser, extract, is_serp,\
-                            get_all_query_params, add_custom_parser
-except ImportError:
-    import os, sys
-    basedir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
-    sys.path.append(basedir)
-    from serpextract import SearchEngineParser, extract, is_serp,\
-                            get_all_query_params, add_custom_parser
+import unittest
+from six.moves.urllib.parse import urlparse
+
+from serpextract import (SearchEngineParser, extract, is_serp,
+                         get_all_query_params, add_custom_parser)
 
 
 class TestSERPs(unittest.TestCase):
