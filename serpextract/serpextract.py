@@ -2,8 +2,9 @@
 referrers."""
 from __future__ import absolute_import, division, print_function
 
-import re
 import logging
+import re
+import sys
 from itertools import groupby
 
 import pylru
@@ -210,7 +211,7 @@ def _get_piwik_engines():
     cache this result since it's only supposed to be called once.
     """
     stream = pkg_resources.resource_stream
-    pickle_path = 'search_engines.pickle' + ('3' if PY3 else '2')
+    pickle_path = 'search_engines.py{}.pickle'.format(sys.version_info[0])
     with stream(__name__, pickle_path) as picklestream:
         _piwik_engines = pickle.load(picklestream)
 

@@ -3,6 +3,7 @@ Use this before deploying an update"""
 from __future__ import absolute_import, division, print_function
 
 import os
+import sys
 from collections import OrderedDict
 from subprocess import Popen, PIPE
 
@@ -14,7 +15,6 @@ try:
     import simplejson as json
 except ImportError:
     import json
-from six import PY2
 from six.moves.urllib.request import urlopen
 
 
@@ -23,7 +23,8 @@ _here = lambda *paths: os.path.join(os.path.dirname(os.path.abspath(__file__)),
 
 
 def main():
-    filename = _here('serpextract', 'search_engines.pickle')
+    py_version = sys.version_info[0]
+    filename = _here('serpextract', 'search_engines.py{}.pickle'.format(py_version))
     print('Updating search engine parser definitions (requires PHP).')
 
     url = urlopen('https://raw.githubusercontent.com/piwik/piwik/2.14.3/core/DataFiles/SearchEngines.php')
@@ -35,7 +36,6 @@ def main():
     # Ordering of the dictionary from PHP matters so we keep it in an
     # OrderedDict
     piwik_engines = json.loads(json_string, object_pairs_hook=OrderedDict)
-    filename += '2' if PY2 else '3'
     with open(filename, 'wb') as pickle_file:
         pickle.dump(piwik_engines, pickle_file)
 
