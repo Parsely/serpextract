@@ -1,13 +1,9 @@
-from urlparse import urlparse
-import unittest
+from __future__ import absolute_import
 
-try:
-    import serpextract.serpextract as serpextract
-except ImportError:
-    import os, sys
-    basedir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
-    sys.path.append(basedir)
-    import serpextract.serpextract as serpextract
+import unittest
+from six.moves.urllib.parse import urlparse
+
+from serpextract import serpextract
 
 
 class TestSERPExtractUtilityFunctions(unittest.TestCase):

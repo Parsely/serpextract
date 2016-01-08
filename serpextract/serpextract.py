@@ -1,12 +1,16 @@
 """Utilities for extracting keyword information from search engine
 referrers."""
-import re
-import logging
-from itertools import groupby
-from urlparse import urlparse, parse_qs, ParseResult
+from __future__ import absolute_import, division, print_function
 
-from iso3166 import countries
+import logging
+import re
+import sys
+from itertools import groupby
+
 import pylru
+from iso3166 import countries
+from six import iteritems, itervalues, PY3, string_types, text_type
+from six.moves.urllib.parse import urlparse, parse_qs, ParseResult
 
 # import pkg_resources
 # with fallback for environments that lack it
@@ -60,11 +64,11 @@ def _unicode_parse_qs(qs, **kwargs):
     to latin-1 see http://hg.python.org/cpython/file/2.7/Lib/urlparse.py
 
     :param qs:       Percent-encoded query string to be parsed.
-    :type qs:        ``basestring``
+    :type qs:        ``str``
 
     :param kwargs:   Other keyword args passed onto ``parse_qs``.
     """
-    if isinstance(qs, str):
+    if PY3 or isinstance(qs, bytes):
         # Nothing to do
         return parse_qs(qs, **kwargs)
 
@@ -87,23 +91,23 @@ def _unicode_urlparse(url, encoding='utf-8', errors='ignore'):
     all elements of the parse result are unicode.
 
     :param url:      A URL.
-    :type url:       ``str``, ``unicode`` or :class:`urlparse.ParseResult`
+    :type url:       ``bytes``, ``unicode`` or :class:`urlparse.ParseResult`
 
     :param encoding: The string encoding assumed in the underlying ``str`` or
                      :class:`urlparse.ParseResult` (default is utf-8).
-    :type encoding:  ``str``
+    :type encoding:  ``bytes``
 
     :param errors:   response from ``decode`` if string cannot be converted to
                      unicode given encoding (default is ignore).
-    :type errors:    ``str``
+    :type errors:    ``bytes``
     """
-    if isinstance(url, str):
+    if isinstance(url, bytes):
         url = url.decode(encoding, errors)
     elif isinstance(url, ParseResult):
         # Ensure every part is unicode because we can't rely on clients to do so
         parts = list(url)
         for i in range(len(parts)):
-            if isinstance(parts[i], str):
+            if isinstance(parts[i], bytes):
                 parts[i] = parts[i].decode(encoding, errors)
         return ParseResult(*parts)
 
@@ -158,7 +162,7 @@ def _get_search_engines():
     # so we group by those guys, and create our new dictionary with that
     # order
     get_engine_name = lambda x: x[1][0]
-    definitions_by_engine = groupby(piwik_engines.iteritems(), get_engine_name)
+    definitions_by_engine = groupby(iteritems(piwik_engines), get_engine_name)
     _engines = {}
 
     for engine_name, rule_group in definitions_by_engine:
@@ -207,7 +211,8 @@ def _get_piwik_engines():
     cache this result since it's only supposed to be called once.
     """
     stream = pkg_resources.resource_stream
-    with stream(__name__, 'search_engines.pickle') as picklestream:
+    pickle_path = 'search_engines.py{}.pickle'.format(sys.version_info[0])
+    with stream(__name__, pickle_path) as picklestream:
         _piwik_engines = pickle.load(picklestream)
 
     return _piwik_engines
@@ -220,7 +225,7 @@ def _get_lossy_domain(domain):
     dict.
 
     :param domain: A string that is the ``netloc`` portion of a URL.
-    :type domain:  ``str``
+    :type domain:  ``bytes``
     """
     global _domain_cache, _get_lossy_domain_regex
 
@@ -294,7 +299,7 @@ class SearchEngineParser(object):
                                     decode the keyword
         """
         self.engine_name = engine_name
-        if isinstance(keyword_extractor, basestring):
+        if isinstance(keyword_extractor, string_types):
             keyword_extractor = [keyword_extractor]
         self.keyword_extractor = keyword_extractor[:]
         for i, extractor in enumerate(self.keyword_extractor):
@@ -305,7 +310,7 @@ class SearchEngineParser(object):
                 self.keyword_extractor[i] = extractor
 
         self.link_macro = link_macro
-        if isinstance(charsets, basestring):
+        if isinstance(charsets, string_types):
             charsets = [charsets]
         self.charsets = [c.lower() for c in charsets]
 
@@ -400,7 +405,7 @@ class SearchEngineParser(object):
 
         # Otherwise we keep looking through the defined extractors
         for extractor in self.keyword_extractor:
-            if not isinstance(extractor, basestring):
+            if not isinstance(extractor, string_types):
                 # Regular expression extractor
                 match = extractor.search(url_parts.path)
                 if match:
@@ -451,7 +456,7 @@ def add_custom_parser(match_rule, parser):
     :param parser:     A custom parser.
     :type parser:      :class:`SearchEngineParser`
     """
-    assert isinstance(match_rule, unicode)
+    assert isinstance(match_rule, text_type)
     assert isinstance(parser, SearchEngineParser)
 
     global _engines
@@ -469,8 +474,8 @@ def get_all_query_params():
     """
     engines = _get_search_engines()
     all_params = set()
-    _not_regex = lambda x: isinstance(x, basestring)
-    for parser in engines.itervalues():
+    _not_regex = lambda x: isinstance(x, string_types)
+    for parser in itervalues(engines):
         # Find non-regex params
         params = set(filter(_not_regex, parser.keyword_extractor))
         all_params |= params
@@ -640,7 +645,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Parse a SERP URL to extract engine name and keyword.')
 
-    parser.add_argument('input', metavar='url', type=unicode, nargs='*',
+    parser.add_argument('input', metavar='url', type=text_type, nargs='*',
                         help='A potential SERP URL')
     parser.add_argument('-l', '--list', default=False, action='store_true',
                         help='Print a list of all the SearchEngineParsers.')
@@ -649,11 +654,11 @@ def main():
 
     if args.list:
         engines = _get_search_engines()
-        engines = sorted(engines.iteritems(), key=lambda x: x[1].engine_name)
-        print '{:<30}{}'.format('Fuzzy Domain', 'Parser')
+        engines = sorted(iteritems(engines), key=lambda x: x[1].engine_name)
+        print('{:<30}{}'.format('Fuzzy Domain', 'Parser'))
         for fuzzy_domain, parser in engines:
-            print '{:<30}{}'.format(fuzzy_domain, parser)
-        print '{} parsers.'.format(len(engines))
+            print('{:<30}{}'.format(fuzzy_domain, parser))
+        print('{} parsers.'.format(len(engines)))
         sys.exit(0)
 
     if len(args.input) == 0:
@@ -669,7 +674,7 @@ def main():
         else:
             res = [escape_quotes(res.engine_name), escape_quotes(res.keyword)]
             res = [u'"{}"'.format(r) for r in res]
-        print u','.join(res)
+        print(u','.join(res))
 
 if __name__ == '__main__':
     main()

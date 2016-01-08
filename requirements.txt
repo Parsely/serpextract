@@ -1,5 +1,6 @@
 iso3166>=0.4
-nose==1.3.0
-coverage==3.6
+nose>=1.3.0
+coverage>=3.6
 pylru>=1.0.3
-tldextract==1.2
+tldextract>=1.2
+six
