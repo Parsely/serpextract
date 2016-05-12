@@ -48,15 +48,11 @@ def parse_php(php_script):
             or line.startswith('*/')
             or line == ''):
             continue
+            
         k, v = line.split('=>', 1)
         k = k.strip().strip("'")
         v = eval(v)[0]
         piwik_search_engines.append((k, v))
-
-    # print(json_body)
-    # indent
-    # json_body = 'if 1:\n' + json_body
-    # exec(json_body)
 
     return OrderedDict(piwik_search_engines)
 

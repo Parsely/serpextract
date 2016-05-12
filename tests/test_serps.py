@@ -1,3 +1,4 @@
+# -*- coding=utf-8 -*-
 from __future__ import absolute_import
 
 import unittest
@@ -60,6 +61,10 @@ class TestSERPs(unittest.TestCase):
         # TODO: More tests for Baidu
         serps = (
             ('http://www.baidu.com/s?wd=%E4%BD%A0%E5%A5%BD&rsv_bp=0&ch=&tn=baidu&bar=&rsv_spt=3&ie=utf-8&rsv_n=2&rsv_sug3=1&rsv_sug=0&rsv_sug1=1&rsv_sug4=352&inputT=1295', 'Baidu', u'\u4f60\u597d'),
+            ('http://www.baidu.com/s?wd=baidu', 'Baidu', u'baidu'),
+
+            ('http://m.baidu.com/s?tn=zbios&pu=sz%401320_480%2Ccuid%40la2si_O62i_OaH8sgu2BalajHiYgaH8IgOSu808Cva8Ca-8gYPvli_uqv8_Ea2tWA%2Ccua%40_PvjhYa6vhIDJEjPkJAiC_CVBhxVGNGoC%2Ccut%405kSYMltqeC_kavNkJavjh_h02IgUNvikyf3NuDhwWexZB%2Cosname%40baiduboxapp%2Cctv%402%2Ccfrom%40100027o%2Ccen%40cuid_cua_cut%2Ccsrc%40app_mainbox_txt&bd_page_type=1&word=JA%2Fp%2B5L7M%7AbPQiXwy%2FwNvsehkuDQ7MkKYlc7KBr%396F3%2FK7nn%7AIyc4bEsILLktNREw4av3%7Au6LK8evDN0J1%39N6Q%3D%3D&cki=1&from=100027o&pkgname=com.baidu.searchbox&network=1_0&bdna=0&rq=ia32CwEEkD5%2BrODe7teev%7AxDEeFDnwewm1g0b6lDp%5AL2gR28C3QFsgSf7rt%2F5ccYQAi6YdcJuSOBWUtroCOnDw%3D%3D&ckirq=1&sa=ikb&ss=110', 'Baidu', u'美洽'),
+            ('http://www.baidu.com/s?wd=%CD%E2%CE%A7%C4%A3%CC%D8%C9%CC%CE%F1%BB%E1', 'Baidu', u'外围模特商务会'),
         )
         self.assertValidSERPs(serps)
 
