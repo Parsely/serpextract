@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 """Utilities for extracting keyword information from search engine
 referrers."""
 from __future__ import absolute_import, division, print_function
@@ -5,6 +6,7 @@ from __future__ import absolute_import, division, print_function
 import logging
 import re
 import sys
+import urllib
 from itertools import groupby
 
 import pylru
@@ -12,6 +14,7 @@ from iso3166 import countries
 from six import iteritems, itervalues, PY3, string_types, text_type
 from six.moves.urllib.parse import urlparse, parse_qs, ParseResult
 
+import chardet
 # import pkg_resources
 # with fallback for environments that lack it
 try:
@@ -175,7 +178,7 @@ def _get_search_engines():
         for i, rule in enumerate(rule_group):
             domain = rule[0]
             rule = rule[1][1:]
-            if i == 0:
+            if i == 0 and len(rule)>0:
                 defaults['extractor'] = rule[0]
                 if len(rule) >= 2:
                     defaults['link_macro'] = rule[1]
@@ -239,7 +242,7 @@ def _get_lossy_domain(domain):
                 r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
                 r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
                 r'(?P<domain>.*?)' + # domain
-                r'(?P<tld>\.(com|org|net|co|edu))?' + # tld
+                r'(?P<tld>\.(com|org|net|co|edu|cn))?' + # tld
                 r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
                 r'$') # all done
 
@@ -299,6 +302,7 @@ class SearchEngineParser(object):
                                     decode the keyword
         """
         self.engine_name = engine_name
+        keyword_extractor = keyword_extractor or ''
         if isinstance(keyword_extractor, string_types):
             keyword_extractor = [keyword_extractor]
         self.keyword_extractor = keyword_extractor[:]
@@ -418,6 +422,33 @@ class SearchEngineParser(object):
                     # most recent
                     keyword = query[extractor][-1]
 
+                # baidu
+                # 2.关键词需要decode
+                # 3.有cki参数加密的情况
+                # 4.默认情况
+                if engine_name == 'Baidu':
+                    qs = parse_qs(url_parts.query)
+                    if 'wd' in qs:
+                        try:
+                            qs = parse_qs(url_parts.query.encode('utf-8'))
+                            keyword = qs['wd'][0]
+
+                            encoding = chardet.detect(keyword)['encoding']
+                            
+                            # 使用最新GBK编码
+                            if encoding == 'GB2312' or not encoding:
+                                encoding = 'GB18030'
+                            keyword = keyword.decode(encoding)
+                        except:
+                            pass
+
+                    elif 'cki' in qs:
+                        try:
+                            q = urllib.urlopen(url_parts.geturl()).read()
+                            keyword = re.findall(r'<title.*?>(.*?)</title>', q)[0].replace('- \xe7\x99\xbe\xe5\xba\xa6', '').strip().decode('utf-8')
+                        except:
+                            pass
+
                 # Now we have to check for a tricky case where it is a SERP
                 # but just with no keyword as can be the case with Google,
                 # DuckDuckGo or Yahoo!
@@ -432,8 +463,7 @@ class SearchEngineParser(object):
                      url_parts.netloc.lower() == 'r.search.yahoo.com':
                     keyword = ''
 
-        if keyword is not None:
-            return ExtractResult(engine_name, keyword, self)
+        return ExtractResult(engine_name, keyword or '', self)
 
     def __repr__(self):
         repr_fmt = ("SearchEngineParser(engine_name={!r}, "
@@ -534,7 +564,6 @@ def get_parser(referring_url):
             engine_key = 'search.yahoo.com'
         else:
             return None
-
     return engines.get(engine_key)
 
 
