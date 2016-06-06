@@ -5,3 +5,4 @@ serpextract.egg-info
 .DS_Store
 docs/_build
 .cache
+.idea/
