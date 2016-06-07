@@ -142,7 +142,7 @@ def _is_url_without_path_query_or_fragment(url_parts):
     :param url_parts: A URL.
     :type url_parts:  :class:`urlparse.ParseResult`
     """
-    return url_parts.path.strip('/') == '' and url_parts.query == '' \
+    return url_parts.path.strip('/') in ['', 'search'] and url_parts.query == '' \
            and url_parts.fragment == ''
 
 _engines = None
@@ -404,10 +404,14 @@ class SearchEngineParser(object):
                 # but just with no keyword as can be the case with Google,
                 # DuckDuckGo or Yahoo!
                 if keyword is None and extractor == 'q' and \
-                   engine_name in ('Google Images', 'DuckDuckGo'):
+                   engine_name in ('Ixquick', 'Google Images', 'DuckDuckGo'):
                     keyword = ''
                 elif keyword is None and extractor == 'q' and \
                      engine_name == 'Google' and \
+                     _is_url_without_path_query_or_fragment(url_parts):
+                    keyword = ''
+                elif keyword is None and \
+                     engine_name in ['Yahoo!', 'Yahoo! Japan'] and \
                      _is_url_without_path_query_or_fragment(url_parts):
                     keyword = ''
                 elif keyword is None and engine_name == 'Yahoo!' and \
