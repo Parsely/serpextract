@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import sys
-import yaml
+import ruamel.yaml as yaml
 
 try:
     import cPickle as pickle
