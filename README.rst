@@ -167,6 +167,6 @@ Caching
 -------
 
 Internally, this module caches an OrderedDict representation of 
-`Piwik's list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_
+`Piwik's list of search engines <https://raw.githubusercontent.com/piwik/piwik/2.14.3/core/DataFiles/SearchEngines.php>`_
 which is stored in ``serpextract/search_engines.pickle``.  This isn't intended to change that often and so this
 module ships with a cached version.
