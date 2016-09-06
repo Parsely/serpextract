@@ -5,9 +5,11 @@ from __future__ import absolute_import, division, print_function
 import logging
 import re
 import sys
+from collections import defaultdict
 from itertools import groupby
 
 import pylru
+import tldextract
 from iso3166 import countries
 from six import iteritems, itervalues, PY3, string_types, text_type
 from six.moves.urllib.parse import urlparse, parse_qs, ParseResult
@@ -38,7 +40,8 @@ except ImportError:
 
 
 __all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params',
-           'add_custom_parser', 'SearchEngineParser')
+           'get_all_query_params_by_domain', 'add_custom_parser',
+           'SearchEngineParser')
 
 log = logging.getLogger('serpextract')
 
@@ -56,6 +59,7 @@ _domain_cache = pylru.lrucache(500)
 # try to extract using common query params
 _naive_re = re.compile(r'\.?search\.')
 _naive_params = ('q', 'query', 'k', 'keyword', 'term',)
+
 
 def _unicode_parse_qs(qs, **kwargs):
     """
@@ -460,13 +464,32 @@ def get_all_query_params():
     """
     engines = _get_search_engines()
     all_params = set()
-    _not_regex = lambda x: isinstance(x, string_types)
     for parser in itervalues(engines):
         # Find non-regex params
-        params = set(filter(_not_regex, parser.keyword_extractor))
+        params = {param for param in parser.keyword_extractor
+                  if isinstance(param, string_types)}
         all_params |= params
 
     return list(all_params)
+
+
+def get_all_query_params_by_domain():
+    """
+    Return all the possible query string params for all search engines.
+
+    :returns: a ``list`` of all the unique query string parameters that are
+              used across the search engine definitions.
+    """
+    engines = _get_search_engines()
+    param_dict = defaultdict(list)
+    for domain, parser in iteritems(engines):
+        # Find non-regex params
+        params = {param for param in parser.keyword_extractor
+                  if isinstance(param, string_types)}
+        tld_res = tldextract.extract(domain)
+        domain = tld_res.registered_domain
+        param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
+    return param_dict
 
 
 def get_parser(referring_url):
@@ -600,7 +623,6 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
             query = _unicode_parse_qs(url_parts.query, keep_blank_values=True)
             for param in _naive_params:
                 if param in query:
-                    import tldextract
                     tld_res = tldextract.extract(url_parts.netloc)
                     return ExtractResult(tld_res.domain,
                                          query[param][0],
