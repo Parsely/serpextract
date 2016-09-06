@@ -3,7 +3,7 @@
 set -e
 
 # Deploy the module to PyPI
-VERSION=`python -c "import serpextract; print serpextract.__version__"`
+VERSION=`python -c "import serpextract; print(serpextract.__version__)"`
 echo "Deploying serpextract" $VERSION "to PyPI."
 echo
 python update_list.py
