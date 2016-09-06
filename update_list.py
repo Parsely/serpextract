@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import sys
-import ruamel.yaml as yaml
 
 try:
     import cPickle as pickle
@@ -14,6 +13,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
+import ruamel.yaml as yaml
 from six.moves.urllib.request import urlopen
 
 
@@ -24,7 +24,7 @@ _here = lambda *paths: os.path.join(os.path.dirname(os.path.abspath(__file__)),
 def main():
     py_version = sys.version_info[0]
     filename = _here('serpextract', 'search_engines.py{}.pickle'.format(py_version))
-    print('Updating search engine parser definitions (requires PHP).')
+    print('Updating search engine parser definitions.')
 
     url = urlopen('https://raw.githubusercontent.com/piwik/searchengine-and-social-list/master/SearchEngines.yml')
     piwik_engines = yaml.load(url)
