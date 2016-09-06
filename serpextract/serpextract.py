@@ -142,7 +142,7 @@ def _is_url_without_path_query_or_fragment(url_parts):
     :param url_parts: A URL.
     :type url_parts:  :class:`urlparse.ParseResult`
     """
-    return url_parts.path.strip('/') == '' and url_parts.query == '' \
+    return url_parts.path.strip('/') in ['', 'search'] and url_parts.query == '' \
            and url_parts.fragment == ''
 
 _engines = None
@@ -161,46 +161,28 @@ def _get_search_engines():
     # Engine names are the first param of each of the search engine arrays
     # so we group by those guys, and create our new dictionary with that
     # order
-    get_engine_name = lambda x: x[1][0]
-    definitions_by_engine = groupby(iteritems(piwik_engines), get_engine_name)
     _engines = {}
 
-    for engine_name, rule_group in definitions_by_engine:
+    for engine_name, rule_group in iteritems(piwik_engines):
         defaults = {
             'extractor': None,
             'link_macro': None,
             'charsets': ['utf-8']
         }
 
-        for i, rule in enumerate(rule_group):
-            domain = rule[0]
-            rule = rule[1][1:]
-            if i == 0:
-                defaults['extractor'] = rule[0]
-                if len(rule) >= 2:
-                    defaults['link_macro'] = rule[1]
-                if len(rule) >= 3:
-                    defaults['charsets'] = rule[2]
+        for rule in rule_group:
+            for i, domain in enumerate(rule['urls']):
+                if i == 0:
+                    defaults['extractor'] = rule['params']
+                    if 'backlink' in rule:
+                        defaults['link_macro'] = rule['backlink']
+                    if 'charsets' in rule:
+                        defaults['charsets'] = rule['charsets']
 
                 _engines[domain] = SearchEngineParser(engine_name,
                                                       defaults['extractor'],
                                                       defaults['link_macro'],
                                                       defaults['charsets'])
-                continue
-
-            # Default args for SearchEngineParser
-            args = [engine_name, defaults['extractor'],
-                    defaults['link_macro'], defaults['charsets']]
-            if len(rule) >= 1 and rule[0]:
-                args[1] = rule[0]
-
-            if len(rule) >= 2 and rule[1]:
-                args[2] = rule[1]
-
-            if len(rule) == 3 and rule[2]:
-                args[3] = rule[2]
-
-            _engines[domain] = SearchEngineParser(*args)
 
     return _engines
 
@@ -422,10 +404,14 @@ class SearchEngineParser(object):
                 # but just with no keyword as can be the case with Google,
                 # DuckDuckGo or Yahoo!
                 if keyword is None and extractor == 'q' and \
-                   engine_name in ('Google Images', 'DuckDuckGo'):
+                   engine_name in ('Ixquick', 'Google Images', 'DuckDuckGo'):
                     keyword = ''
                 elif keyword is None and extractor == 'q' and \
                      engine_name == 'Google' and \
+                     _is_url_without_path_query_or_fragment(url_parts):
+                    keyword = ''
+                elif keyword is None and \
+                     engine_name in ['Yahoo!', 'Yahoo! Japan'] and \
                      _is_url_without_path_query_or_fragment(url_parts):
                     keyword = ''
                 elif keyword is None and engine_name == 'Yahoo!' and \
