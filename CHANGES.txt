@@ -1,3 +1,4 @@
+v0.5.0, 2016-09-23 -- Switched to storing search engine list in JSON, and fixed issue where Yahoo homepage referrers were being detected as SERPs
 v0.4.1, 2016-09-06 -- Add missing ruamel.yaml requirement to setup.py
 v0.4.0, 2016-09-06 -- Updated to use latest Piwik search engine YAML instead of PHP as source; added get_all_query_params_by_domain function
 v0.3.0, 2016-01-06 -- Added Python 3 support, updated to 2.14.3 Piwiki search engines
