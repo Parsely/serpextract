@@ -6,6 +6,7 @@ import logging
 import re
 import sys
 from collections import defaultdict
+from io import TextIOWrapper
 
 import pylru
 import tldextract
@@ -200,6 +201,11 @@ def _get_piwik_engines():
     """
     stream = pkg_resources.resource_stream
     with stream(__name__, 'search_engines.json') as json_stream:
+        if PY3:
+            if hasattr(json_stream, 'buffer'):
+                json_stream = TextIOWrapper(json_stream.buffer, encoding='utf-8')
+            else:
+                json_stream = TextIOWrapper(json_stream, encoding='utf-8')
         _piwik_engines = json.load(json_stream)
     return _piwik_engines
 
