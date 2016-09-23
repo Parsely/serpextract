@@ -224,13 +224,13 @@ def _get_lossy_domain(domain):
     if not _get_lossy_domain_regex:
         codes = '|'.join(_country_codes)
         _get_lossy_domain_regex = re.compile(
-                r'^' # start of string
-                r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
-                r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
-                r'(?P<domain>.*?)' + # domain
-                r'(?P<tld>\.(com|org|net|co|edu))?' + # tld
-                r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
-                r'$') # all done
+            r'^' # start of string
+            r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
+            r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
+            r'(?P<domain>.*?)' + # domain
+            r'(?P<tld>\.(com|org|net|co|edu))?' + # tld
+            r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
+            r'$') # all done
 
     res = _get_lossy_domain_regex.match(domain).groupdict()
     output = u'%s%s%s' % ('{}.' if res['ccsub'] else '',
@@ -378,23 +378,23 @@ class SearchEngineParser(object):
             # Search Operator: None (same as normal search)
             key = query.get('as_q')
             if key:
-              keys.append(key[0])
+                keys.append(key[0])
             # Results should contain any of these words
             # Search Operator: <keyword> [OR <keyword>]+
             key = query.get('as_oq')
             if key:
-              key = key[0].replace('+', ' OR ')
-              keys.append(key)
+                key = key[0].replace('+', ' OR ')
+                keys.append(key)
             # Results should match the exact phrase
             # Search Operator: "<keyword>"
             key = query.get('as_epq')
             if key:
-              keys.append(u'"{}"'.format(key[0]))
+                keys.append(u'"{}"'.format(key[0]))
             # Results should contain none of these words
             # Search Operator: -<keyword>
             key = query.get('as_eq')
             if key:
-              keys.append(u'-{}'.format(key[0]))
+                keys.append(u'-{}'.format(key[0]))
 
             keyword = u' '.join(keys).strip()
 
@@ -681,8 +681,6 @@ def extract(serp_url, parser=None, lower_case=True, trimmed=True,
 
 def main():
     import argparse
-    import sys
-    import re
 
     parser = argparse.ArgumentParser(
         description='Parse a SERP URL to extract engine name and keyword.')
