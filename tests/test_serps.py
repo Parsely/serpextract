@@ -131,6 +131,7 @@ class TestSERPs(unittest.TestCase):
             'http://www.something.com/',
             'http://www.reddit.com/',
             'http://www.yahoo.com/',
+            'https://www.yahoo.com/'
         )
         for url in invalid_serps:
             self.assertInvalidSERP(url)

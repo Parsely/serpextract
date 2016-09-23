@@ -30,12 +30,11 @@ except ImportError:
             f = os.path.join(moddir, resource_name)
             return open(f)
 
-# import cPickle
-# for performance with a fallback on Python pickle
+# import ujson for performance with a fallback on default json
 try:
-    import cPickle as pickle
+    import ujson as json
 except ImportError:
-    import pickle
+    import json
 
 
 __all__ = ('get_parser', 'is_serp', 'extract', 'get_all_query_params',
@@ -200,10 +199,8 @@ def _get_piwik_engines():
     cache this result since it's only supposed to be called once.
     """
     stream = pkg_resources.resource_stream
-    pickle_path = 'search_engines.py{}.pickle'.format(sys.version_info[0])
-    with stream(__name__, pickle_path) as picklestream:
-        _piwik_engines = pickle.load(picklestream)
-
+    with stream(__name__, 'search_engines.json') as json_stream:
+        _piwik_engines = json.load(json_stream)
     return _piwik_engines
 
 
