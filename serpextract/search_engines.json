@@ -1902,6 +1902,17 @@
       ]
     }
   ],
+  "Laban":[
+    {
+      "backlink":"search.html?q={k}",
+      "params":[
+        "q"
+      ],
+      "urls":[
+        "laban.vn"
+      ]
+    }
+  ],
   "Latne":[
     {
       "backlink":"siets.php?q={k}",
@@ -1910,6 +1921,17 @@
       ],
       "urls":[
         "www.latne.lv"
+      ]
+    }
+  ],
+  "Lilo":[
+    {
+      "backlink":"results.php?q={k}",
+      "params":[
+        "q"
+      ],
+      "urls":[
+        "search.lilo.org"
       ]
     }
   ],
