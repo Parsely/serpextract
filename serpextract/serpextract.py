@@ -271,8 +271,6 @@ class SearchEngineParser(object):
     __slots__ = ('engine_name', 'keyword_extractor', 'link_macro', 'charsets',
                  'hidden_keyword_paths')
 
-    _NO_KEYWORD = u'####NO_KEYWORDS_SPECIFIED####'
-
     def __init__(self, engine_name, keyword_extractor, link_macro, charsets,
                  hidden_keyword_paths=None):
         """New instance of a :class:`SearchEngineParser`.
@@ -432,11 +430,10 @@ class SearchEngineParser(object):
 
                 # Now we have to check for a tricky case where it is a SERP but
                 # there are no keywords
-                if keyword is None and (u'&{}='.format(extractor) in query or
-                                        u'?{}='.format(extractor) in query):
-                    keyword = self._NO_KEYWORD
+                if keyword == u'':
+                    keyword = False
 
-                if keyword is not None or keyword == self._NO_KEYWORD:
+                if keyword is not None:
                     break
 
         # if no keyword found, but empty/hidden keywords are allowed
@@ -449,15 +446,15 @@ class SearchEngineParser(object):
             for path in self.hidden_keyword_paths:
                 if not isinstance(path, string_types):
                     if path.search(path_with_query_and_frag):
-                        keyword = self._NO_KEYWORD
+                        keyword = False
                         break
                 elif path == path_with_query_and_frag:
-                    keyword = self._NO_KEYWORD
+                    keyword = False
                     break
 
-        if keyword:
+        if keyword is not None:
             # Replace special placeholder with blank string
-            if keyword == self._NO_KEYWORD:
+            if keyword is False:
                 keyword = u''
             return ExtractResult(engine_name, keyword, self)
 
