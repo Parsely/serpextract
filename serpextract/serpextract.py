@@ -210,39 +210,6 @@ def _get_piwik_engines():
     return _piwik_engines
 
 
-_get_lossy_domain_regex = None
-def _get_lossy_domain(domain):
-    """
-    A lossy version of a domain/host to use as lookup in the ``_engines``
-    dict.
-
-    :param domain: A string that is the ``netloc`` portion of a URL.
-    :type domain:  ``bytes``
-    """
-    global _domain_cache, _get_lossy_domain_regex
-
-    if domain in _domain_cache:
-        return _domain_cache[domain]
-
-    if not _get_lossy_domain_regex:
-        codes = '|'.join(_country_codes)
-        _get_lossy_domain_regex = re.compile(
-            r'^' # start of string
-            r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
-            r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
-            r'(?P<domain>.*?)' + # domain
-            r'(?P<tld>\.(com|org|net|co|edu))?' + # tld
-            r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
-            r'$') # all done
-
-    res = _get_lossy_domain_regex.match(domain).groupdict()
-    output = u'%s%s%s' % ('{}.' if res['ccsub'] else '',
-                          res['domain'],
-                          '.{}' if res['tldcc'] else res['tld'] or '')
-    _domain_cache[domain] = output # Add to LRU cache
-    return output
-
-
 class ExtractResult(object):
     __slots__ = ('engine_name', 'keyword', 'parser')
 
@@ -545,7 +512,6 @@ def get_parser(referring_url):
 
     domain = url_parts.netloc
     path = url_parts.path
-    lossy_domain = _get_lossy_domain(url_parts.netloc)
     engine_key = url_parts.netloc
 
     # Try to find a parser in the engines list.  We go from most specific to
@@ -558,11 +524,7 @@ def get_parser(referring_url):
     # search engines, yahoo and yahoo images
     if u'{}{}'.format(domain, path) in engines:
         engine_key = u'{}{}'.format(domain, path)
-    elif u'{}{}'.format(lossy_domain, path) in engines:
-        engine_key = u'{}{}'.format(lossy_domain, path)
-    elif lossy_domain in engines:
-        engine_key = lossy_domain
-    elif domain not in engines:
+    elif domain not in engines and domain.strip('www.') not in engines:
         if query[:14] == 'cx=partner-pub':
             # Google custom search engine
             engine_key = u'google.com/cse'
@@ -578,7 +540,7 @@ def get_parser(referring_url):
         else:
             return None
 
-    return engines.get(engine_key)
+    return engines.get(engine_key) or engines.get(engine_key.strip('www.'))
 
 
 def is_serp(referring_url, parser=None, use_naive_method=False):
