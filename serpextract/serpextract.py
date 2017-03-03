@@ -198,6 +198,7 @@ def _get_search_engines():
     return _engines
 
 def _expand_country_codes(urls):
+    urls = urls if isinstance(urls, list) else [urls]
     end_string = re.compile(r'\w$')
     expanded_urls = set()
     for country_code in _country_codes:
