@@ -160,6 +160,7 @@ def _get_search_engines():
     if _engines:
         return _engines
 
+    replace_string = re.compile(r'{}')
     piwik_engines = _get_piwik_engines()
     # Engine names are the first param of each of the search engine arrays
     # so we group by those guys, and create our new dictionary with that
@@ -175,6 +176,9 @@ def _get_search_engines():
         }
 
         for rule in rule_group:
+            replacements = [url for url in rule['urls'] if replace_string.search(url)]
+            if replacements:
+                rule['urls'] = _expand_country_codes(rule['urls'])
             for i, domain in enumerate(rule['urls']):
                 if i == 0:
                     defaults['extractor'] = rule['params']
@@ -192,6 +196,19 @@ def _get_search_engines():
                                                       defaults['hiddenkeyword'])
 
     return _engines
+
+def _expand_country_codes(urls):
+    end_string = re.compile(r'\w$')
+    expanded_urls = set()
+    for country_code in _country_codes:
+        for url in urls:
+            if country_code in ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in',
+                                'ua'] and not end_string.search(url):
+                cc_subs = ['co', 'com']
+                expanded_urls.update(
+                    {url.format('{}.{}'.format(cc_sub, country_code)) for cc_sub in cc_subs})
+            expanded_urls.add(url.format(country_code))
+    return expanded_urls
 
 
 def _get_piwik_engines():
