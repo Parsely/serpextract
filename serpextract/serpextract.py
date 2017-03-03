@@ -198,17 +198,13 @@ def _get_search_engines():
     return _engines
 
 def _expand_country_codes(urls):
+    cc_sub_domains = ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in', 'ua']
+    second_level_domains = ['co', 'com']
     urls = urls if isinstance(urls, list) else [urls]
+    urls = set(urls)
     end_string = re.compile(r'\w$')
-    expanded_urls = set()
-    for country_code in _country_codes:
-        for url in urls:
-            if country_code in ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in',
-                                'ua'] and not end_string.search(url):
-                cc_subs = ['co', 'com']
-                expanded_urls.update(
-                    {url.format('{}.{}'.format(cc_sub, country_code)) for cc_sub in cc_subs})
-            expanded_urls.add(url.format(country_code))
+    expanded_urls = {url.format(country_code) for url in urls for country_code in _country_codes}
+    expanded_urls.update((url.format('{}.{}'.format(second_level_domain, cc_sub_domain)) for url in urls for cc_sub_domain in cc_sub_domains for second_level_domain in second_level_domains if end_string.search(url)))
     return expanded_urls
 
 
