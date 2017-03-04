@@ -160,7 +160,6 @@ def _get_search_engines():
     if _engines:
         return _engines
 
-    replace_string = re.compile(r'{}')
     piwik_engines = _get_piwik_engines()
     # Engine names are the first param of each of the search engine arrays
     # so we group by those guys, and create our new dictionary with that
@@ -176,7 +175,7 @@ def _get_search_engines():
         }
 
         for rule in rule_group:
-            replacements = [url for url in rule['urls'] if replace_string.search(url)]
+            replacements = [url for url in rule['urls'] if '{}' in url]
             if replacements:
                 rule['urls'] = _expand_country_codes(rule['urls'])
             for i, domain in enumerate(rule['urls']):
@@ -197,10 +196,9 @@ def _get_search_engines():
 
     return _engines
 
-
+cc_sub_domains = ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in', 'ua']
+second_level_domains = ['co', 'com']
 def _expand_country_codes(urls):
-    cc_sub_domains = ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in', 'ua']
-    second_level_domains = ['co', 'com']
     urls = urls if isinstance(urls, list) else [urls]
     urls = set(urls)
     end_string = re.compile('\w$')
@@ -503,12 +501,20 @@ def get_all_query_params_by_domain():
     """
     engines = _get_search_engines()
     param_dict = defaultdict(list)
+    cc_string = re.compile(r'\w+\.\w+\.\w+$')
+    non_cc_string = re.compile(r'\w+\.\w+$')
     for domain, parser in iteritems(engines):
+        domain = domain.split('/')[0]
+        if any(sub_domain in domain for sub_domain in cc_sub_domains):
+            try:
+                domain = cc_string.findall(domain)[0]
+            except IndexError:
+                domain = non_cc_string.findall(domain)[0]
+        else:
+            domain = non_cc_string.findall(domain)[0]
         # Find non-regex params
         params = {param for param in parser.keyword_extractor
                   if isinstance(param, string_types)}
-        tld_res = tldextract.extract(domain)
-        domain = tld_res.registered_domain
         param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
     return param_dict
 
