@@ -197,9 +197,10 @@ def _get_search_engines():
 
     return _engines
 
-cc_sub_domains = ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in', 'ua']
-second_level_domains = ['co', 'com']
+
 def _expand_country_codes(urls):
+    cc_sub_domains = ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in', 'ua']
+    second_level_domains = ['co', 'com']
     urls = urls if isinstance(urls, list) else [urls]
     urls = set(urls)
     end_string = re.compile('\w$')
