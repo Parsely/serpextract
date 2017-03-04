@@ -131,12 +131,18 @@ class TestSERPs(unittest.TestCase):
         bing_params = [u'Q', u'q']
         baidu_params = [u'kw', u'wd', u'word']
         yahoo_params = [u'p', u'q', u'va']
+        so_net_params = [u'kw', u'query']
+        goo_ne_jp_params = [u'MT']
+        t_online_params = [u'q']
         self.assertEqual(params_by_domain['google.com'], google_params)
         self.assertEqual(params_by_domain['google.de'], google_params)
         self.assertEqual(params_by_domain['google.co.uk'], google_params)
         self.assertEqual(params_by_domain['baidu.com'], baidu_params)
         self.assertEqual(params_by_domain['bing.com'], bing_params)
         self.assertEqual(params_by_domain['yahoo.com'], yahoo_params)
+        self.assertEqual(params_by_domain['so-net.ne.jp'], so_net_params)
+        self.assertEqual(params_by_domain['goo.ne.jp'], goo_ne_jp_params)
+        self.assertEqual(params_by_domain['t-online.de'], t_online_params)
 
     def test_invalid_serps(self):
         invalid_serps = (
