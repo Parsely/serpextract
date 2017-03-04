@@ -4,7 +4,8 @@ import unittest
 from six.moves.urllib.parse import urlparse
 
 from serpextract import (SearchEngineParser, extract, is_serp,
-                         get_all_query_params, add_custom_parser)
+                         get_all_query_params, add_custom_parser,
+                         get_all_query_params_by_domain)
 
 
 class TestSERPs(unittest.TestCase):
@@ -122,6 +123,20 @@ class TestSERPs(unittest.TestCase):
         params = get_all_query_params()
         self.assertIsInstance(params, list)
         self.assertGreater(len(params), 0)
+
+    def test_get_query_params_by_domain(self):
+        """ make sure that individual subdomains are enumerated properly """
+        params_by_domain = get_all_query_params_by_domain()
+        google_params = [u'q', u'query']
+        bing_params = [u'Q', u'q']
+        baidu_params = [u'kw', u'wd', u'word']
+        yahoo_params = [u'p', u'q', u'va']
+        self.assertEqual(params_by_domain['google.com'], google_params)
+        self.assertEqual(params_by_domain['google.de'], google_params)
+        self.assertEqual(params_by_domain['google.co.uk'], google_params)
+        self.assertEqual(params_by_domain['baidu.com'], baidu_params)
+        self.assertEqual(params_by_domain['bing.com'], bing_params)
+        self.assertEqual(params_by_domain['yahoo.com'], yahoo_params)
 
     def test_invalid_serps(self):
         invalid_serps = (
