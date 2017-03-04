@@ -196,7 +196,6 @@ def _get_search_engines():
 
     return _engines
 
-cc_sub_domains = ['au', 'at', 'br', 'nz', 'il', 'za', 'kr', 'uk', 'in', 'ua', 'jp']
 second_level_domains = ['co', 'com']
 def _expand_country_codes(urls):
     urls = urls if isinstance(urls, list) else [urls]
@@ -206,7 +205,7 @@ def _expand_country_codes(urls):
                      for country_code in _country_codes}
     expanded_urls.update({url.format('{}.{}'.format(second_level_domain, cc_sub_domain))
                           for url in urls
-                          for cc_sub_domain in cc_sub_domains
+                          for cc_sub_domain in _country_codes
                           for second_level_domain in second_level_domains
                           if not end_string.search(url)})
     return expanded_urls
@@ -491,7 +490,7 @@ def get_all_query_params():
 
     return list(all_params)
 
-
+qs_params = defaultdict(list)
 def get_all_query_params_by_domain():
     """
     Return all the possible query string params for all search engines.
@@ -499,23 +498,18 @@ def get_all_query_params_by_domain():
     :returns: a ``list`` of all the unique query string parameters that are
               used across the search engine definitions.
     """
+    global qs_params
+    if qs_params:
+        return qs_params
     engines = _get_search_engines()
     param_dict = defaultdict(list)
-    cc_string = re.compile(r'[\-\w]+\.\w+\.\w+$')
-    non_cc_string = re.compile(r'[\-\w]+\.\w+$')
     for domain, parser in iteritems(engines):
-        domain = domain.split('/')[0]
-        if any(sub_domain in domain for sub_domain in cc_sub_domains) or 'jp' in domain:
-            try:
-                domain = cc_string.findall(domain)[0]
-            except IndexError:
-                domain = non_cc_string.findall(domain)[0]
-        else:
-            domain = non_cc_string.findall(domain)[0]
-        # Find non-regex params
         params = {param for param in parser.keyword_extractor
                   if isinstance(param, string_types)}
+        tld_ex = tldextract.extract(domain)
+        domain = tld_ex.registered_domain
         param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
+    qs_params = param_dict
     return param_dict
 
 
