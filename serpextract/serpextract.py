@@ -501,11 +501,11 @@ def get_all_query_params_by_domain():
     """
     engines = _get_search_engines()
     param_dict = defaultdict(list)
-    cc_string = re.compile(r'\w+\.\w+\.\w+$')
-    non_cc_string = re.compile(r'\w+\.\w+$')
+    cc_string = re.compile(r'[\-\w]+\.\w+\.\w+$')
+    non_cc_string = re.compile(r'[\-\w]+\.\w+$')
     for domain, parser in iteritems(engines):
         domain = domain.split('/')[0]
-        if any(sub_domain in domain for sub_domain in cc_sub_domains):
+        if any(sub_domain in domain for sub_domain in cc_sub_domains) or 'jp' in domain:
             try:
                 domain = cc_string.findall(domain)[0]
             except IndexError:
