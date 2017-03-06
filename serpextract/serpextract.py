@@ -200,14 +200,13 @@ second_level_domains = ['co', 'com']
 def _expand_country_codes(urls):
     urls = urls if isinstance(urls, list) else [urls]
     urls = set(urls)
-    end_string = re.compile('\w$')
     expanded_urls = {url.format(country_code) for url in urls
                      for country_code in _country_codes}
     expanded_urls.update({url.format('{}.{}'.format(second_level_domain, cc_sub_domain))
                           for url in urls
                           for cc_sub_domain in _country_codes
                           for second_level_domain in second_level_domains
-                          if not end_string.search(url)})
+                          if not url[-1].isalnum()})
     return expanded_urls
 
 
