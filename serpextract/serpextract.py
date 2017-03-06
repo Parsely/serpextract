@@ -535,10 +535,10 @@ def get_parser(referring_url):
     # Try to find a parser in the engines list.  We go from most specific to
     # least specific order:
     # 1. <domain><path>
-    # 2. <lossy_domain><path>
-    # 3. <lossy_domain>
-    # 4. <domain>
-    # The final case has some special exceptions for things like Google custom
+    # 2. <custom search engines>
+    # 3. <domain>
+    # 4. <stripped_domain>
+    # The second step has some special exceptions for things like Google custom
     # search engines, yahoo and yahoo images
     if u'{}{}'.format(domain, path) in engines:
         engine_key = u'{}{}'.format(domain, path)
