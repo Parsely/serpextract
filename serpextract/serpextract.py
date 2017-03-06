@@ -54,6 +54,9 @@ _country_codes += ['uk']
 # For generating possible variations of domains based
 _second_level_domains = ['co', 'com']
 
+# Cache for querystring params returned by get_all_query_params_by_domain
+_qs_params = None
+
 # A LRUCache of domains to save us from having to do lots of regex matches
 _domain_cache = pylru.lrucache(500)
 
@@ -490,7 +493,7 @@ def get_all_query_params():
 
     return list(all_params)
 
-_qs_params = defaultdict(list)
+
 def get_all_query_params_by_domain():
     """
     Return all the possible query string params for all search engines.
