@@ -1,6 +1,6 @@
 """Utilities for extracting keyword information from search engine
 referrers."""
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import re
@@ -175,7 +175,7 @@ def _get_search_engines():
         }
 
         for rule in rule_group:
-            if any([url for url in rule['urls'] if '{}' in url]):
+            if any(url for url in rule['urls'] if '{}' in url):
                 rule['urls'] = _expand_country_codes(rule['urls'])
             for i, domain in enumerate(rule['urls']):
                 if i == 0:
@@ -506,7 +506,7 @@ def get_all_query_params_by_domain():
                   if isinstance(param, string_types)}
         tld_res = tldextract.extract(domain)
         domain = tld_res.registered_domain
-        param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
+        param_dict[domain] = sorted(set(param_dict[domain]) | params)
     _qs_params = param_dict
     return param_dict
 
