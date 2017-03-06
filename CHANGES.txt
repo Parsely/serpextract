@@ -1,3 +1,4 @@
+v0.6.1, 2017-03-06 -- Fixed issue where get_all_query_params_by_domain didn't return a complete list
 v0.6.0, 2017-02-28 -- Fixed issue where hidden_keyword SERPs weren't being detected properly, and updated to latest Piwik list
 v0.5.0, 2016-09-23 -- Switched to storing search engine list in JSON, and fixed issue where Yahoo homepage referrers were being detected as SERPs
 v0.4.1, 2016-09-06 -- Add missing ruamel.yaml requirement to setup.py
