@@ -497,8 +497,8 @@ def get_all_query_params_by_domain():
               used across the search engine definitions.
     """
     global _qs_params
-    if qs_params:
-        return qs_params
+    if _qs_params:
+        return _qs_params
     engines = _get_search_engines()
     param_dict = defaultdict(list)
     for domain, parser in iteritems(engines):
@@ -507,7 +507,7 @@ def get_all_query_params_by_domain():
         tld_ex = tldextract.extract(domain)
         domain = tld_ex.registered_domain
         param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
-    qs_params = param_dict
+    _qs_params = param_dict
     return param_dict
 
 
