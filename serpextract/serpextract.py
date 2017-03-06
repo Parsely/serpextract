@@ -1,6 +1,6 @@
 """Utilities for extracting keyword information from search engine
 referrers."""
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import re
@@ -50,6 +50,12 @@ _country_codes = [country.alpha2.lower()
 # domains so we add it to our list see
 # http://en.wikipedia.org/wiki/ISO_3166-1 for more information
 _country_codes += ['uk']
+
+# For generating possible variations of domains based
+_second_level_domains = ['co', 'com']
+
+# Cache for querystring params returned by get_all_query_params_by_domain
+_qs_params = None
 
 # A LRUCache of domains to save us from having to do lots of regex matches
 _domain_cache = pylru.lrucache(500)
@@ -117,7 +123,7 @@ def _unicode_urlparse(url, encoding='utf-8', errors='ignore'):
     try:
         return urlparse(url)
     except ValueError:
-        msg = u'Malformed URL "{}" could not parse'.format(url)
+        msg = 'Malformed URL "{}" could not parse'.format(url)
         log.debug(msg, exc_info=True)
         return None
 
@@ -133,7 +139,7 @@ def _serp_query_string(parse_result):
     """
     query = parse_result.query
     if parse_result.fragment != '':
-        query = u'{}&{}'.format(query, parse_result.fragment)
+        query = '{}&{}'.format(query, parse_result.fragment)
 
     return query
 
@@ -175,6 +181,8 @@ def _get_search_engines():
         }
 
         for rule in rule_group:
+            if any(url for url in rule['urls'] if '{}' in url):
+                rule['urls'] = _expand_country_codes(rule['urls'])
             for i, domain in enumerate(rule['urls']):
                 if i == 0:
                     defaults['extractor'] = rule['params']
@@ -194,6 +202,18 @@ def _get_search_engines():
     return _engines
 
 
+def _expand_country_codes(urls):
+    urls = set(urls) if isinstance(urls, list) else {urls}
+    expanded_urls = {url.format(country_code) for url in urls
+                     for country_code in _country_codes}
+    expanded_urls.update({url.format(second_level_domain + '.' + cc_sub_domain)
+                          for url in urls
+                          for cc_sub_domain in _country_codes
+                          for second_level_domain in _second_level_domains
+                          if not url[-1].isalnum()})
+    return expanded_urls
+
+
 def _get_piwik_engines():
     """
     Return the search engine parser definitions stored in this module. We don't
@@ -208,39 +228,6 @@ def _get_piwik_engines():
                 json_stream = TextIOWrapper(json_stream, encoding='utf-8')
         _piwik_engines = json.load(json_stream)
     return _piwik_engines
-
-
-_get_lossy_domain_regex = None
-def _get_lossy_domain(domain):
-    """
-    A lossy version of a domain/host to use as lookup in the ``_engines``
-    dict.
-
-    :param domain: A string that is the ``netloc`` portion of a URL.
-    :type domain:  ``bytes``
-    """
-    global _domain_cache, _get_lossy_domain_regex
-
-    if domain in _domain_cache:
-        return _domain_cache[domain]
-
-    if not _get_lossy_domain_regex:
-        codes = '|'.join(_country_codes)
-        _get_lossy_domain_regex = re.compile(
-            r'^' # start of string
-            r'(?:w+\d*\.|search\.|m\.)*' + # www. www1. search. m.
-            r'((?P<ccsub>{})\.)?'.format(codes) + # country-code subdomain
-            r'(?P<domain>.*?)' + # domain
-            r'(?P<tld>\.(com|org|net|co|edu))?' + # tld
-            r'(?P<tldcc>\.({}))?'.format(codes) + # country-code tld
-            r'$') # all done
-
-    res = _get_lossy_domain_regex.match(domain).groupdict()
-    output = u'%s%s%s' % ('{}.' if res['ccsub'] else '',
-                          res['domain'],
-                          '.{}' if res['tldcc'] else res['tld'] or '')
-    _domain_cache[domain] = output # Add to LRU cache
-    return output
 
 
 class ExtractResult(object):
@@ -340,7 +327,7 @@ class SearchEngineParser(object):
         if self.link_macro is None:
             return None
 
-        link = u'{}/{}'.format(base_url, self.link_macro.format(k=keyword))
+        link = '{}/{}'.format(base_url, self.link_macro.format(k=keyword))
         return link
 
     def parse(self, url_parts):
@@ -390,14 +377,14 @@ class SearchEngineParser(object):
             # Search Operator: "<keyword>"
             key = query.get('as_epq')
             if key:
-                keys.append(u'"{}"'.format(key[0]))
+                keys.append('"{}"'.format(key[0]))
             # Results should contain none of these words
             # Search Operator: -<keyword>
             key = query.get('as_eq')
             if key:
-                keys.append(u'-{}'.format(key[0]))
+                keys.append('-{}'.format(key[0]))
 
-            keyword = u' '.join(keys).strip()
+            keyword = ' '.join(keys).strip()
 
         if engine_name == 'Google':
             # Check for usage of Google's top bar menu
@@ -430,7 +417,7 @@ class SearchEngineParser(object):
 
                 # Now we have to check for a tricky case where it is a SERP but
                 # there are no keywords
-                if keyword == u'':
+                if keyword == '':
                     keyword = False
 
                 if keyword is not None:
@@ -440,9 +427,9 @@ class SearchEngineParser(object):
         if self.hidden_keyword_paths and (keyword is None or keyword is False):
             path_with_query_and_frag = url_parts.path
             if url_parts.query:
-                path_with_query_and_frag += u'?{}'.format(url_parts.query)
+                path_with_query_and_frag += '?{}'.format(url_parts.query)
             if url_parts.fragment:
-                path_with_query_and_frag += u'#{}'.format(url_parts.fragment)
+                path_with_query_and_frag += '#{}'.format(url_parts.fragment)
             for path in self.hidden_keyword_paths:
                 if not isinstance(path, string_types):
                     if path.search(path_with_query_and_frag):
@@ -455,7 +442,7 @@ class SearchEngineParser(object):
         if keyword is not None:
             # Replace special placeholder with blank string
             if keyword is False:
-                keyword = u''
+                keyword = ''
             return ExtractResult(engine_name, keyword, self)
 
     def __repr__(self):
@@ -514,6 +501,9 @@ def get_all_query_params_by_domain():
     :returns: a ``list`` of all the unique query string parameters that are
               used across the search engine definitions.
     """
+    global _qs_params
+    if _qs_params:
+        return _qs_params
     engines = _get_search_engines()
     param_dict = defaultdict(list)
     for domain, parser in iteritems(engines):
@@ -522,7 +512,8 @@ def get_all_query_params_by_domain():
                   if isinstance(param, string_types)}
         tld_res = tldextract.extract(domain)
         domain = tld_res.registered_domain
-        param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
+        param_dict[domain] = sorted(set(param_dict[domain]) | params)
+    _qs_params = param_dict
     return param_dict
 
 
@@ -545,40 +536,35 @@ def get_parser(referring_url):
 
     domain = url_parts.netloc
     path = url_parts.path
-    lossy_domain = _get_lossy_domain(url_parts.netloc)
     engine_key = url_parts.netloc
-
+    stripped_domain = domain[4:] if domain.startswith('www.') else None
     # Try to find a parser in the engines list.  We go from most specific to
     # least specific order:
     # 1. <domain><path>
-    # 2. <lossy_domain><path>
-    # 3. <lossy_domain>
-    # 4. <domain>
-    # The final case has some special exceptions for things like Google custom
+    # 2. <custom search engines>
+    # 3. <domain>
+    # 4. <stripped_domain>
+    # The second step has some special exceptions for things like Google custom
     # search engines, yahoo and yahoo images
-    if u'{}{}'.format(domain, path) in engines:
-        engine_key = u'{}{}'.format(domain, path)
-    elif u'{}{}'.format(lossy_domain, path) in engines:
-        engine_key = u'{}{}'.format(lossy_domain, path)
-    elif lossy_domain in engines:
-        engine_key = lossy_domain
-    elif domain not in engines:
+    if '{}{}'.format(domain, path) in engines:
+        engine_key = '{}{}'.format(domain, path)
+    elif domain not in engines and stripped_domain not in engines:
         if query[:14] == 'cx=partner-pub':
             # Google custom search engine
-            engine_key = u'google.com/cse'
+            engine_key = 'google.com/cse'
         elif url_parts.path[:28] == '/pemonitorhosted/ws/results/':
             # private-label search powered by InfoSpace Metasearch
-            engine_key = u'wsdsold.infospace.com'
+            engine_key = 'wsdsold.infospace.com'
         elif '.images.search.yahoo.com' in url_parts.netloc:
             # Yahoo! Images
-            engine_key = u'images.search.yahoo.com'
+            engine_key = 'images.search.yahoo.com'
         elif '.search.yahoo.com' in url_parts.netloc:
             # Yahoo!
-            engine_key = u'search.yahoo.com'
+            engine_key = 'search.yahoo.com'
         else:
             return None
 
-    return engines.get(engine_key)
+    return engines.get(engine_key) or engines.get(stripped_domain)
 
 
 def is_serp(referring_url, parser=None, use_naive_method=False):
@@ -713,8 +699,8 @@ def main():
             res = ['""', '""']
         else:
             res = [escape_quotes(res.engine_name), escape_quotes(res.keyword)]
-            res = [u'"{}"'.format(r) for r in res]
-        print(u','.join(res))
+            res = ['"{}"'.format(r) for r in res]
+        print(','.join(res))
 
 if __name__ == '__main__':
     main()

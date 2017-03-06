@@ -33,25 +33,5 @@ class TestSERPExtractUtilityFunctions(unittest.TestCase):
             actual = is_url_without_path_query_or_fragment(parts)
             self.assertEqual(actual, expected)
 
-    def test_get_lossy_domain(self):
-        get_lossy_domain = serpextract._get_lossy_domain
-
-        url = 'www.a.com'
-        expected = 'a.com'
-        self.assertEqual(get_lossy_domain(url), expected)
-
-        url = 'www15.a.com'
-        self.assertEqual(get_lossy_domain(url), expected)
-
-        url = 'search.a.com'
-        self.assertEqual(get_lossy_domain(url), expected)
-
-        url = 'a.co.uk'
-        self.assertEqual(get_lossy_domain(url), 'a.{}')
-
-        url = 'ca.a.com'
-        self.assertEqual(get_lossy_domain(url), '{}.a.com')
-
-
 if __name__ == '__main__':
     unittest.main()
