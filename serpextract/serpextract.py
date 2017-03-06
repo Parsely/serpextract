@@ -488,7 +488,7 @@ def get_all_query_params():
 
     return list(all_params)
 
-qs_params = defaultdict(list)
+_qs_params = defaultdict(list)
 def get_all_query_params_by_domain():
     """
     Return all the possible query string params for all search engines.
@@ -496,7 +496,7 @@ def get_all_query_params_by_domain():
     :returns: a ``list`` of all the unique query string parameters that are
               used across the search engine definitions.
     """
-    global qs_params
+    global _qs_params
     if qs_params:
         return qs_params
     engines = _get_search_engines()
