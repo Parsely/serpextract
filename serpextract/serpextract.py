@@ -197,11 +197,10 @@ def _get_search_engines():
 
 second_level_domains = ['co', 'com']
 def _expand_country_codes(urls):
-    urls = urls if isinstance(urls, list) else [urls]
-    urls = set(urls)
+    urls = set(urls) if isinstance(urls, list) else {urls}
     expanded_urls = {url.format(country_code) for url in urls
                      for country_code in _country_codes}
-    expanded_urls.update({url.format('{}.{}'.format(second_level_domain, cc_sub_domain))
+    expanded_urls.update({url.format(second_level_domain + u'.' + cc_sub_domain)
                           for url in urls
                           for cc_sub_domain in _country_codes
                           for second_level_domain in second_level_domains
