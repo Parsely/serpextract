@@ -530,7 +530,7 @@ def get_parser(referring_url):
     domain = url_parts.netloc
     path = url_parts.path
     engine_key = url_parts.netloc
-
+    stripped_domain = domain[4:] if domain.startswith('www.') else None
     # Try to find a parser in the engines list.  We go from most specific to
     # least specific order:
     # 1. <domain><path>
@@ -541,7 +541,7 @@ def get_parser(referring_url):
     # search engines, yahoo and yahoo images
     if u'{}{}'.format(domain, path) in engines:
         engine_key = u'{}{}'.format(domain, path)
-    elif domain not in engines and domain.strip('www.') not in engines:
+    elif domain not in engines and stripped_domain not in engines:
         if query[:14] == 'cx=partner-pub':
             # Google custom search engine
             engine_key = u'google.com/cse'
@@ -557,7 +557,7 @@ def get_parser(referring_url):
         else:
             return None
 
-    return engines.get(engine_key) or engines.get(engine_key.strip('www.'))
+    return engines.get(engine_key) or engines.get(stripped_domain)
 
 
 def is_serp(referring_url, parser=None, use_naive_method=False):
