@@ -175,8 +175,7 @@ def _get_search_engines():
         }
 
         for rule in rule_group:
-            replacements = [url for url in rule['urls'] if '{}' in url]
-            if replacements:
+            if any([url for url in rule['urls'] if '{}' in url]):
                 rule['urls'] = _expand_country_codes(rule['urls'])
             for i, domain in enumerate(rule['urls']):
                 if i == 0:
