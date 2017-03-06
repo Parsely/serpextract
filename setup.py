@@ -14,8 +14,6 @@ install_requires = [
     'tldextract >= 1.2',
     'ruamel.yaml'
 ]
-if sys.version_info <= (2,7):
-    install_requires.append("argparse >= 1.2.1")
 
 with open('README.rst', 'r') as f:
     long_description = f.read()
