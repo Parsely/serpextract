@@ -501,10 +501,11 @@ def get_all_query_params_by_domain():
     engines = _get_search_engines()
     param_dict = defaultdict(list)
     for domain, parser in iteritems(engines):
+        # Find non-regex params
         params = {param for param in parser.keyword_extractor
                   if isinstance(param, string_types)}
-        tld_ex = tldextract.extract(domain)
-        domain = tld_ex.registered_domain
+        tld_res = tldextract.extract(domain)
+        domain = tld_res.registered_domain
         param_dict[domain] = list(sorted(set(param_dict[domain]) | params))
     _qs_params = param_dict
     return param_dict
