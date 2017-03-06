@@ -43,7 +43,7 @@ Python
 .. code-block:: python
 
     from serpextract import get_parser, extract, is_serp, get_all_query_params
-    
+
     non_serp_url = 'http://arstechnica.com/'
     serp_url = ('http://www.google.ca/url?sa=t&rct=j&q=ars%20technica&source=web&cd=1&ved=0CCsQFjAA'
                 '&url=http%3A%2F%2Farstechnica.com%2F&ei=pf7RUYvhO4LdyAHf9oGAAw&usg=AFQjCNHA7qjcMXh'
@@ -161,12 +161,12 @@ Tests
 There are some basic tests for popular search engines, but more are required::
 
     $ pip install -r requirements.txt
-    $ nosetests
+    $ py.test
 
 Caching
 -------
 
-Internally, this module caches an OrderedDict representation of 
+Internally, this module caches an OrderedDict representation of
 `Piwik's list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_
 which is stored in ``serpextract/search_engines.pickle``.  This isn't intended to change that often and so this
 module ships with a cached version.
