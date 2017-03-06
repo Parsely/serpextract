@@ -51,6 +51,9 @@ _country_codes = [country.alpha2.lower()
 # http://en.wikipedia.org/wiki/ISO_3166-1 for more information
 _country_codes += ['uk']
 
+# For generating possible variations of domains based
+_second_level_domains = ['co', 'com']
+
 # A LRUCache of domains to save us from having to do lots of regex matches
 _domain_cache = pylru.lrucache(500)
 
@@ -117,7 +120,7 @@ def _unicode_urlparse(url, encoding='utf-8', errors='ignore'):
     try:
         return urlparse(url)
     except ValueError:
-        msg = u'Malformed URL "{}" could not parse'.format(url)
+        msg = 'Malformed URL "{}" could not parse'.format(url)
         log.debug(msg, exc_info=True)
         return None
 
@@ -133,7 +136,7 @@ def _serp_query_string(parse_result):
     """
     query = parse_result.query
     if parse_result.fragment != '':
-        query = u'{}&{}'.format(query, parse_result.fragment)
+        query = '{}&{}'.format(query, parse_result.fragment)
 
     return query
 
@@ -195,15 +198,15 @@ def _get_search_engines():
 
     return _engines
 
-second_level_domains = ['co', 'com']
+
 def _expand_country_codes(urls):
     urls = set(urls) if isinstance(urls, list) else {urls}
     expanded_urls = {url.format(country_code) for url in urls
                      for country_code in _country_codes}
-    expanded_urls.update({url.format(second_level_domain + u'.' + cc_sub_domain)
+    expanded_urls.update({url.format(second_level_domain + '.' + cc_sub_domain)
                           for url in urls
                           for cc_sub_domain in _country_codes
-                          for second_level_domain in second_level_domains
+                          for second_level_domain in _second_level_domains
                           if not url[-1].isalnum()})
     return expanded_urls
 
@@ -321,7 +324,7 @@ class SearchEngineParser(object):
         if self.link_macro is None:
             return None
 
-        link = u'{}/{}'.format(base_url, self.link_macro.format(k=keyword))
+        link = '{}/{}'.format(base_url, self.link_macro.format(k=keyword))
         return link
 
     def parse(self, url_parts):
@@ -371,14 +374,14 @@ class SearchEngineParser(object):
             # Search Operator: "<keyword>"
             key = query.get('as_epq')
             if key:
-                keys.append(u'"{}"'.format(key[0]))
+                keys.append('"{}"'.format(key[0]))
             # Results should contain none of these words
             # Search Operator: -<keyword>
             key = query.get('as_eq')
             if key:
-                keys.append(u'-{}'.format(key[0]))
+                keys.append('-{}'.format(key[0]))
 
-            keyword = u' '.join(keys).strip()
+            keyword = ' '.join(keys).strip()
 
         if engine_name == 'Google':
             # Check for usage of Google's top bar menu
@@ -411,7 +414,7 @@ class SearchEngineParser(object):
 
                 # Now we have to check for a tricky case where it is a SERP but
                 # there are no keywords
-                if keyword == u'':
+                if keyword == '':
                     keyword = False
 
                 if keyword is not None:
@@ -421,9 +424,9 @@ class SearchEngineParser(object):
         if self.hidden_keyword_paths and (keyword is None or keyword is False):
             path_with_query_and_frag = url_parts.path
             if url_parts.query:
-                path_with_query_and_frag += u'?{}'.format(url_parts.query)
+                path_with_query_and_frag += '?{}'.format(url_parts.query)
             if url_parts.fragment:
-                path_with_query_and_frag += u'#{}'.format(url_parts.fragment)
+                path_with_query_and_frag += '#{}'.format(url_parts.fragment)
             for path in self.hidden_keyword_paths:
                 if not isinstance(path, string_types):
                     if path.search(path_with_query_and_frag):
@@ -436,7 +439,7 @@ class SearchEngineParser(object):
         if keyword is not None:
             # Replace special placeholder with blank string
             if keyword is False:
-                keyword = u''
+                keyword = ''
             return ExtractResult(engine_name, keyword, self)
 
     def __repr__(self):
@@ -540,21 +543,21 @@ def get_parser(referring_url):
     # 4. <stripped_domain>
     # The second step has some special exceptions for things like Google custom
     # search engines, yahoo and yahoo images
-    if u'{}{}'.format(domain, path) in engines:
-        engine_key = u'{}{}'.format(domain, path)
+    if '{}{}'.format(domain, path) in engines:
+        engine_key = '{}{}'.format(domain, path)
     elif domain not in engines and stripped_domain not in engines:
         if query[:14] == 'cx=partner-pub':
             # Google custom search engine
-            engine_key = u'google.com/cse'
+            engine_key = 'google.com/cse'
         elif url_parts.path[:28] == '/pemonitorhosted/ws/results/':
             # private-label search powered by InfoSpace Metasearch
-            engine_key = u'wsdsold.infospace.com'
+            engine_key = 'wsdsold.infospace.com'
         elif '.images.search.yahoo.com' in url_parts.netloc:
             # Yahoo! Images
-            engine_key = u'images.search.yahoo.com'
+            engine_key = 'images.search.yahoo.com'
         elif '.search.yahoo.com' in url_parts.netloc:
             # Yahoo!
-            engine_key = u'search.yahoo.com'
+            engine_key = 'search.yahoo.com'
         else:
             return None
 
@@ -693,8 +696,8 @@ def main():
             res = ['""', '""']
         else:
             res = [escape_quotes(res.engine_name), escape_quotes(res.keyword)]
-            res = [u'"{}"'.format(r) for r in res]
-        print(u','.join(res))
+            res = ['"{}"'.format(r) for r in res]
+        print(','.join(res))
 
 if __name__ == '__main__':
     main()
