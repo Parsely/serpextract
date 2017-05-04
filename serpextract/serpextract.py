@@ -308,7 +308,7 @@ class SearchEngineParser(object):
         for i, path in enumerate(self.hidden_keyword_paths):
             # Pre-compile all the regular expressions
             if len(path) > 1 and path.startswith('/') and path.endswith('/'):
-                path = path.strip('/')
+                path = path[1:-1]
                 path = re.compile(path)
                 self.hidden_keyword_paths[i] = path
 
