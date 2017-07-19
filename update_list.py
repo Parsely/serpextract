@@ -21,7 +21,7 @@ def main():
     print('Updating search engine parser definitions.')
 
     url = urlopen('https://raw.githubusercontent.com/piwik/searchengine-and-social-list/master/SearchEngines.yml')
-    piwik_engines = yaml.load(url)
+    piwik_engines = yaml.safe_load(url)
     with open(filename, 'w') as json_file:
         json.dump(piwik_engines, json_file, indent=2, sort_keys=True)
 
