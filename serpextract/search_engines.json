@@ -471,6 +471,7 @@
     {
       "backlink":"search?q={k}",
       "hiddenkeyword":[
+        "\/\\\/cr\\?.*\/",
         "\/^$\/",
         "\/"
       ],
@@ -480,7 +481,8 @@
       ],
       "urls":[
         "bing.com",
-        "{}.bing.com"
+        "{}.bing.com",
+        "global.bing.com"
       ]
     },
     {
@@ -1141,7 +1143,8 @@
       "hiddenkeyword":[
         "\/^$\/",
         "\/",
-        "\/search"
+        "\/\\\/search(\\?.*)?\/",
+        "\/\\\/url\\?.*\/"
       ],
       "params":[
         "q"
@@ -1161,9 +1164,20 @@
         "gppgle.{}",
         "googel.com",
         "googel.{}",
-        "com.google.android.googlequicksearchbox",
         "search.avg.com",
         "isearch.avg.com"
+      ]
+    },
+    {
+      "hiddenkeyword":[
+        "\/.*\/"
+      ],
+      "params":[
+        "q"
+      ],
+      "urls":[
+        "com.google.android.googlequicksearchbox",
+        "android-app\/\/com.google.android.googlequicksearchbox\/https\/www.google.com"
       ]
     },
     {
@@ -3167,6 +3181,7 @@
     {
       "backlink":"search?p={k}",
       "hiddenkeyword":[
+        "\/\\\/r\\\/.*\/",
         "\/^$\/",
         "\/"
       ],
