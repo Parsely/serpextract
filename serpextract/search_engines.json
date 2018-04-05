@@ -64,7 +64,8 @@
         "q"
       ],
       "urls":[
-        "www.so.com"
+        "www.so.com",
+        "m.so.com"
       ]
     }
   ],
@@ -357,20 +358,6 @@
         "avira.search.ask.com",
         "int.search.tb.ask.com"
       ]
-    },
-    {
-      "hiddenkeyword":[
-        "\/^$\/",
-        "\/"
-      ],
-      "params":[
-        "ask",
-        "q",
-        "searchfor"
-      ],
-      "urls":[
-        "safesearch.avira.com"
-      ]
     }
   ],
   "Atlas":[
@@ -392,6 +379,25 @@
       "urls":[
         "www2.austronaut.at",
         "www1.austronaut.at"
+      ]
+    }
+  ],
+  "Avira SafeSearch":[
+    {
+      "backlink":"#\/web\/result?q={k}",
+      "hiddenkeyword":[
+        "\/^$\/",
+        "\/"
+      ],
+      "params":[
+        "ask",
+        "q",
+        "searchfor"
+      ],
+      "urls":[
+        "search.avira.com",
+        "search.avira.net",
+        "safesearch.avira.com"
       ]
     }
   ],
@@ -784,6 +790,10 @@
   "Ecosia":[
     {
       "backlink":"search?q={k}",
+      "hiddenkeyword":[
+        "\/^$\/",
+        "\/"
+      ],
       "params":[
         "q"
       ],
@@ -1330,7 +1340,8 @@
         "query"
       ],
       "urls":[
-        "searches.f-secure.com"
+        "searches.f-secure.com",
+        "search.f-secure.com"
       ]
     },
     {
@@ -2010,6 +2021,9 @@
         "UTF-8",
         "windows-1251"
       ],
+      "hiddenkeyword":[
+        "\/redir\\?.*redir=.*\/"
+      ],
       "params":[
         "q"
       ],
@@ -2516,7 +2530,8 @@
         "q"
       ],
       "urls":[
-        "searchlock.com"
+        "searchlock.com",
+        "results.searchlock.com"
       ]
     }
   ],
@@ -2685,6 +2700,9 @@
       "charsets":[
         "gb2312"
       ],
+      "hiddenkeyword":[
+        "\/link\\?url=.*\/"
+      ],
       "params":[
         "query"
       ],
@@ -2697,7 +2715,8 @@
         "keyword"
       ],
       "urls":[
-        "m.sogou.com"
+        "m.sogou.com",
+        "wap.sogou.com"
       ]
     }
   ],
@@ -2738,7 +2757,24 @@
       "urls":[
         "startpage.com",
         "classic.startpage.com",
-        "www.startpage.com"
+        "www.startpage.com",
+        "eu.startpage.com",
+        "s6-eu5.ixquick.com",
+        "s2-eu4.startpage.com",
+        "s6-eu4.startpage.com",
+        "s7-eu4.startpage.com",
+        "s1-eu5.startpage.com",
+        "s2-eu5.startpage.com",
+        "s4-eu5.startpage.com",
+        "s5-eu5.startpage.com",
+        "s6-eu5.startpage.com",
+        "s7-eu5.startpage.com",
+        "s8-eu5.startpage.com",
+        "s10-eu5.startpage.com",
+        "s11-eu5.startpage.com",
+        "s12-eu5.startpage.com",
+        "s13-eu5.startpage.com",
+        "s14-eu5.startpage.com"
       ]
     }
   ],
@@ -2836,6 +2872,17 @@
       ],
       "urls":[
         "www.talktalk.co.uk"
+      ]
+    }
+  ],
+  "Tarmot":[
+    {
+      "backlink":"ara\/?q={k}",
+      "params":[
+        "q"
+      ],
+      "urls":[
+        "tarmot.com"
       ]
     }
   ],
@@ -3362,6 +3409,10 @@
   "Yandex":[
     {
       "backlink":"yandsearch?text={k}",
+      "hiddenkeyword":[
+        "\/^$\/",
+        "\/"
+      ],
       "params":[
         "text"
       ],
@@ -3372,6 +3423,14 @@
         "www.yandex.{}",
         "clck.yandex.{}",
         "m.yandex.{}"
+      ]
+    },
+    {
+      "params":[
+        "q"
+      ],
+      "urls":[
+        "yabs.yandex.{}"
       ]
     }
   ],
