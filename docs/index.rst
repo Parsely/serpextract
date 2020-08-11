@@ -65,7 +65,7 @@ your local cache via::
 Naive Detection
 ---------------
 
-The list of search engine parsers that Piwik and therefore :mod:`serpextract.serpextract` uses is far from
+The list of search engine parsers that Matomo and therefore :mod:`serpextract.serpextract` uses is far from
 exhaustive.  If you want :mod:`serpextract.serpextract` to attempt to guess if a given referring URL is a SERP,
 you can specify ``use_naive_method=True`` to :func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract`.
 By default, the naive method is disabled.
@@ -101,7 +101,7 @@ Custom Parsers
 --------------
 
 In the event that you have a custom search engine that you'd like to track which is not currently
-supported by Piwik/:mod:`serpextract.serpextract`, you can create your own instance of
+supported by Matomo/:mod:`serpextract.serpextract`, you can create your own instance of
 :class:`serpextract.serpextract.SearchEngineParser` and either pass it explicitly to either
 :func:`serpextract.serpextract.is_serp` or :func:`serpextract.serpextract.extract` or add it
 to the internal list of parsers.

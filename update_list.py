@@ -20,13 +20,13 @@ def main():
     filename = _here('serpextract', 'search_engines.json')
     print('Updating search engine parser definitions.')
 
-    url = urlopen('https://raw.githubusercontent.com/piwik/searchengine-and-social-list/master/SearchEngines.yml')
-    piwik_engines = yaml.safe_load(url)
+    url = urlopen('https://raw.githubusercontent.com/matomo-org/searchengine-and-social-list/master/SearchEngines.yml')
+    matomo_engines = yaml.safe_load(url)
     with open(filename, 'w') as json_file:
-        json.dump(piwik_engines, json_file, indent=2, sort_keys=True)
+        json.dump(matomo_engines, json_file, indent=2, sort_keys=True)
 
     print('Saved {} search engine parser definitions to {}.'
-          .format(len(piwik_engines), filename))
+          .format(len(matomo_engines), filename))
 
 
 if __name__ == '__main__':

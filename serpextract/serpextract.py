@@ -157,7 +157,7 @@ def _is_url_without_path_query_or_fragment(url_parts):
 _engines = None
 def _get_search_engines():
     """
-    Convert the OrderedDict of search engine parsers that we get from Piwik
+    Convert the OrderedDict of search engine parsers that we get from Matomo
     to a dictionary of SearchEngineParser objects.
 
     Cache this thing by storing in the global ``_engines``.
@@ -166,13 +166,13 @@ def _get_search_engines():
     if _engines:
         return _engines
 
-    piwik_engines = _get_piwik_engines()
+    matomo_engines = _get_matomo_engines()
     # Engine names are the first param of each of the search engine arrays
     # so we group by those guys, and create our new dictionary with that
     # order
     _engines = {}
 
-    for engine_name, rule_group in iteritems(piwik_engines):
+    for engine_name, rule_group in iteritems(matomo_engines):
         defaults = {
             'extractor': None,
             'link_macro': None,
@@ -214,7 +214,7 @@ def _expand_country_codes(urls):
     return expanded_urls
 
 
-def _get_piwik_engines():
+def _get_matomo_engines():
     """
     Return the search engine parser definitions stored in this module. We don't
     cache this result since it's only supposed to be called once.
@@ -226,8 +226,8 @@ def _get_piwik_engines():
                 json_stream = TextIOWrapper(json_stream.buffer, encoding='utf-8')
             else:
                 json_stream = TextIOWrapper(json_stream, encoding='utf-8')
-        _piwik_engines = json.load(json_stream)
-    return _piwik_engines
+        _matomo_engines = json.load(json_stream)
+    return _matomo_engines
 
 
 class ExtractResult(object):
@@ -244,12 +244,12 @@ class ExtractResult(object):
 
 
 class SearchEngineParser(object):
-    """Handles persing logic for a single line in Piwik's list of search
+    """Handles persing logic for a single line in Matomo's list of search
     engines.
 
-    Piwik's list for reference:
+    Matomo's list for reference:
 
-    https://raw.github.com/piwik/piwik/master/core/DataFiles/SearchEngines.php
+    https://raw.githubusercontent.com/matomo-org/searchengine-and-social-list/master/SearchEngines.yml
 
     This class is not used directly since it already assumes you know the
     exact search engine you want to use to parse a URL. The main interface
