@@ -16,10 +16,6 @@ Latest release on PyPI::
 
     $ pip install serpextract
 
-Or the latest development version (not recommended)::
-
-    $ pip install -e git://github.com/Parsely/serpextract.git#egg=serpextract
-
 Usage
 -----
 
