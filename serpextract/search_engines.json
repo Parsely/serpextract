@@ -1,94 +1,94 @@
 {
-  "1.cz":[
+  "1.cz": [
     {
-      "backlink":"s\/{k}",
-      "charsets":[
+      "backlink": "s/{k}",
+      "charsets": [
         "iso-8859-2"
       ],
-      "params":[
-        "\/s\\\/([^\\\/]+)\/",
+      "params": [
+        "/s\\/([^\\/]+)/",
         "q"
       ],
-      "urls":[
+      "urls": [
         "1.cz"
       ]
     }
   ],
-  "118 700":[
+  "118 700": [
     {
-      "backlink":"sok.aspx?q={k}",
-      "params":[
+      "backlink": "sok.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.118700.se",
         "foretag.118700.se",
         "webben.118700.se"
       ]
     }
   ],
-  "123people":[
+  "123people": [
     {
-      "backlink":"s\/{k}",
-      "params":[
-        "\/s\\\/([^\\\/]+)\/",
+      "backlink": "s/{k}",
+      "params": [
+        "/s\\/([^\\/]+)/",
         "search_term"
       ],
-      "urls":[
+      "urls": [
         "www.123people.com",
         "123people.{}"
       ]
     }
   ],
-  "360search":[
+  "360search": [
     {
-      "backlink":"s?q={k}",
-      "charsets":[
+      "backlink": "s?q={k}",
+      "charsets": [
         "UTF-8",
         "gb2312"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "so.360.cn"
       ]
     },
     {
-      "backlink":"s?q={k}",
-      "charsets":[
+      "backlink": "s?q={k}",
+      "charsets": [
         "UTF-8",
         "gb2312"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.so.com",
         "m.so.com"
       ]
     }
   ],
-  "ABCs\u00f8k":[
+  "ABCs\u00f8k": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "abcsok.no",
         "verden.abcsok.no"
       ]
     }
   ],
-  "AOL":[
+  "AOL": [
     {
-      "backlink":"aol\/search?q={k}",
-      "params":[
+      "backlink": "aol/search?q={k}",
+      "params": [
         "query",
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.aol.com",
         "search.aol.it",
         "aolsearch.aol.com",
@@ -118,22 +118,22 @@
       ]
     },
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "de.aolsearch.com"
       ]
     }
   ],
-  "Abacho":[
+  "Abacho": [
     {
-      "backlink":"suche?q={k}",
-      "params":[
+      "backlink": "suche?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.abacho.de",
         "www.abacho.com",
         "www.abacho.co.uk",
@@ -147,104 +147,115 @@
       ]
     }
   ],
-  "Acoon":[
+  "Acoon": [
     {
-      "backlink":"cgi-bin\/search.exe?begriff={k}",
-      "params":[
+      "backlink": "cgi-bin/search.exe?begriff={k}",
+      "params": [
         "begriff"
       ],
-      "urls":[
+      "urls": [
         "www.acoon.de"
       ]
     }
   ],
-  "Aguea":[
+  "Aguea": [
     {
-      "backlink":"s.py?q={k}",
-      "params":[
+      "backlink": "s.py?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "chercherfr.aguea.com"
       ]
     }
   ],
-  "Alexa":[
+  "Alexa": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "alexa.com",
         "search.toolbars.alexa.com"
       ]
     }
   ],
-  "Alice Adsl":[
+  "Alice Adsl": [
     {
-      "backlink":"google.pl?qs={k}",
-      "params":[
+      "backlink": "google.pl?qs={k}",
+      "params": [
         "qs"
       ],
-      "urls":[
+      "urls": [
         "rechercher.aliceadsl.fr"
       ]
     }
   ],
-  "All.by":[
+  "All.by": [
     {
-      "backlink":"cgi-bin\/search.cgi?mode=by&query={k}",
-      "params":[
+      "backlink": "cgi-bin/search.cgi?mode=by&query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "all.by"
       ]
     }
   ],
-  "AllTheWeb":[
+  "AllTheWeb": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.alltheweb.com"
       ]
     }
   ],
-  "Allaverksamheter":[
+  "Allaverksamheter": [
     {
-      "backlink":"SearchResult.aspx?What={k}",
-      "params":[
+      "backlink": "SearchResult.aspx?What={k}",
+      "params": [
         "What"
       ],
-      "urls":[
+      "urls": [
         "www.allaverksamheter.se"
       ]
     }
   ],
-  "Allesklar":[
+  "Allesklar": [
     {
-      "backlink":"?words={k}",
-      "params":[
+      "backlink": "?words={k}",
+      "params": [
         "words"
       ],
-      "urls":[
+      "urls": [
         "www.allesklar.de",
         "www.allesklar.at",
         "www.allesklar.ch"
       ]
     }
   ],
-  "AltaVista":[
+  "AlohaFind": [
     {
-      "backlink":"web\/results?q={k}",
-      "params":[
+      "backlink": "search/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
+        "alohafind.com"
+      ]
+    }
+  ],
+  "AltaVista": [
+    {
+      "backlink": "web/results?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
         "www.altavista.com",
         "search.altavista.com",
         "listings.altavista.com",
@@ -256,82 +267,82 @@
       ]
     }
   ],
-  "Apollo lv":[
+  "Apollo lv": [
     {
-      "backlink":"?cof=FORID%3A11&q={k}&search_where=www",
-      "params":[
+      "backlink": "?cof=FORID%3A11&q={k}&search_where=www",
+      "params": [
         "q"
       ],
-      "urls":[
-        "apollo.lv\/portal\/search\/"
+      "urls": [
+        "apollo.lv/portal/search/"
       ]
     }
   ],
-  "Apollo7":[
+  "Apollo7": [
     {
-      "backlink":"a7db\/index.php?query={k}&de_sharelook=true&de_bing=true&de_witch=true&de_google=true&de_yahoo=true&de_lycos=true",
-      "params":[
+      "backlink": "a7db/index.php?query={k}&de_sharelook=true&de_bing=true&de_witch=true&de_google=true&de_yahoo=true&de_lycos=true",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "apollo7.de"
       ]
     }
   ],
-  "Aport":[
+  "Aport": [
     {
-      "backlink":"search?r={k}",
-      "params":[
+      "backlink": "search?r={k}",
+      "params": [
         "r"
       ],
-      "urls":[
+      "urls": [
         "sm.aport.ru"
       ]
     }
   ],
-  "Arama":[
+  "Arama": [
     {
-      "backlink":"search.php3?q={k}",
-      "params":[
+      "backlink": "search.php3?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "arama.com"
       ]
     }
   ],
-  "Arcor":[
+  "Arcor": [
     {
-      "backlink":"content\/searchresult.jsp?Keywords={k}",
-      "params":[
+      "backlink": "content/searchresult.jsp?Keywords={k}",
+      "params": [
         "Keywords"
       ],
-      "urls":[
+      "urls": [
         "www.arcor.de"
       ]
     }
   ],
-  "Arianna":[
+  "Arianna": [
     {
-      "backlink":"search\/abin\/integrata.cgi?query={k}",
-      "params":[
+      "backlink": "search/abin/integrata.cgi?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "arianna.libero.it",
         "www.arianna.com"
       ]
     }
   ],
-  "Ask":[
+  "Ask": [
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "ask",
         "q",
         "searchfor"
       ],
-      "urls":[
+      "urls": [
         "ask.com",
         "web.ask.com",
         "int.ask.com",
@@ -360,75 +371,80 @@
       ]
     }
   ],
-  "Atlas":[
+  "Atlas": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "searchatlas.centrum.cz"
       ]
     }
   ],
-  "Austronaut":[
+  "Austronaut": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www2.austronaut.at",
         "www1.austronaut.at"
       ]
     }
   ],
-  "Avira SafeSearch":[
+  "Avira SafeSearch": [
     {
-      "backlink":"#\/web\/result?q={k}",
-      "hiddenkeyword":[
-        "\/^$\/",
-        "\/"
+      "backlink": "#/web/result?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "ask",
         "q",
         "searchfor"
       ],
-      "urls":[
+      "urls": [
         "search.avira.com",
         "search.avira.net",
         "safesearch.avira.com"
       ]
     }
   ],
-  "Babylon":[
+  "Babylon": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q",
-        "\/\\\/web\\\/(.*)\/"
+        "/\\/web\\/(.*)/"
       ],
-      "urls":[
+      "urls": [
         "search.babylon.com",
         "searchassist.babylon.com"
       ]
     }
   ],
-  "Baidu":[
+  "Baidu": [
     {
-      "backlink":"s?wd={k}",
-      "charsets":[
+      "backlink": "s?wd={k}",
+      "charsets": [
         "UTF-8",
         "gb2312"
       ],
-      "params":[
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [
         "wd",
         "word",
         "kw"
       ],
-      "urls":[
+      "urls": [
         "www.baidu.com",
         "www1.baidu.com",
+        "baidu.com",
         "m.baidu.com",
         "www.baidu.co.th",
         "zhidao.baidu.com",
@@ -437,67 +453,67 @@
       ]
     },
     {
-      "backlink":"search?search={k}",
-      "params":[
+      "backlink": "search?search={k}",
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "web.gougou.com"
       ]
     }
   ],
-  "Biglobe":[
+  "Biglobe": [
     {
-      "backlink":"cgi-bin\/search-st?q={k}",
-      "charsets":[
+      "backlink": "cgi-bin/search-st?q={k}",
+      "charsets": [
         "utf-8",
         "euc-jp",
         "ms932"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "cgi.search.biglobe.ne.jp"
       ]
     }
   ],
-  "Biglobe Images":[
+  "Biglobe Images": [
     {
-      "backlink":"cgi-bin\/search-st?q={k}",
-      "params":[
+      "backlink": "cgi-bin/search-st?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "images.search.biglobe.ne.jp"
       ]
     }
   ],
-  "Bing":[
+  "Bing": [
     {
-      "backlink":"search?q={k}",
-      "hiddenkeyword":[
-        "\/\\\/cr\\?.*\/",
-        "\/^$\/",
-        "\/"
+      "backlink": "search?q={k}",
+      "hiddenkeyword": [
+        "/\\/cr\\?.*/",
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "q",
         "Q"
       ],
-      "urls":[
+      "urls": [
         "bing.com",
         "{}.bing.com",
         "global.bing.com"
       ]
     },
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q",
         "Q"
       ],
-      "urls":[
+      "urls": [
         "msnbc.msn.com",
         "dizionario.it.msn.com",
         "enciclopedia.it.msn.com",
@@ -505,377 +521,409 @@
       ]
     }
   ],
-  "Bing Images":[
+  "Bing Images": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q",
         "Q"
       ],
-      "urls":[
-        "bing.com\/images\/search",
-        "{}.bing.com\/images\/search"
+      "urls": [
+        "bing.com/images/search",
+        "{}.bing.com/images/search"
       ]
     }
   ],
-  "Blogdigger":[
+  "Blogdigger": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.blogdigger.com"
       ]
     }
   ],
-  "Blogpulse":[
+  "Blogpulse": [
     {
-      "backlink":"search?query={k}",
-      "params":[
+      "backlink": "search?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.blogpulse.com"
       ]
     }
   ],
-  "Bluewin":[
+  "Bluewin": [
     {
-      "backlink":"v2\/index.php?q={k}",
-      "params":[
+      "backlink": "v2/index.php?q={k}",
+      "params": [
         "searchTerm",
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.bluewin.ch"
       ]
     }
   ],
-  "Canoe.ca":[
+  "Canoe.ca": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "web.canoe.ca"
       ]
     }
   ],
-  "Centrum":[
+  "Centrum": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.centrum.cz",
         "morfeo.centrum.cz"
       ]
     }
   ],
-  "Charter":[
+  "Charter": [
     {
-      "backlink":"search\/index.php?q={k}",
-      "params":[
+      "backlink": "search/index.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.charter.net"
       ]
     }
   ],
-  "Claro Search":[
+  "Claro Search": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "claro-search.com"
       ]
     }
   ],
-  "Clix":[
+  "Clix": [
     {
-      "backlink":"resultado.html?in=Mundial&question={k}",
-      "params":[
+      "backlink": "resultado.html?in=Mundial&question={k}",
+      "params": [
         "question"
       ],
-      "urls":[
+      "urls": [
         "pesquisa.clix.pt"
       ]
     }
   ],
-  "Comcast":[
+  "Comcast": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.comcast.net"
       ]
     }
   ],
-  "Compuserve.com (Enhanced by Google)":[
+  "Compuserve.com (Enhanced by Google)": [
     {
-      "backlink":"cs\/search?query={k}",
-      "params":[
+      "backlink": "cs/search?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "websearch.cs.com"
       ]
     }
   ],
-  "Conduit.com":[
+  "Conduit.com": [
     {
-      "backlink":"Results.aspx?q={k}",
-      "params":[
+      "backlink": "Results.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.conduit.com",
         "images.search.conduit.com"
       ]
     }
   ],
-  "Crawler":[
+  "Crawler": [
     {
-      "backlink":"search\/results1.aspx?q={k}",
-      "params":[
+      "backlink": "search/results1.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.crawler.com"
       ]
     }
   ],
-  "Cuil":[
+  "Cuil": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.cuil.com"
       ]
     }
   ],
-  "Daemon search":[
+  "C\u1ed1c C\u1ed1c": [
     {
-      "backlink":"explore\/web?q={k}",
-      "params":[
+      "backlink": "search#query={k}",
+      "params": [
+        "query"
+      ],
+      "urls": [
+        "coccoc.com"
+      ]
+    }
+  ],
+  "Daemon search": [
+    {
+      "backlink": "explore/web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "daemon-search.com",
         "my.daemon-search.com"
       ]
     }
   ],
-  "DasOertliche":[
+  "DasOertliche": [
     {
-      "params":[
+      "params": [
         "kw"
       ],
-      "urls":[
+      "urls": [
         "www.dasoertliche.de"
       ]
     },
     {
-      "params":[
+      "params": [
         "ph",
         "kw"
       ],
-      "urls":[
+      "urls": [
         "www2.dasoertliche.de"
       ]
     }
   ],
-  "DasTelefonbuch":[
+  "DasTelefonbuch": [
     {
-      "params":[
+      "params": [
         "kw"
       ],
-      "urls":[
+      "urls": [
         "www1.dastelefonbuch.de"
       ]
     }
   ],
-  "Daum":[
+  "Daum": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.daum.net"
       ]
     }
   ],
-  "Delfi EE":[
+  "Delfi EE": [
     {
-      "backlink":"find?q={k}",
-      "params":[
+      "backlink": "find?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "otsing.delfi.ee"
       ]
     }
   ],
-  "Delfi lv":[
+  "Delfi lv": [
     {
-      "backlink":"find?q={k}",
-      "params":[
+      "backlink": "find?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "smart.delfi.lv"
       ]
     }
   ],
-  "Digg":[
+  "Digg": [
     {
-      "backlink":"search?s={k}",
-      "params":[
+      "backlink": "search?s={k}",
+      "params": [
         "s"
       ],
-      "urls":[
+      "urls": [
         "digg.com"
       ]
     }
   ],
-  "DisconnectSearch":[
+  "DisconnectSearch": [
     {
-      "hiddenkeyword":[
-        "\/.*\/"
+      "hiddenkeyword": [
+        "/.*/"
       ],
-      "params":[
-
-      ],
-      "urls":[
+      "params": [],
+      "urls": [
         "search.disconnect.me"
       ]
     }
   ],
-  "DuckDuckGo":[
+  "DuckDuckGo": [
     {
-      "backlink":"?q={k}",
-      "hiddenkeyword":[
-        "\/.*\/"
+      "backlink": "?q={k}",
+      "hiddenkeyword": [
+        "/.*/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "duckduckgo.com",
         "r.duckduckgo.com"
       ]
     }
   ],
-  "Earthlink":[
+  "Earthlink": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.earthlink.net"
       ]
     }
   ],
-  "Ecosia":[
+  "Ecosia": [
     {
-      "backlink":"search?q={k}",
-      "hiddenkeyword":[
-        "\/^$\/",
-        "\/"
+      "backlink": "search?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "ecosia.org",
         "www.ecosia.org"
       ]
     }
   ],
-  "El Mundo":[
+  "El Mundo": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "ariadna.elmundo.es"
       ]
     }
   ],
-  "Eniro":[
+  "Eniro": [
     {
-      "backlink":"query?q={k}",
-      "params":[
+      "backlink": "query?q={k}",
+      "params": [
         "q",
         "search_word"
       ],
-      "urls":[
+      "urls": [
         "www.eniro.se"
       ]
     }
   ],
-  "Eurip":[
+  "Entireweb": [
     {
-      "backlink":"search\/?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
+        "www.entireweb.com"
+      ]
+    }
+  ],
+  "EpicSearch.in": [
+    {
+      "backlink": "search/?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "epicsearch.in",
+        "www.epicsearch.in"
+      ]
+    }
+  ],
+  "Eurip": [
+    {
+      "backlink": "search/?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
         "www.eurip.com"
       ]
     }
   ],
-  "Euroseek":[
+  "Euroseek": [
     {
-      "backlink":"system\/search.cgi?string={k}",
-      "params":[
+      "backlink": "system/search.cgi?string={k}",
+      "params": [
         "string"
       ],
-      "urls":[
+      "urls": [
         "www.euroseek.com"
       ]
     }
   ],
-  "Everyclick":[
+  "Everyclick": [
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "www.everyclick.com"
       ]
     }
   ],
-  "Exalead":[
+  "Exalead": [
     {
-      "backlink":"search\/results?q={k}",
-      "params":[
+      "backlink": "search/results?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.exalead.fr",
         "www.exalead.com"
       ]
     }
   ],
-  "Excite":[
+  "Excite": [
     {
-      "backlink":"web\/?q={k}",
-      "params":[
+      "backlink": "web/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.excite.it",
         "search.excite.fr",
         "search.excite.de",
@@ -885,281 +933,297 @@
       ]
     },
     {
-      "params":[
-        "\/\\\/[^\\\/]+\\\/ws\\\/results\\\/[^\\\/]+\\\/([^\\\/]+)\/",
+      "params": [
+        "/\\/[^\\/]+\\/ws\\/results\\/[^\\/]+\\/([^\\/]+)/",
         "q"
       ],
-      "urls":[
+      "urls": [
         "msxml.excite.com"
       ]
     },
     {
-      "backlink":"search.gw?search={k}",
-      "charsets":[
+      "backlink": "search.gw?search={k}",
+      "charsets": [
         "SHIFT_JIS"
       ],
-      "params":[
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "www.excite.co.jp"
       ]
     }
   ],
-  "Facebook":[
+  "Facebook": [
     {
-      "backlink":"search\/?q={k}",
-      "params":[
+      "backlink": "search/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.facebook.com"
       ]
     }
   ],
-  "Fast Browser Search":[
+  "Fast Browser Search": [
     {
-      "backlink":"results\/results.aspx?q={k}",
-      "params":[
+      "backlink": "results/results.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.fastbrowsersearch.com"
       ]
     }
   ],
-  "Findhurtig":[
+  "Findhurtig": [
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.findhurtig.dk"
       ]
     }
   ],
-  "Fireball":[
+  "Fireball": [
     {
-      "backlink":"ajax.asp?q={k}",
-      "params":[
+      "backlink": "ajax.asp?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.fireball.de"
       ]
     }
   ],
-  "Firstsfind":[
+  "Firstsfind": [
     {
-      "params":[
+      "params": [
         "qry"
       ],
-      "urls":[
+      "urls": [
         "www.firstsfind.com"
       ]
     }
   ],
-  "Fixsuche":[
+  "Fixsuche": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.fixsuche.de"
       ]
     }
   ],
-  "Flix.de":[
+  "Flix.de": [
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "www.flix.de"
       ]
     }
   ],
-  "Fooooo":[
+  "Fooooo": [
     {
-      "backlink":"web\/?q={k}",
-      "params":[
+      "backlink": "web/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.fooooo.com"
       ]
     }
   ],
-  "Forestle":[
+  "Forestle": [
     {
-      "backlink":"search.php?q={k}",
-      "params":[
+      "backlink": "search.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "forestle.org",
         "{}.forestle.org",
         "forestle.mobi"
       ]
     }
   ],
-  "Francite":[
+  "Francite": [
     {
-      "params":[
+      "params": [
         "name"
       ],
-      "urls":[
+      "urls": [
         "recherche.francite.com"
       ]
     }
   ],
-  "Free":[
+  "Free": [
     {
-      "params":[
+      "params": [
         "q",
         "qs"
       ],
-      "urls":[
+      "urls": [
         "search.free.fr",
         "search1-2.free.fr",
         "search1-1.free.fr"
       ]
     }
   ],
-  "FreeCause":[
+  "FreeCause": [
     {
-      "backlink":"?p={k}",
-      "params":[
+      "backlink": "?p={k}",
+      "params": [
         "p"
       ],
-      "urls":[
+      "urls": [
         "search.freecause.com"
       ]
     }
   ],
-  "Freenet":[
+  "Freenet": [
     {
-      "backlink":"suche\/?query={k}",
-      "params":[
+      "backlink": "suche/?query={k}",
+      "params": [
         "query",
         "Keywords"
       ],
-      "urls":[
+      "urls": [
         "suche.freenet.de"
       ]
     }
   ],
-  "FriendFeed":[
+  "FriendFeed": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "friendfeed.com"
       ]
     }
   ],
-  "GAIS":[
+  "GAIS": [
     {
-      "backlink":"search.php?q={k}",
-      "params":[
+      "backlink": "search.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "gais.cs.ccu.edu.tw"
       ]
     }
   ],
-  "Genieo":[
+  "Genieo": [
     {
-      "backlink":"&q={k}",
-      "params":[
+      "backlink": "&q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.genieo.com"
       ]
     }
   ],
-  "Geona":[
+  "Geona": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "geona.net"
       ]
     }
   ],
-  "Gigablast":[
+  "Gibiru": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "results.html?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
+        "gibiru.com",
+        "www.gibiru.com"
+      ]
+    }
+  ],
+  "Gigablast": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
         "www.gigablast.com"
       ]
     }
   ],
-  "Gigablast (Directory)":[
+  "Gigablast (Directory)": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "dir.gigablast.com"
       ]
     }
   ],
-  "Gnadenmeer":[
+  "Gnadenmeer": [
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "www.gnadenmeer.de"
       ]
     }
   ],
-  "GoYellow.de":[
+  "GoYellow.de": [
     {
-      "params":[
+      "params": [
         "MDN"
       ],
-      "urls":[
+      "urls": [
         "www.goyellow.de"
       ]
     }
   ],
-  "Gomeo":[
+  "Gomeo": [
     {
-      "backlink":"\/search\/{k}",
-      "params":[
+      "backlink": "/search/{k}",
+      "params": [
         "Keywords",
-        "\/\\\/search\\\/([^\\\/]+)\/"
+        "/\\/search\\/([^\\/]+)/"
       ],
-      "urls":[
+      "urls": [
         "www.gomeo.com"
       ]
     }
   ],
-  "Google":[
+  "Google": [
     {
-      "backlink":"search?q={k}",
-      "hiddenkeyword":[
-        "\/^$\/",
-        "\/",
-        "\/\\\/search(\\?.*)?\/",
-        "\/\\\/url\\?.*\/"
+      "backlink": "search?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/",
+        "/\\/search(\\?.*)?/",
+        "/\\/url\\?.*/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "google.com",
         "google.{}",
         "encrypted.google.com",
@@ -1179,30 +1243,30 @@
       ]
     },
     {
-      "hiddenkeyword":[
-        "\/.*\/"
+      "hiddenkeyword": [
+        "/.*/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "com.google.android.googlequicksearchbox",
-        "android-app\/\/com.google.android.googlequicksearchbox\/https\/www.google.com"
+        "android-app//com.google.android.googlequicksearchbox/https/www.google.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "text"
       ],
-      "urls":[
+      "urls": [
         "search.chedot.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.cnn.com",
         "darkoogle.com",
         "search.darkoogle.com",
@@ -1210,10 +1274,10 @@
       ]
     },
     {
-      "params":[
+      "params": [
         "Keywords"
       ],
-      "urls":[
+      "urls": [
         "www.gooofullsearch.com",
         "search.hiyo.com",
         "search.incredimail.com",
@@ -1226,10 +1290,10 @@
       ]
     },
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "search.juno.com",
         "search.zum.com",
         "find.tdc.dk",
@@ -1240,57 +1304,62 @@
       ]
     },
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [
         "q"
       ],
-      "urls":[
-        "suche.gmx.net"
+      "urls": [
+        "suche.gmx.net",
+        "search.gmx.com"
       ]
     },
     {
-      "backlink":"search.php?q={k}",
-      "params":[
+      "backlink": "search.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.incredibar.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.delta-search.com",
         "www1.delta-search.com"
       ]
     },
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.1und1.de"
       ]
     },
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "suche.1und1.de",
         "search.zonealarm.com"
       ]
     },
     {
-      "backlink":"search\/index.php?q={k}",
-      "params":[
+      "backlink": "search/index.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "start.lenovo.com",
         "wow.com",
         "{}.wow.com",
@@ -1302,339 +1371,339 @@
       ]
     },
     {
-      "params":[
+      "params": [
         "gsc.q"
       ],
-      "urls":[
+      "urls": [
         "cgi2.nintendo.co.jp"
       ]
     },
     {
-      "params":[
+      "params": [
         "MT"
       ],
-      "urls":[
+      "urls": [
         "search.smt.docomo.ne.jp",
         "image.search.smt.docomo.ne.jp"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "gfsoso.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "searches.safehomepage.com"
       ]
     },
     {
-      "backlink":"search?query={k}",
-      "params":[
+      "backlink": "search?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "searches.f-secure.com",
         "search.f-secure.com"
       ]
     },
     {
-      "backlink":"search?q={k}",
-      "params":[
-        "\/\\\/search\\?q=cache:(?:[A-Za-z0-9]+):[^+]+([^&]+)\/"
+      "backlink": "search?q={k}",
+      "params": [
+        "/\\/search\\?q=cache:(?:[A-Za-z0-9]+):[^+]+([^&]+)/"
       ],
-      "urls":[
+      "urls": [
         "webcache.googleusercontent.com"
       ]
     },
     {
-      "backlink":"result?p={k}",
-      "params":[
+      "backlink": "result?p={k}",
+      "params": [
         "p"
       ],
-      "urls":[
+      "urls": [
         "search.bt.com"
       ]
     },
     {
-      "backlink":"search\/?q={k}",
-      "params":[
+      "backlink": "search/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "startab.me"
       ]
     }
   ],
-  "Google Blogsearch":[
+  "Google Blogsearch": [
     {
-      "backlink":"blogsearch?q={k}",
-      "params":[
+      "backlink": "blogsearch?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "blogsearch.google.com",
         "blogsearch.google.{}"
       ]
     }
   ],
-  "Google Custom Search":[
+  "Google Custom Search": [
     {
-      "params":[
+      "params": [
         "q",
         "query"
       ],
-      "urls":[
-        "google.com\/cse",
-        "google.{}\/cse",
+      "urls": [
+        "google.com/cse",
+        "google.{}/cse",
         "cse.google.com",
         "cse.google.{}",
-        "google.com\/custom",
-        "google.{}\/custom"
+        "google.com/custom",
+        "google.{}/custom"
       ]
     }
   ],
-  "Google Images":[
+  "Google Images": [
     {
-      "backlink":"images?q={k}",
-      "hiddenkeyword":[
-        "\/.*\/"
+      "backlink": "images?q={k}",
+      "hiddenkeyword": [
+        "/.*/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "images.google.com",
         "images.google.{}",
-        "google.com\/imgres",
-        "google.{}\/imgres"
+        "google.com/imgres",
+        "google.{}/imgres"
       ]
     }
   ],
-  "Google Maps":[
+  "Google Maps": [
     {
-      "backlink":"maps?q={k}",
-      "params":[
+      "backlink": "maps?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "maps.google.com",
         "maps.google.{}"
       ]
     }
   ],
-  "Google News":[
+  "Google News": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "news.google.com",
         "news.google.{}"
       ]
     }
   ],
-  "Google Scholar":[
+  "Google Scholar": [
     {
-      "backlink":"scholar?q={k}",
-      "params":[
+      "backlink": "scholar?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "scholar.google.com",
         "scholar.google.{}"
       ]
     }
   ],
-  "Google Shopping":[
+  "Google Shopping": [
     {
-      "backlink":"?q={k}&tbm=shop",
-      "params":[
+      "backlink": "?q={k}&tbm=shop",
+      "params": [
         "q"
       ],
-      "urls":[
-        "google.com\/products",
-        "google.{}\/products"
+      "urls": [
+        "google.com/products",
+        "google.{}/products"
       ]
     }
   ],
-  "Google Translations":[
+  "Google Translations": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "translate.google.com"
       ]
     }
   ],
-  "Google Video":[
+  "Google Video": [
     {
-      "backlink":"search?q={k}&tbm=vid",
-      "params":[
+      "backlink": "search?q={k}&tbm=vid",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "video.google.com"
       ]
     }
   ],
-  "Google syndicated search":[
+  "Google syndicated search": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "googlesyndicatedsearch.com"
       ]
     }
   ],
-  "Gule Sider":[
+  "Gule Sider": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.gulesider.no"
       ]
     }
   ],
-  "Haosou":[
+  "Haosou": [
     {
-      "backlink":"s?q={k}",
-      "params":[
+      "backlink": "s?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.haosou.com"
       ]
     }
   ],
-  "HighBeam":[
+  "HighBeam": [
     {
-      "backlink":"Search.aspx?q={k}",
-      "params":[
+      "backlink": "Search.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.highbeam.com"
       ]
     }
   ],
-  "Hit-Parade":[
+  "Hit-Parade": [
     {
-      "backlink":"general\/recherche.asp?p7={k}",
-      "params":[
+      "backlink": "general/recherche.asp?p7={k}",
+      "params": [
         "p7"
       ],
-      "urls":[
+      "urls": [
         "req.hit-parade.com",
         "class.hit-parade.com",
         "www.hit-parade.com"
       ]
     }
   ],
-  "Holmes":[
+  "Holmes": [
     {
-      "backlink":"search.htm?q={k}",
-      "params":[
+      "backlink": "search.htm?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "holmes.ge"
       ]
     }
   ],
-  "Hooseek":[
+  "Hooseek": [
     {
-      "backlink":"web?recherche={k}",
-      "params":[
+      "backlink": "web?recherche={k}",
+      "params": [
         "recherche"
       ],
-      "urls":[
+      "urls": [
         "www.hooseek.com"
       ]
     }
   ],
-  "Hotbot":[
+  "Hotbot": [
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.hotbot.com"
       ]
     }
   ],
-  "I-play":[
+  "I-play": [
     {
-      "backlink":"searchresults.aspx?q={k}",
-      "params":[
+      "backlink": "searchresults.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "start.iplay.com"
       ]
     }
   ],
-  "ICQ":[
+  "ICQ": [
     {
-      "backlink":"search\/results.php?q={k}",
-      "params":[
+      "backlink": "search/results.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.icq.com",
         "search.icq.com"
       ]
     }
   ],
-  "Icerocket":[
+  "Icerocket": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "blogs.icerocket.com"
       ]
     }
   ],
-  "Ilse NL":[
+  "Ilse NL": [
     {
-      "backlink":"?search_for={k}",
-      "params":[
+      "backlink": "?search_for={k}",
+      "params": [
         "search_for"
       ],
-      "urls":[
+      "urls": [
         "www.ilse.nl"
       ]
     }
   ],
-  "Inbox":[
+  "Inbox": [
     {
-      "backlink":"search\/results1.aspx?q={k}",
-      "params":[
+      "backlink": "search/results1.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www2.inbox.com"
       ]
     }
   ],
-  "InfoSpace":[
+  "InfoSpace": [
     {
-      "backlink":"\/search\/web?q={k}",
-      "params":[
+      "backlink": "/search/web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "infospace.com",
         "dogpile.com",
         "tattoodle.com",
@@ -1649,176 +1718,176 @@
       ]
     },
     {
-      "backlink":"pemonitorhosted\/ws\/results\/Web\/{k}\/1\/417\/TopNavigation\/Source\/",
-      "params":[
-        "\/\\\/[^\\\/]+\\\/ws\\\/results\\\/[^\\\/]+\\\/([^\\\/]+)\/"
+      "backlink": "pemonitorhosted/ws/results/Web/{k}/1/417/TopNavigation/Source/",
+      "params": [
+        "/\\/[^\\/]+\\/ws\\/results\\/[^\\/]+\\/([^\\/]+)/"
       ],
-      "urls":[
+      "urls": [
         "wsdsold.infospace.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.avast.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "isearch.babylon.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "s"
       ],
-      "urls":[
+      "urls": [
         "start.facemoods.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "start.funmoods.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.magentic.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.searchcompletion.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.searchmobileonline.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "isearch.glarysoft.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.chatzum.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "home.speedbit.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.b1.org"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "searchya.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.handycafe.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.v9.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.iminent.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "utorrent.inspsearch.com",
         "govome.inspsearch.com"
       ]
     }
   ],
-  "Interia":[
+  "Interia": [
     {
-      "backlink":"szukaj?q={k}",
-      "params":[
+      "backlink": "szukaj?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.google.interia.pl"
       ]
     }
   ],
-  "Isodelen":[
+  "Isodelen": [
     {
-      "backlink":"sokresultat?Keywords={k}",
-      "params":[
+      "backlink": "sokresultat?Keywords={k}",
+      "params": [
         "Keywords"
       ],
-      "urls":[
+      "urls": [
         "www.isodelen.se"
       ]
     }
   ],
-  "IxQuick":[
+  "IxQuick": [
     {
-      "backlink":"do\/asearch?query={k}",
-      "hiddenkeyword":[
-        "\/do\/asearch"
+      "backlink": "do/asearch?query={k}",
+      "hiddenkeyword": [
+        "/do/asearch"
       ],
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "ixquick.com",
         "www.eu.ixquick.com",
         "ixquick.de",
@@ -1837,312 +1906,314 @@
       ]
     }
   ],
-  "Jungle Key":[
+  "Jungle Key": [
     {
-      "backlink":"search.php?query={k}&type=web&lang=en",
-      "params":[
+      "backlink": "search.php?query={k}&type=web&lang=en",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "junglekey.com",
         "junglekey.fr"
       ]
     }
   ],
-  "Jungle Spider":[
+  "Jungle Spider": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.jungle-spider.de"
       ]
     }
   ],
-  "Jyxo":[
+  "Jyxo": [
     {
-      "backlink":"s?q={k}",
-      "params":[
+      "backlink": "s?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "jyxo.1188.cz"
       ]
     }
   ],
-  "K9 Safe Search":[
+  "K9 Safe Search": [
     {
-      "backlink":"search.jsp?q={k}",
-      "params":[
+      "backlink": "search.jsp?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "k9safesearch.com"
       ]
     }
   ],
-  "Kataweb":[
+  "Kataweb": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.kataweb.it"
       ]
     }
   ],
-  "Kensaq":[
+  "Kensaq": [
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.kensaq.com"
       ]
     }
   ],
-  "Kvasir":[
+  "Kvasir": [
     {
-      "backlink":"alle?q={k}",
-      "params":[
+      "backlink": "alle?q={k}",
+      "params": [
         "q",
         "search_word"
       ],
-      "urls":[
+      "urls": [
         "kvasir.no",
         "www.kvasir.no"
       ]
     }
   ],
-  "La Toile Du Qu\u00e9bec (Google)":[
+  "La Toile Du Qu\u00e9bec (Google)": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.toile.com",
         "web.toile.com"
       ]
     }
   ],
-  "Laban":[
+  "Laban": [
     {
-      "backlink":"search.html?q={k}",
-      "params":[
+      "backlink": "search.html?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "laban.vn"
       ]
     }
   ],
-  "Latne":[
+  "Latne": [
     {
-      "backlink":"siets.php?q={k}",
-      "params":[
+      "backlink": "siets.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.latne.lv"
       ]
     }
   ],
-  "Lilo":[
+  "Lilo": [
     {
-      "backlink":"results.php?q={k}",
-      "params":[
+      "backlink": "results.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.lilo.org"
       ]
     }
   ],
-  "Lo.st":[
+  "Lo.st": [
     {
-      "backlink":"cgi-bin\/eolost.cgi?x_query={k}",
-      "params":[
+      "backlink": "cgi-bin/eolost.cgi?x_query={k}",
+      "params": [
         "x_query"
       ],
-      "urls":[
+      "urls": [
         "lo.st"
       ]
     }
   ],
-  "LookAny":[
+  "LookAny": [
     {
-      "params":[
-        "\/(?:search|images|videos)\\\/([^\\\/]+)\/"
+      "params": [
+        "/(?:search|images|videos)\\/([^\\/]+)/"
       ],
-      "urls":[
+      "urls": [
         "www.lookany.com"
       ]
     }
   ],
-  "Lookseek":[
+  "Lookseek": [
     {
-      "backlink":"search2.php?q={k}",
-      "params":[
+      "backlink": "search2.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.lookseek.com"
       ]
     }
   ],
-  "Looksmart":[
+  "Looksmart": [
     {
-      "params":[
+      "params": [
         "key"
       ],
-      "urls":[
+      "urls": [
         "www.looksmart.com"
       ]
     }
   ],
-  "Lycos":[
+  "Lycos": [
     {
-      "backlink":"?query={k}",
-      "params":[
+      "backlink": "?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "search.lycos.com",
         "lycos.{}"
       ]
     }
   ],
-  "Mailru":[
+  "Mailru": [
     {
-      "backlink":"search?rch=e&q={k}",
-      "charsets":[
+      "backlink": "search?rch=e&q={k}",
+      "charsets": [
         "UTF-8",
         "windows-1251"
       ],
-      "hiddenkeyword":[
-        "\/redir\\?.*redir=.*\/"
+      "hiddenkeyword": [
+        "/redir\\?.*redir=.*/",
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "go.mail.ru"
       ]
     }
   ],
-  "Mamma":[
+  "Mamma": [
     {
-      "backlink":"result.php?q={k}",
-      "params":[
+      "backlink": "result.php?q={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.mamma.com",
         "mamma75.mamma.com"
       ]
     }
   ],
-  "Meinestadt.de":[
+  "Meinestadt.de": [
     {
-      "params":[
+      "params": [
         "words"
       ],
-      "urls":[
+      "urls": [
         "www.meinestadt.de"
       ]
     }
   ],
-  "Meta.ua":[
+  "Meta.ua": [
     {
-      "backlink":"search.asp?q={k}",
-      "params":[
+      "backlink": "search.asp?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "meta.ua"
       ]
     }
   ],
-  "MetaCrawler DE":[
+  "MetaCrawler DE": [
     {
-      "backlink":"?qry={k}",
-      "params":[
+      "backlink": "?qry={k}",
+      "params": [
         "qry"
       ],
-      "urls":[
+      "urls": [
         "s1.metacrawler.de",
         "s2.metacrawler.de",
         "s3.metacrawler.de"
       ]
     }
   ],
-  "Metager":[
+  "Metager": [
     {
-      "backlink":"meta\/cgi-bin\/meta.ger1?eingabe={k}",
-      "params":[
+      "backlink": "meta/cgi-bin/meta.ger1?eingabe={k}",
+      "params": [
         "eingabe"
       ],
-      "urls":[
+      "urls": [
         "meta.rrzn.uni-hannover.de",
         "www.metager.de",
         "metager.de"
       ]
     }
   ],
-  "Metager2":[
+  "Metager2": [
     {
-      "backlink":"search\/index.php?q={k}",
-      "params":[
+      "backlink": "search/index.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "metager2.de"
       ]
     }
   ],
-  "Mister Wong":[
+  "Mister Wong": [
     {
-      "backlink":"search\/?keywords={k}",
-      "params":[
+      "backlink": "search/?keywords={k}",
+      "params": [
         "keywords"
       ],
-      "urls":[
+      "urls": [
         "www.mister-wong.com",
         "www.mister-wong.de"
       ]
     }
   ],
-  "Monstercrawler":[
+  "Monstercrawler": [
     {
-      "params":[
+      "params": [
         "qry"
       ],
-      "urls":[
+      "urls": [
         "www.monstercrawler.com"
       ]
     }
   ],
-  "MySpace":[
+  "MySpace": [
     {
-      "backlink":"index.cfm?fuseaction=sitesearch.results&type=Web&qry={k}",
-      "params":[
+      "backlink": "index.cfm?fuseaction=sitesearch.results&type=Web&qry={k}",
+      "params": [
         "qry"
       ],
-      "urls":[
+      "urls": [
         "searchservice.myspace.com"
       ]
     }
   ],
-  "MyWebSearch":[
+  "MyWebSearch": [
     {
-      "backlink":"search\/Ajmain.jhtml?searchfor={k}",
-      "params":[
+      "backlink": "search/Ajmain.jhtml?searchfor={k}",
+      "params": [
         "searchfor",
         "searchFor"
       ],
-      "urls":[
+      "urls": [
         "www.mysearch.com",
         "ms114.mysearch.com",
         "ms146.mysearch.com",
@@ -2153,252 +2224,252 @@
       ]
     }
   ],
-  "Najdi.si":[
+  "Najdi.si": [
     {
-      "backlink":"search.jsp?q={k}",
-      "params":[
+      "backlink": "search.jsp?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.najdi.si"
       ]
     }
   ],
-  "Nate":[
+  "Nate": [
     {
-      "backlink":"search\/all.html?q={k}",
-      "charsets":[
+      "backlink": "search/all.html?q={k}",
+      "charsets": [
         "EUC-KR"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.nate.com"
       ]
     }
   ],
-  "Naver":[
+  "Naver": [
     {
-      "backlink":"search.naver?query={k}",
-      "params":[
+      "backlink": "search.naver?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "search.naver.com"
       ]
     }
   ],
-  "Needtofind":[
+  "Needtofind": [
     {
-      "backlink":"search\/AJmain.jhtml?searchfor={k}",
-      "params":[
+      "backlink": "search/AJmain.jhtml?searchfor={k}",
+      "params": [
         "searchfor"
       ],
-      "urls":[
+      "urls": [
         "ko.search.need2find.com"
       ]
     }
   ],
-  "Neti":[
+  "Neti": [
     {
-      "backlink":"cgi-bin\/otsing?query={k}",
-      "charsets":[
+      "backlink": "cgi-bin/otsing?query={k}",
+      "charsets": [
         "iso-8859-1"
       ],
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.neti.ee"
       ]
     }
   ],
-  "Nifty":[
+  "Nifty": [
     {
-      "backlink":"websearch\/search?q={k}",
-      "params":[
+      "backlink": "websearch/search?q={k}",
+      "params": [
         "q",
         "Text"
       ],
-      "urls":[
+      "urls": [
         "search.nifty.com",
         "search.azby.fmworld.net"
       ]
     }
   ],
-  "Nifty Videos":[
+  "Nifty Videos": [
     {
-      "backlink":"search?kw={k}",
-      "params":[
+      "backlink": "search?kw={k}",
+      "params": [
         "kw"
       ],
-      "urls":[
+      "urls": [
         "videosearch.nifty.com"
       ]
     }
   ],
-  "Nigma":[
+  "Nigma": [
     {
-      "backlink":"index.php?s={k}",
-      "params":[
+      "backlink": "index.php?s={k}",
+      "params": [
         "s"
       ],
-      "urls":[
+      "urls": [
         "nigma.ru"
       ]
     }
   ],
-  "Onet.pl":[
+  "Onet.pl": [
     {
-      "backlink":"query.html?qt={k}",
-      "params":[
+      "backlink": "query.html?qt={k}",
+      "params": [
         "qt"
       ],
-      "urls":[
+      "urls": [
         "szukaj.onet.pl"
       ]
     }
   ],
-  "Online.no":[
+  "Online.no": [
     {
-      "backlink":"google\/index.jsp?q={k}",
-      "params":[
+      "backlink": "google/index.jsp?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "online.no"
       ]
     }
   ],
-  "OnlySearch":[
+  "OnlySearch": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.only-search.com"
       ]
     }
   ],
-  "Opplysningen 1881":[
+  "Opplysningen 1881": [
     {
-      "backlink":"Multi\/?Query={k}",
-      "params":[
+      "backlink": "Multi/?Query={k}",
+      "params": [
         "Query"
       ],
-      "urls":[
+      "urls": [
         "www.1881.no"
       ]
     }
   ],
-  "Orange":[
+  "Orange": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "busca.orange.es"
       ]
     },
     {
-      "backlink":"?kw={k}",
-      "params":[
+      "backlink": "?kw={k}",
+      "params": [
         "kw"
       ],
-      "urls":[
+      "urls": [
         "lemoteur.ke.voila.fr",
         "lemoteur.orange.fr"
       ]
     }
   ],
-  "Paperball":[
+  "Paperball": [
     {
-      "backlink":"suche\/s\/?q={k}",
-      "params":[
+      "backlink": "suche/s/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.paperball.de"
       ]
     }
   ],
-  "PeopleCheck":[
+  "PeopleCheck": [
     {
-      "backlink":"link.php?q={k}",
-      "params":[
+      "backlink": "link.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "extern.peoplecheck.de"
       ]
     }
   ],
-  "PeoplePC":[
+  "PeoplePC": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.peoplepc.com"
       ]
     }
   ],
-  "Picsearch":[
+  "Picsearch": [
     {
-      "backlink":"index.cgi?q={k}",
-      "params":[
+      "backlink": "index.cgi?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.picsearch.com"
       ]
     }
   ],
-  "Plazoo":[
+  "Plazoo": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.plazoo.com"
       ]
     }
   ],
-  "PlusNetwork":[
+  "PlusNetwork": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "plusnetwork.com"
       ]
     }
   ],
-  "Poisk.Ru":[
+  "Poisk.Ru": [
     {
-      "backlink":"cgi-bin\/poisk?text={k}",
-      "charsets":[
+      "backlink": "cgi-bin/poisk?text={k}",
+      "charsets": [
         "windows-1251"
       ],
-      "params":[
+      "params": [
         "text"
       ],
-      "urls":[
+      "urls": [
         "poisk.ru"
       ]
     }
   ],
-  "Qualigo":[
+  "Qualigo": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.qualigo.at",
         "www.qualigo.ch",
         "www.qualigo.de",
@@ -2406,175 +2477,175 @@
       ]
     }
   ],
-  "Qwant":[
+  "Qwant": [
     {
-      "hiddenkeyword":[
-        "\/^$\/",
-        "\/"
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.qwant.com",
         "lite.qwant.com"
       ]
     }
   ],
-  "Rakuten":[
+  "Rakuten": [
     {
-      "backlink":"WebIS?qt={k}",
-      "params":[
+      "backlink": "WebIS?qt={k}",
+      "params": [
         "qt"
       ],
-      "urls":[
+      "urls": [
         "websearch.rakuten.co.jp"
       ]
     }
   ],
-  "Rambler":[
+  "Rambler": [
     {
-      "backlink":"search?query={k}",
-      "params":[
+      "backlink": "search?query={k}",
+      "params": [
         "query",
         "words"
       ],
-      "urls":[
+      "urls": [
         "nova.rambler.ru"
       ]
     }
   ],
-  "Riksdelen":[
+  "Riksdelen": [
     {
-      "backlink":"SearchResult.aspx?What={k}",
-      "params":[
+      "backlink": "SearchResult.aspx?What={k}",
+      "params": [
         "What"
       ],
-      "urls":[
+      "urls": [
         "www.riksdelen.se"
       ]
     }
   ],
-  "Road Runner":[
+  "Road Runner": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.rr.com"
       ]
     }
   ],
-  "Sapo":[
+  "Sapo": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "pesquisa.sapo.pt"
       ]
     }
   ],
-  "Scour.com":[
+  "Scour.com": [
     {
-      "backlink":"search\/web\/{k}",
-      "params":[
-        "\/search\\\/[^\\\/]+\\\/(.*)\/"
+      "backlink": "search/web/{k}",
+      "params": [
+        "/search\\/[^\\/]+\\/(.*)/"
       ],
-      "urls":[
+      "urls": [
         "scour.com"
       ]
     }
   ],
-  "Search.ch":[
+  "Search.ch": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.search.ch"
       ]
     }
   ],
-  "Search.com":[
+  "Search.com": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.search.com"
       ]
     }
   ],
-  "SearchCanvas":[
+  "SearchCanvas": [
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.searchcanvas.com"
       ]
     }
   ],
-  "SearchLock":[
+  "SearchLock": [
     {
-      "hiddenkeyword":[
-        "\/.*\/"
+      "hiddenkeyword": [
+        "/.*/"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "searchlock.com",
         "results.searchlock.com"
       ]
     }
   ],
-  "Searchalot":[
+  "Searchalot": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "searchalot.com"
       ]
     }
   ],
-  "Searchy":[
+  "Searchy": [
     {
-      "backlink":"index.html?q={k}",
-      "params":[
+      "backlink": "index.html?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.searchy.co.uk"
       ]
     }
   ],
-  "SeeSaa":[
+  "SeeSaa": [
     {
-      "backlink":"{k}\/index.html",
-      "params":[
-        "\/\\\/([^\\\/]+)\\\/index\\.html\/"
+      "backlink": "{k}/index.html",
+      "params": [
+        "/\\/([^\\/]+)\\/index\\.html/"
       ],
-      "urls":[
+      "urls": [
         "search.seesaa.jp"
       ]
     }
   ],
-  "Setooz":[
+  "Setooz": [
     {
-      "backlink":"search?query={k}",
-      "params":[
+      "backlink": "search?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "bg.setooz.com",
         "da.setooz.com",
         "el.setooz.com",
@@ -2584,177 +2655,181 @@
       ]
     }
   ],
-  "Seznam":[
+  "Seznam": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.seznam.cz"
       ]
     }
   ],
-  "Seznam Videa":[
+  "Seznam Videa": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "videa.seznam.cz"
       ]
     }
   ],
-  "Sharelook":[
+  "Sharelook": [
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "www.sharelook.fr"
       ]
     }
   ],
-  "Skynet":[
+  "Skynet": [
     {
-      "backlink":"services\/recherche\/google?q={k}",
-      "params":[
+      "backlink": "services/recherche/google?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.skynet.be"
       ]
     }
   ],
-  "SmartAddressbar":[
+  "SmartAddressbar": [
     {
-      "backlink":"?s={k}",
-      "params":[
+      "backlink": "?s={k}",
+      "params": [
         "s"
       ],
-      "urls":[
+      "urls": [
         "search.smartaddressbar.com"
       ]
     }
   ],
-  "SmartShopping":[
+  "SmartShopping": [
     {
-      "backlink":"?kwd={k}",
-      "params":[
+      "backlink": "?kwd={k}",
+      "params": [
         "kwd",
         "keywords"
       ],
-      "urls":[
+      "urls": [
         "search.smartshopping.com"
       ]
     }
   ],
-  "Snap.do":[
+  "Snap.do": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.snap.do"
       ]
     }
   ],
-  "So-net":[
+  "So-net": [
     {
-      "backlink":"search\/web\/?query={k}",
-      "params":[
+      "backlink": "search/web/?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.so-net.ne.jp"
       ]
     }
   ],
-  "So-net Videos":[
+  "So-net Videos": [
     {
-      "backlink":"search\/?kw={k}",
-      "params":[
+      "backlink": "search/?kw={k}",
+      "params": [
         "kw"
       ],
-      "urls":[
+      "urls": [
         "video.so-net.ne.jp"
       ]
     }
   ],
-  "Softonic":[
+  "Softonic": [
     {
-      "backlink":"default\/default?q={k}",
-      "params":[
+      "backlink": "default/default?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.softonic.com"
       ]
     }
   ],
-  "Sogou":[
+  "Sogou": [
     {
-      "backlink":"web?query={k}",
-      "charsets":[
+      "backlink": "web?query={k}",
+      "charsets": [
         "gb2312"
       ],
-      "hiddenkeyword":[
-        "\/link\\?url=.*\/"
+      "hiddenkeyword": [
+        "/link\\?url=.*/",
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
-        "www.sogou.com"
+      "urls": [
+        "www.sogou.com",
+        "sogou.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "m.sogou.com",
-        "wap.sogou.com"
+        "wap.sogou.com",
+        "english.sogou.com"
       ]
     }
   ],
-  "Soso":[
+  "Soso": [
     {
-      "backlink":"q?w={k}",
-      "charsets":[
+      "backlink": "q?w={k}",
+      "charsets": [
         "gb2312"
       ],
-      "params":[
+      "params": [
         "w"
       ],
-      "urls":[
+      "urls": [
         "www.soso.com"
       ]
     }
   ],
-  "Sputnik":[
+  "Sputnik": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.sputnik.ru"
       ]
     }
   ],
-  "StartPage":[
+  "StartPage": [
     {
-      "backlink":"do\/asearch?query={k}",
-      "hiddenkeyword":[
-        "\/do\/asearch"
+      "backlink": "do/asearch?query={k}",
+      "hiddenkeyword": [
+        "/do/asearch"
       ],
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "startpage.com",
         "classic.startpage.com",
         "www.startpage.com",
@@ -2778,203 +2853,207 @@
       ]
     }
   ],
-  "Startpagina (Google)":[
+  "Startpagina (Google)": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q",
         "query"
       ],
-      "urls":[
+      "urls": [
         "startgoogle.startpagina.nl"
       ]
     }
   ],
-  "Startsiden":[
+  "Startsiden": [
     {
-      "backlink":"sok\/index.html?q={k}",
-      "params":[
+      "backlink": "sok/index.html?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.startsiden.no"
       ]
     }
   ],
-  "Suche.info":[
+  "Suche.info": [
     {
-      "backlink":"suche.php?Keywords={k}",
-      "params":[
+      "backlink": "suche.php?Keywords={k}",
+      "params": [
         "Keywords"
       ],
-      "urls":[
+      "urls": [
         "suche.info"
       ]
     }
   ],
-  "Suchmaschine.com":[
+  "Suchmaschine.com": [
     {
-      "backlink":"cgi-bin\/wo.cgi?suchstr={k}",
-      "params":[
+      "backlink": "cgi-bin/wo.cgi?suchstr={k}",
+      "params": [
         "suchstr"
       ],
-      "urls":[
+      "urls": [
         "www.suchmaschine.com"
       ]
     }
   ],
-  "Suchnase":[
+  "Suchnase": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.suchnase.de"
       ]
     }
   ],
-  "Surf Canyon":[
+  "Surf Canyon": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "surfcanyon.com"
       ]
     }
   ],
-  "T-Online":[
+  "T-Online": [
     {
-      "backlink":"fast-cgi\/tsc?mandant=toi&context=internet-tab&q={k}",
-      "params":[
+      "backlink": "fast-cgi/tsc?mandant=toi&context=internet-tab&q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "suche.t-online.de",
         "brisbane.t-online.de"
       ]
     },
     {
-      "backlink":"dtag\/dns\/results?mode=search_top&q={k}",
-      "params":[
+      "backlink": "dtag/dns/results?mode=search_top&q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "navigationshilfe.t-online.de"
       ]
     }
   ],
-  "TalkTalk":[
+  "TalkTalk": [
     {
-      "backlink":"search\/results.html?query={k}",
-      "params":[
+      "backlink": "search/results.html?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.talktalk.co.uk"
       ]
     }
   ],
-  "Tarmot":[
+  "Tarmot": [
     {
-      "backlink":"ara\/?q={k}",
-      "params":[
+      "backlink": "ara/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "tarmot.com"
       ]
     }
   ],
-  "Technorati":[
+  "Technorati": [
     {
-      "backlink":"search?return=sites&authority=all&q={k}",
-      "params":[
+      "backlink": "search?return=sites&authority=all&q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "technorati.com"
       ]
     }
   ],
-  "Teoma":[
+  "Teoma": [
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.teoma.com"
       ]
     }
   ],
-  "Terra":[
+  "Terra": [
     {
-      "backlink":"Default.aspx?source=Search&query={k}",
-      "params":[
+      "backlink": "Default.aspx?source=Search&query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "buscador.terra.es",
         "buscador.terra.cl",
         "buscador.terra.com.br"
       ]
     }
   ],
-  "Tiscali":[
+  "Tiscali": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q",
         "key"
       ],
-      "urls":[
+      "urls": [
         "search.tiscali.it",
         "search-dyn.tiscali.it"
       ]
     },
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "hledani.tiscali.cz"
       ]
     }
   ],
-  "Tixuma":[
+  "Tixuma": [
     {
-      "backlink":"index.php?mp=search&stp=&sc={k}&tg=0",
-      "params":[
+      "backlink": "index.php?mp=search&stp=&sc={k}&tg=0",
+      "params": [
         "sc"
       ],
-      "urls":[
+      "urls": [
         "www.tixuma.de"
       ]
     }
   ],
-  "Toolbarhome":[
+  "Toolbarhome": [
     {
-      "backlink":"search.aspx?q={k}",
-      "params":[
+      "backlink": "search.aspx?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.toolbarhome.com",
         "vshare.toolbarhome.com"
       ]
     }
   ],
-  "Toppreise.ch":[
+  "Toppreise.ch": [
     {
-      "backlink":"index.php?search={k}",
-      "charsets":[
+      "backlink": "index.php?search={k}",
+      "charsets": [
         "ISO-8859-1"
       ],
-      "params":[
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "www.toppreise.ch",
         "toppreise.ch",
         "fr.toppreise.ch",
@@ -2983,90 +3062,90 @@
       ]
     }
   ],
-  "Trouvez.com":[
+  "Trouvez.com": [
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.trouvez.com"
       ]
     }
   ],
-  "TrovaRapido":[
+  "TrovaRapido": [
     {
-      "backlink":"result.php?q={k}",
-      "params":[
+      "backlink": "result.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.trovarapido.com"
       ]
     }
   ],
-  "Trusted Search":[
+  "Trusted Search": [
     {
-      "backlink":"search?w={k}",
-      "params":[
+      "backlink": "search?w={k}",
+      "params": [
         "w"
       ],
-      "urls":[
+      "urls": [
         "www.trusted-search.com"
       ]
     }
   ],
-  "Twingly":[
+  "Twingly": [
     {
-      "backlink":"search?q={k}",
-      "params":[
+      "backlink": "search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.twingly.com"
       ]
     }
   ],
-  "URL.ORGanzier":[
+  "URL.ORGanzier": [
     {
-      "backlink":"?l=de&q={k}",
-      "params":[
+      "backlink": "?l=de&q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.url.org"
       ]
     }
   ],
-  "Vinden":[
+  "Vinden": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.vinden.nl"
       ]
     }
   ],
-  "Vindex":[
+  "Vindex": [
     {
-      "backlink":"\/web?search_for={k}",
-      "params":[
+      "backlink": "/web?search_for={k}",
+      "params": [
         "search_for"
       ],
-      "urls":[
+      "urls": [
         "www.vindex.nl",
         "search.vindex.nl"
       ]
     }
   ],
-  "Virgilio":[
+  "Virgilio": [
     {
-      "backlink":"ricerca?qs={k}",
-      "params":[
+      "backlink": "ricerca?qs={k}",
+      "params": [
         "qs"
       ],
-      "urls":[
+      "urls": [
         "ricerca.virgilio.it",
         "ricercaimmagini.virgilio.it",
         "ricercavideo.virgilio.it",
@@ -3074,47 +3153,47 @@
       ]
     },
     {
-      "params":[
+      "params": [
         "qrs"
       ],
-      "urls":[
+      "urls": [
         "mobile.virgilio.it"
       ]
     }
   ],
-  "Voila":[
+  "Voila": [
     {
-      "backlink":"S\/voila?rdata={k}",
-      "params":[
+      "backlink": "S/voila?rdata={k}",
+      "params": [
         "rdata"
       ],
-      "urls":[
+      "urls": [
         "search.ke.voila.fr",
         "www.lemoteur.fr"
       ]
     }
   ],
-  "Volny":[
+  "Volny": [
     {
-      "backlink":"fulltext\/?search={k}",
-      "charsets":[
+      "backlink": "fulltext/?search={k}",
+      "charsets": [
         "windows-1250"
       ],
-      "params":[
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "web.volny.cz"
       ]
     }
   ],
-  "Walhello":[
+  "Walhello": [
     {
-      "backlink":"search?key={k}",
-      "params":[
+      "backlink": "search?key={k}",
+      "params": [
         "key"
       ],
-      "urls":[
+      "urls": [
         "www.walhello.info",
         "www.walhello.com",
         "www.walhello.de",
@@ -3122,121 +3201,125 @@
       ]
     }
   ],
-  "Web.de":[
+  "Web.de": [
     {
-      "backlink":"search\/web\/?su={k}",
-      "params":[
+      "backlink": "search/web/?su={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [
         "su",
         "q"
       ],
-      "urls":[
+      "urls": [
         "suche.web.de",
         "m.suche.web.de"
       ]
     }
   ],
-  "Web.nl":[
+  "Web.nl": [
     {
-      "params":[
+      "params": [
         "zoekwoord"
       ],
-      "urls":[
+      "urls": [
         "www.web.nl"
       ]
     }
   ],
-  "WebSearch":[
+  "WebSearch": [
     {
-      "backlink":"search\/results2.aspx?q={k}",
-      "params":[
+      "backlink": "search/results2.aspx?q={k}",
+      "params": [
         "qkw",
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.websearch.com"
       ]
     }
   ],
-  "Wedoo":[
+  "Wedoo": [
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "fr.wedoo.com",
         "en.wedoo.com",
         "es.wedoo.com"
       ]
     }
   ],
-  "Winamp":[
+  "Winamp": [
     {
-      "backlink":"search\/search?q={k}",
-      "params":[
+      "backlink": "search/search?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.winamp.com"
       ]
     }
   ],
-  "Wirtualna Polska":[
+  "Wirtualna Polska": [
     {
-      "backlink":"http:\/\/szukaj.wp.pl\/szukaj.html?szukaj={k}",
-      "params":[
+      "backlink": "http://szukaj.wp.pl/szukaj.html?szukaj={k}",
+      "params": [
         "szukaj"
       ],
-      "urls":[
+      "urls": [
         "szukaj.wp.pl"
       ]
     }
   ],
-  "Witch":[
+  "Witch": [
     {
-      "backlink":"search-result.php?cn=0&search={k}",
-      "params":[
+      "backlink": "search-result.php?cn=0&search={k}",
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "www.witch.de"
       ]
     }
   ],
-  "Woopie":[
+  "Woopie": [
     {
-      "backlink":"search?kw={k}",
-      "params":[
+      "backlink": "search?kw={k}",
+      "params": [
         "kw"
       ],
-      "urls":[
+      "urls": [
         "www.woopie.jp"
       ]
     }
   ],
-  "X-Recherche":[
+  "X-Recherche": [
     {
-      "backlink":"cgi-bin\/websearch?MOTS={k}",
-      "params":[
+      "backlink": "cgi-bin/websearch?MOTS={k}",
+      "params": [
         "MOTS"
       ],
-      "urls":[
+      "urls": [
         "www.x-recherche.com"
       ]
     }
   ],
-  "Yahoo!":[
+  "Yahoo!": [
     {
-      "backlink":"search?p={k}",
-      "hiddenkeyword":[
-        "\/\\\/r\\\/.*\/",
-        "\/^$\/",
-        "\/"
+      "backlink": "search?p={k}",
+      "hiddenkeyword": [
+        "/\\/r\\/.*/",
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "p",
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.yahoo.com",
         "malaysia.search.yahoo.com",
         "{}.search.yahoo.com",
@@ -3247,68 +3330,66 @@
       ]
     },
     {
-      "hiddenkeyword":[
-        "\/.*\/"
+      "hiddenkeyword": [
+        "/.*/"
       ],
-      "params":[
-
-      ],
-      "urls":[
+      "params": [],
+      "urls": [
         "r.search.yahoo.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.cercato.it"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.offerbox.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.benefind.de"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "ys.mirostart.com"
       ]
     }
   ],
-  "Yahoo! Directory":[
+  "Yahoo! Directory": [
     {
-      "backlink":"?p={k}",
-      "params":[
+      "backlink": "?p={k}",
+      "params": [
         "p"
       ],
-      "urls":[
-        "search.yahoo.com\/search\/dir"
+      "urls": [
+        "search.yahoo.com/search/dir"
       ]
     }
   ],
-  "Yahoo! Images":[
+  "Yahoo! Images": [
     {
-      "backlink":"search\/images?p={k}",
-      "params":[
+      "backlink": "search/images?p={k}",
+      "params": [
         "p",
         "va"
       ],
-      "urls":[
+      "urls": [
         "images.search.yahoo.com",
         "{}.images.yahoo.com",
         "cade.images.yahoo.com",
@@ -3317,106 +3398,106 @@
       ]
     }
   ],
-  "Yahoo! Japan":[
+  "Yahoo! Japan": [
     {
-      "backlink":"search?p={k}",
-      "charsets":[
+      "backlink": "search?p={k}",
+      "charsets": [
         "utf-8",
         "euc-jp",
         "ms932"
       ],
-      "hiddenkeyword":[
-        "\/\\\/r\\\/.*\/",
-        "\/^$\/",
-        "\/"
+      "hiddenkeyword": [
+        "/\\/r\\/.*/",
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "p",
         "vp"
       ],
-      "urls":[
+      "urls": [
         "search.yahoo.co.jp"
       ]
     },
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "jp.hao123.com"
       ]
     },
     {
-      "params":[
+      "params": [
         "keyword"
       ],
-      "urls":[
+      "urls": [
         "home.kingsoft.jp"
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "jwsearch.jword.jp"
       ]
     }
   ],
-  "Yahoo! Japan Images":[
+  "Yahoo! Japan Images": [
     {
-      "backlink":"search?p={k}",
-      "charsets":[
+      "backlink": "search?p={k}",
+      "charsets": [
         "utf-8",
         "euc-jp",
         "ms932"
       ],
-      "params":[
+      "params": [
         "p"
       ],
-      "urls":[
+      "urls": [
         "image.search.yahoo.co.jp"
       ]
     }
   ],
-  "Yahoo! Japan Videos":[
+  "Yahoo! Japan Videos": [
     {
-      "backlink":"search?p={k}",
-      "charsets":[
+      "backlink": "search?p={k}",
+      "charsets": [
         "utf-8",
         "euc-jp",
         "ms932"
       ],
-      "params":[
+      "params": [
         "p"
       ],
-      "urls":[
+      "urls": [
         "video.search.yahoo.co.jp"
       ]
     }
   ],
-  "Yam":[
+  "Yam": [
     {
-      "backlink":"Search\/Web\/?SearchType=web&k={k}",
-      "params":[
+      "backlink": "Search/Web/?SearchType=web&k={k}",
+      "params": [
         "k"
       ],
-      "urls":[
+      "urls": [
         "search.yam.com"
       ]
     }
   ],
-  "Yandex":[
+  "Yandex": [
     {
-      "backlink":"yandsearch?text={k}",
-      "hiddenkeyword":[
-        "\/^$\/",
-        "\/"
+      "backlink": "yandsearch?text={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
       ],
-      "params":[
+      "params": [
         "text"
       ],
-      "urls":[
+      "urls": [
         "yandex.ru",
         "yandex.com",
         "yandex.{}",
@@ -3426,33 +3507,33 @@
       ]
     },
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "yabs.yandex.{}"
       ]
     }
   ],
-  "Yandex Images":[
+  "Yandex Images": [
     {
-      "backlink":"yandsearch?text={k}",
-      "params":[
+      "backlink": "yandsearch?text={k}",
+      "params": [
         "text"
       ],
-      "urls":[
+      "urls": [
         "images.yandex.ru",
         "images.yandex.com",
         "images.yandex.{}"
       ]
     }
   ],
-  "Yasni":[
+  "Yasni": [
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.yasni.de",
         "www.yasni.com",
         "www.yasni.co.uk",
@@ -3461,58 +3542,58 @@
       ]
     }
   ],
-  "Yatedo":[
+  "Yatedo": [
     {
-      "backlink":"search\/profil?q={k}",
-      "params":[
+      "backlink": "search/profil?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.yatedo.com",
         "www.yatedo.fr"
       ]
     }
   ],
-  "Yellowmap":[
+  "Yellowmap": [
     {
-      "params":[
+      "params": [
         " "
       ],
-      "urls":[
+      "urls": [
         "yellowmap.de"
       ]
     }
   ],
-  "Yippy":[
+  "Yippy": [
     {
-      "backlink":"search?query={k}",
-      "params":[
+      "backlink": "search?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "search.yippy.com"
       ]
     }
   ],
-  "YouGoo":[
+  "YouGoo": [
     {
-      "backlink":"?cx=search&q={k}",
-      "params":[
+      "backlink": "?cx=search&q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.yougoo.fr"
       ]
     }
   ],
-  "Zapmeta":[
+  "Zapmeta": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q",
         "query"
       ],
-      "urls":[
+      "urls": [
         "www.zapmeta.com",
         "zapmeta.{}",
         "uk.zapmeta.com",
@@ -3525,293 +3606,307 @@
       ]
     }
   ],
-  "Zhongsou":[
+  "Zhongsou": [
     {
-      "backlink":"p?w={k}",
-      "params":[
+      "backlink": "p?w={k}",
+      "params": [
         "w"
       ],
-      "urls":[
+      "urls": [
         "p.zhongsou.com"
       ]
     }
   ],
-  "Zoek":[
+  "Zoek": [
     {
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www3.zoek.nl"
       ]
     }
   ],
-  "Zoeken":[
+  "Zoeken": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.zoeken.nl"
       ]
     }
   ],
-  "Zoohoo":[
+  "Zoohoo": [
     {
-      "backlink":"?q={k}",
-      "charsets":[
+      "backlink": "?q={k}",
+      "charsets": [
         "windows-1250"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "zoohoo.cz"
       ]
     }
   ],
-  "Zoznam":[
+  "Zoznam": [
     {
-      "backlink":"hladaj.fcgi?s={k}&co=svet",
-      "params":[
+      "backlink": "hladaj.fcgi?s={k}&co=svet",
+      "params": [
         "s"
       ],
-      "urls":[
+      "urls": [
         "www.zoznam.sk"
       ]
     }
   ],
-  "Zxuso":[
+  "Zxuso": [
     {
-      "backlink":"ri\/?wd={k}",
-      "params":[
+      "backlink": "ri/?wd={k}",
+      "params": [
         "wd"
       ],
-      "urls":[
+      "urls": [
         "www.zxuso.com"
       ]
     }
   ],
-  "auone":[
+  "auone": [
     {
-      "backlink":"?q={k}",
-      "charsets":[
+      "backlink": "?q={k}",
+      "charsets": [
         "utf-8",
         "euc-jp",
         "ms932"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "search.auone.jp",
         "sp-search.auone.jp"
       ]
     }
   ],
-  "auone Images":[
+  "auone Images": [
     {
-      "backlink":"?q={k}",
-      "charsets":[
+      "backlink": "?q={k}",
+      "charsets": [
         "utf-8",
         "euc-jp",
         "ms932"
       ],
-      "params":[
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "sp-image.search.auone.jp"
       ]
     }
   ],
-  "blekko":[
+  "blekko": [
     {
-      "backlink":"ws\/{k}",
-      "params":[
+      "backlink": "ws/{k}",
+      "params": [
         "q",
-        "\/\\\/ws\\\/(.*)\/"
+        "/\\/ws\\/(.*)/"
       ],
-      "urls":[
+      "urls": [
         "blekko.com"
       ]
     }
   ],
-  "dir.com":[
+  "dir.com": [
     {
-      "params":[
+      "params": [
         "req"
       ],
-      "urls":[
+      "urls": [
         "fr.dir.com"
       ]
     }
   ],
-  "dmoz":[
+  "dmoz": [
     {
-      "params":[
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "dmoz.org",
         "editors.dmoz.org"
       ]
     }
   ],
-  "eo":[
+  "eo": [
     {
-      "backlink":"cgi-bin\/eolost.cgi?x_query={k}",
-      "params":[
+      "backlink": "cgi-bin/eolost.cgi?x_query={k}",
+      "params": [
         "x_query"
       ],
-      "urls":[
+      "urls": [
         "eo.st"
       ]
     }
   ],
-  "goo":[
+  "goo": [
     {
-      "backlink":"web.jsp?MT={k}",
-      "params":[
+      "backlink": "web.jsp?MT={k}",
+      "params": [
         "MT"
       ],
-      "urls":[
+      "urls": [
         "search.goo.ne.jp",
         "ocnsearch.goo.ne.jp"
       ]
     }
   ],
-  "iMesh":[
+  "iMesh": [
     {
-      "backlink":"web?q={k}",
-      "params":[
+      "backlink": "web?q={k}",
+      "params": [
         "q",
         "si"
       ],
-      "urls":[
+      "urls": [
         "search.imesh.com"
       ]
     }
   ],
-  "maailm.com":[
+  "maailm.com": [
     {
-      "params":[
+      "params": [
         "tekst"
       ],
-      "urls":[
+      "urls": [
         "www.maailm.com"
       ]
     }
   ],
-  "mozbot":[
+  "mozbot": [
     {
-      "backlink":"results.php?q={k}",
-      "params":[
+      "backlink": "results.php?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.mozbot.fr",
         "www.mozbot.co.uk",
         "www.mozbot.com"
       ]
     }
   ],
-  "qip.ru":[
+  "qip.ru": [
     {
-      "backlink":"search?query={k}",
-      "params":[
+      "backlink": "search?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "search.qip.ru"
       ]
     }
   ],
-  "rpmfind":[
+  "rpmfind": [
     {
-      "backlink":"linux\/rpm2html\/search.php?query={k}",
-      "params":[
+      "backlink": "linux/rpm2html/search.php?query={k}",
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "rpmfind.net",
         "fr2.rpmfind.net"
       ]
     }
   ],
-  "sm.cn":[
+  "sm.cn": [
     {
-      "backlink":"s?q={k}",
-      "params":[
+      "backlink": "s?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "m.sm.cn",
-        "m.sp.sm.cn"
+        "so.m.sm.cn",
+        "m.sp.sm.cn",
+        "yz.m.sm.cn",
+        "quark.sm.cn"
       ]
     }
   ],
-  "sm.de":[
+  "sm.de": [
     {
-      "backlink":"?q={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "www.sm.de"
       ]
     }
   ],
-  "talimba":[
+  "start.fyi": [
     {
-      "backlink":"index.php?page=search\/web&search={k}",
-      "params":[
+      "backlink": "?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "search.start.fyi"
+      ]
+    }
+  ],
+  "talimba": [
+    {
+      "backlink": "index.php?page=search/web&search={k}",
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "www.talimba.com"
       ]
     }
   ],
-  "uol.com.br":[
+  "uol.com.br": [
     {
-      "backlink":"\/web\/?q={k}",
-      "params":[
+      "backlink": "/web/?q={k}",
+      "params": [
         "q"
       ],
-      "urls":[
+      "urls": [
         "busca.uol.com.br"
       ]
     }
   ],
-  "weborama":[
+  "weborama": [
     {
-      "params":[
+      "params": [
         "QUERY"
       ],
-      "urls":[
+      "urls": [
         "www.weborama.fr"
       ]
     }
   ],
-  "www v\u00e4rav":[
+  "www v\u00e4rav": [
     {
-      "params":[
+      "params": [
         "query"
       ],
-      "urls":[
+      "urls": [
         "search.www.ee"
       ]
     }
   ],
-  "\ubb3b\uc9c0\ub9c8 \uac80\uc0c9":[
+  "\ubb3b\uc9c0\ub9c8 \uac80\uc0c9": [
     {
-      "backlink":"#search={k}",
-      "params":[
+      "backlink": "#search={k}",
+      "params": [
         "search"
       ],
-      "urls":[
+      "urls": [
         "kwzf.net"
       ]
     }
