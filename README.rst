@@ -6,8 +6,8 @@ serpextract
 
 ``serpextract`` provides easy extraction of keywords from search engine results pages (SERPs).
 
-This module is possible in large part to the very hard work of the `Piwik <http://piwik.org/>`_ team.
-Specifically, we make extensive use of their `list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_.
+This module is possible in large part to the very hard work of the `Matomo <http://matomo.org/>`_ team.
+Specifically, we make extensive use of their `list of search engines <https://raw.githubusercontent.com/matomo-org/searchengine-and-social-list/master/SearchEngines.yml>`_.
 
 
 Installation
@@ -69,7 +69,7 @@ Python
 
 **Naive Detection**
 
-The list of search engine parsers that Piwik and therefore ``serpextract`` uses is far from
+The list of search engine parsers that Matomo and therefore ``serpextract`` uses is far from
 exhaustive.  If you want ``serpextract`` to attempt to guess if a given referring URL is a SERP,
 you can specify ``use_naive_method=True`` to ``serpextract.is_serp`` or ``serpextract.extract``.
 By default, the naive method is disabled.
@@ -104,7 +104,7 @@ If one of these are found, a keyword is extracted and an ``ExtractResult`` is co
 **Custom Parsers**
 
 In the event that you have a custom search engine that you'd like to track which is not currently
-supported by Piwik/``serpextract``, you can create your own instance of
+supported by Matomo/``serpextract``, you can create your own instance of
 ``serpextract.SearchEngineParser`` and either pass it explicitly to either
 ``serpextract.is_serp`` or ``serpextract.extract`` or add it
 to the internal list of parsers.
@@ -167,6 +167,6 @@ Caching
 -------
 
 Internally, this module caches an OrderedDict representation of
-`Piwik's list of search engines <https://github.com/piwik/piwik/blob/master/core/DataFiles/SearchEngines.php>`_
+`Matomo's list of search engines <https://raw.githubusercontent.com/matomo-org/searchengine-and-social-list/master/SearchEngines.yml>`_
 which is stored in ``serpextract/search_engines.pickle``.  This isn't intended to change that often and so this
 module ships with a cached version.
