@@ -166,5 +166,3 @@ Internally, this module caches an OrderedDict representation of
 `Matomo's list of search engines <https://raw.githubusercontent.com/matomo-org/searchengine-and-social-list/master/SearchEngines.yml>`_
 which is stored in ``serpextract/search_engines.json``.  This isn't intended to change that often and so this
 module ships with a cached version.
-
-When developing on serpextract, you can update the list by running `python update_list.py` and committing the resulting changes.
