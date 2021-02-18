@@ -6,3 +6,4 @@ serpextract.egg-info
 docs/_build
 .cache
 .idea/
+.python-version

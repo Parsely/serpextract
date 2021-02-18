@@ -203,6 +203,17 @@
       ]
     }
   ],
+  "AllTheInternet": [
+    {
+      "backlink": "?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.alltheinternet.com"
+      ]
+    }
+  ],
   "AllTheWeb": [
     {
       "backlink": "search?q={k}",
@@ -1109,6 +1120,17 @@
       ]
     }
   ],
+  "Frontier": [
+    {
+      "backlink": "search/?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "search.frontier.com"
+      ]
+    }
+  ],
   "GAIS": [
     {
       "backlink": "search.php?q={k}",
@@ -1423,6 +1445,19 @@
       ]
     },
     {
+      "backlink": "?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "monumentbrowser.com"
+      ]
+    },
+    {
       "backlink": "result?p={k}",
       "params": [
         "p"
@@ -1438,6 +1473,32 @@
       ],
       "urls": [
         "startab.me"
+      ]
+    },
+    {
+      "backlink": "search.php?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "search.abv.bg"
+      ]
+    },
+    {
+      "params": [
+        "searchTerm"
+      ],
+      "urls": [
+        "search.xfinity.com"
+      ]
+    },
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.kadaza.com"
       ]
     }
   ],
@@ -2185,6 +2246,17 @@
       ]
     }
   ],
+  "Mojeek": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.mojeek.com"
+      ]
+    }
+  ],
   "Monstercrawler": [
     {
       "params": [
@@ -2824,7 +2896,11 @@
     {
       "backlink": "do/asearch?query={k}",
       "hiddenkeyword": [
-        "/do/asearch"
+        "/do/asearch",
+        "/do/search",
+        "/sp/search",
+        "/^$/",
+        "/"
       ],
       "params": [
         "query"
@@ -2872,7 +2948,8 @@
         "q"
       ],
       "urls": [
-        "www.startsiden.no"
+        "www.startsiden.no",
+        "startsiden.no"
       ]
     }
   ],
@@ -3687,7 +3764,8 @@
       ],
       "urls": [
         "search.auone.jp",
-        "sp-search.auone.jp"
+        "sp-search.auone.jp",
+        "sp-web.search.auone.jp"
       ]
     }
   ],
