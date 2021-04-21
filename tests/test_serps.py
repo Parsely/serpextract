@@ -42,6 +42,13 @@ class TestSERPs(unittest.TestCase):
         for url, engine_name, keyword in expected_serps:
             self.assertValidSERP(url, engine_name, keyword, **kwargs)
 
+    def test_mojeek(self):
+        serps = (
+            ('https://mojeek.com', 'Mojeek', ''),
+            ('https://mojeek.com/', 'Mojeek', '')
+        )
+        self.assertValidSERPs(serps, use_naive_method=True)
+
     def test_google(self):
         serps = (
             ('http://www.google.com/url?sa=t&rct=j&q=hello&source=web&cd=1&ved=0CCoQFjAA&url=http%3A%2F%2Fwww.hellomagazine.ca%2F&ei=MDfSUe-JMob9ygGn24CoCw&usg=AFQjCNF6TQIo1aZe7WI8knqcdZax-lpg-A&bvm=bv.48572450,d.aWc', 'Google', u'hello'),

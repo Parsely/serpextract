@@ -2249,10 +2249,17 @@
   "Mojeek": [
     {
       "backlink": "search?q={k}",
+      "hiddenkeyword": [
+        "/^$/",
+        "/",
+        "/\\/search(\\?.*)?/",
+        "/\\/url\\?.*/"
+      ],
       "params": [
         "q"
       ],
       "urls": [
+        "mojeek.com",
         "www.mojeek.com"
       ]
     }
