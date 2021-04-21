@@ -1,3 +1,4 @@
+v0.7.2, 2021-02-18 -- Add Mojeek override.
 v0.7.1, 2021-02-18 -- Get latest list.
 v0.7.0, 2020-08-11 -- Updated to fix Piwik -> Matomo rename and get latest list.
 v0.6.3, 2017-07-19 -- Updated to latest Piwik list to support more hidden keyword URLs for Bing and Google
