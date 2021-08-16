@@ -578,6 +578,17 @@
       ]
     }
   ],
+  "Brave": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "search.brave.com"
+      ]
+    }
+  ],
   "Canoe.ca": [
     {
       "backlink": "search?q={k}",
@@ -2249,17 +2260,10 @@
   "Mojeek": [
     {
       "backlink": "search?q={k}",
-      "hiddenkeyword": [
-        "/^$/",
-        "/",
-        "/\\/search(\\?.*)?/",
-        "/\\/url\\?.*/"
-      ],
       "params": [
         "q"
       ],
       "urls": [
-        "mojeek.com",
         "www.mojeek.com"
       ]
     }
