@@ -42,9 +42,13 @@ class TestSERPs(unittest.TestCase):
         # Test both the URL and a parsed URL version
         for url in (url, urlparse(url)):
             res = extract(url, **kwargs)
-            self.assertEqual(res.keyword, expected_keyword)
-            self.assertEqual(res.engine_name, expected_engine_name)
-            self.assertTrue(is_serp(url, **kwargs))
+            if res is None:
+                self.assertEqual('', expected_keyword)
+                self.assertFalse(is_serp(url, **kwargs))
+            else:
+                self.assertEqual(res.keyword, expected_keyword)
+                self.assertEqual(res.engine_name, expected_engine_name)
+                self.assertTrue(is_serp(url, **kwargs))
 
     def assertValidSERPs(self, expected_serps, **kwargs):
         for url, engine_name, keyword in expected_serps:
