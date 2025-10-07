@@ -8,7 +8,7 @@ try:
     import ujson as json
 except ImportError:
     import json
-import ruamel.yaml as yaml
+from ruamel.yaml import YAML
 from six.moves.urllib.request import urlopen
 
 
@@ -21,7 +21,8 @@ def main():
     print('Updating search engine parser definitions.')
 
     url = urlopen('https://raw.githubusercontent.com/matomo-org/searchengine-and-social-list/master/SearchEngines.yml')
-    matomo_engines = yaml.safe_load(url)
+    yaml = YAML(typ='safe', pure=True)
+    matomo_engines = yaml.load(url)
     with open(filename, 'w') as json_file:
         json.dump(matomo_engines, json_file, indent=2, sort_keys=True)
 
