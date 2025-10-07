@@ -51,8 +51,6 @@ class TestSERPs(unittest.TestCase):
             self.assertValidSERP(url, engine_name, keyword, **kwargs)
 
     def test_mojeek(self):
-        # this test passes because of a manual change to the generated search engines JSON file. the next time that
-        # file is regenerated, this test will break.
         serps = (
             ("https://mojeek.com", "Mojeek", ""),
             ("https://mojeek.com/", "Mojeek", ""),
