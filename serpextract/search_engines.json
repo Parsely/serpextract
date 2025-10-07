@@ -67,6 +67,19 @@
         "www.so.com",
         "m.so.com"
       ]
+    },
+    {
+      "backlink": "?q={k}",
+      "charsets": [
+        "UTF-8",
+        "gb2312"
+      ],
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.sou.com"
+      ]
     }
   ],
   "ABCs\u00f8k": [
@@ -462,15 +475,6 @@
         "tieba.baidu.com",
         "news.baidu.com"
       ]
-    },
-    {
-      "backlink": "search?search={k}",
-      "params": [
-        "search"
-      ],
-      "urls": [
-        "web.gougou.com"
-      ]
     }
   ],
   "Biglobe": [
@@ -620,6 +624,19 @@
       ],
       "urls": [
         "www.charter.net"
+      ]
+    }
+  ],
+  "ChatGPT": [
+    {
+      "hiddenkeyword": [
+        "/^$/",
+        "/"
+      ],
+      "params": [],
+      "urls": [
+        "chat.openai.com",
+        "chatgpt.com"
       ]
     }
   ],
@@ -1011,12 +1028,13 @@
   ],
   "Fireball": [
     {
-      "backlink": "ajax.asp?q={k}",
+      "backlink": "search/?q={k}",
       "params": [
         "q"
       ],
       "urls": [
-        "www.fireball.de"
+        "www.fireball.de",
+        "fireball.com"
       ]
     }
   ],
@@ -2000,6 +2018,17 @@
       ]
     }
   ],
+  "Junior Safe Search": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.juniorsafesearch.com"
+      ]
+    }
+  ],
   "Jyxo": [
     {
       "backlink": "s?q={k}",
@@ -2109,6 +2138,17 @@
       ],
       "urls": [
         "lo.st"
+      ]
+    }
+  ],
+  "Local Moxie": [
+    {
+      "backlink": "serp?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.localmoxie.com"
       ]
     }
   ],
@@ -2275,6 +2315,17 @@
       ],
       "urls": [
         "www.monstercrawler.com"
+      ]
+    }
+  ],
+  "MyPrivateSearch": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.myprivatesearch.com"
       ]
     }
   ],
@@ -2501,6 +2552,17 @@
       ]
     }
   ],
+  "Perplexity": [
+    {
+      "backlink": "search?s=o&q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "www.perplexity.ai"
+      ]
+    }
+  ],
   "Picsearch": [
     {
       "backlink": "index.cgi?q={k}",
@@ -2544,6 +2606,17 @@
       ],
       "urls": [
         "poisk.ru"
+      ]
+    }
+  ],
+  "Presearch": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "presearch.com"
       ]
     }
   ],
@@ -2964,6 +3037,17 @@
       ]
     }
   ],
+  "Stract": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "stract.com"
+      ]
+    }
+  ],
   "Suche.info": [
     {
       "backlink": "suche.php?Keywords={k}",
@@ -3006,6 +3090,28 @@
       ]
     }
   ],
+  "Swiggle": [
+    {
+      "backlink": "?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "swiggle.org.uk"
+      ]
+    }
+  ],
+  "Swisscows": [
+    {
+      "backlink": "web?query={k}",
+      "params": [
+        "query"
+      ],
+      "urls": [
+        "swisscows.com"
+      ]
+    }
+  ],
   "T-Online": [
     {
       "backlink": "fast-cgi/tsc?mandant=toi&context=internet-tab&q={k}",
@@ -3028,6 +3134,17 @@
       ],
       "urls": [
         "navigationshilfe.t-online.de"
+      ]
+    }
+  ],
+  "TUSK Search": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "tusksearch.com"
       ]
     }
   ],
@@ -3179,6 +3296,17 @@
       ],
       "urls": [
         "www.trusted-search.com"
+      ]
+    }
+  ],
+  "Trustnav": [
+    {
+      "backlink": "?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "search.trustnav.com"
       ]
     }
   ],
@@ -3591,7 +3719,8 @@
         "yandex.{}",
         "www.yandex.{}",
         "clck.yandex.{}",
-        "m.yandex.{}"
+        "m.yandex.{}",
+        "ya.ru"
       ]
     },
     {
@@ -3652,6 +3781,17 @@
       ]
     }
   ],
+  "Yep": [
+    {
+      "backlink": "web?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "yep.com"
+      ]
+    }
+  ],
   "Yippy": [
     {
       "backlink": "search?query={k}",
@@ -3660,6 +3800,28 @@
       ],
       "urls": [
         "search.yippy.com"
+      ]
+    }
+  ],
+  "Yongzin": [
+    {
+      "backlink": "page/search.do?word={k}",
+      "params": [
+        "word"
+      ],
+      "urls": [
+        "www.yongzin.com"
+      ]
+    }
+  ],
+  "You": [
+    {
+      "backlink": "search?q={k}",
+      "params": [
+        "q"
+      ],
+      "urls": [
+        "you.com"
       ]
     }
   ],
@@ -3674,9 +3836,9 @@
       ]
     }
   ],
-  "Zapmeta": [
+  "ZapMeta": [
     {
-      "backlink": "?q={k}",
+      "backlink": "search?q={k}",
       "params": [
         "q",
         "query"
@@ -3684,13 +3846,8 @@
       "urls": [
         "www.zapmeta.com",
         "zapmeta.{}",
-        "uk.zapmeta.com",
-        "ar.zapmeta.com",
-        "au.zapmeta.com",
-        "ca.zapmeta.com",
-        "fi.zapmeta.com",
-        "no.zapmeta.com",
-        "tr.zapmeta.com"
+        "{}.zapmeta.com",
+        "www.zapmetasearch.{}"
       ]
     }
   ],
@@ -3933,17 +4090,6 @@
       ],
       "urls": [
         "www.sm.de"
-      ]
-    }
-  ],
-  "start.fyi": [
-    {
-      "backlink": "?q={k}",
-      "params": [
-        "q"
-      ],
-      "urls": [
-        "search.start.fyi"
       ]
     }
   ],
