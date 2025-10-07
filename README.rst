@@ -1,9 +1,6 @@
 serpextract
 ===========
 
-.. image:: https://travis-ci.org/Parsely/serpextract.png?branch=master
-   :target: https://travis-ci.org/Parsely/serpextract
-
 ``serpextract`` provides easy extraction of keywords from search engine results pages (SERPs).
 
 This module is possible in large part to the very hard work of the `Matomo <http://matomo.org/>`_ team.
