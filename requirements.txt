@@ -3,4 +3,4 @@ iso3166>=0.4
 pylru>=1.0.3
 pytest
 ruamel.yaml
-tldextract>=1.2
+tldextract>=5.3
