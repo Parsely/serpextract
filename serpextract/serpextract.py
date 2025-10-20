@@ -1,37 +1,16 @@
 """Utilities for extracting keyword information from search engine
 referrers."""
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import logging
 import re
 import sys
 from collections import defaultdict
-from io import TextIOWrapper
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse, ParseResult
 
 import pylru
 import tldextract
 from iso3166 import countries
-from six import iteritems, itervalues, PY3, string_types, text_type
-from six.moves.urllib.parse import urlparse, parse_qs, ParseResult
-
-# import pkg_resources
-# with fallback for environments that lack it
-try:
-    import pkg_resources
-except ImportError:
-    import os
-
-    class pkg_resources(object):
-        """Fake pkg_resources interface which falls back to getting resources
-        inside `serpextract`'s directory. (thank you tldextract!)
-        """
-
-        @classmethod
-        def resource_stream(cls, package, resource_name):
-            moddir = os.path.dirname(__file__)
-            f = os.path.join(moddir, resource_name)
-            return open(f)
 
 
 # import ujson for performance with a fallback on default json
@@ -78,34 +57,6 @@ _naive_params = (
     "keyword",
     "term",
 )
-
-
-def _unicode_parse_qs(qs, **kwargs):
-    """
-    A wrapper around ``urlparse.parse_qs`` that converts unicode strings to
-    UTF-8 to prevent ``urlparse.unquote`` from performing it's default decoding
-    to latin-1 see http://hg.python.org/cpython/file/2.7/Lib/urlparse.py
-
-    :param qs:       Percent-encoded query string to be parsed.
-    :type qs:        ``str``
-
-    :param kwargs:   Other keyword args passed onto ``parse_qs``.
-    """
-    if PY3 or isinstance(qs, bytes):
-        # Nothing to do
-        return parse_qs(qs, **kwargs)
-
-    qs = qs.encode("utf-8", "ignore")
-    query = parse_qs(qs, **kwargs)
-    unicode_query = {}
-    for key in query:
-        uni_key = key.decode("utf-8", "ignore")
-        if uni_key == "":
-            # because we ignore decode errors and only support utf-8 right now,
-            # we could end up with a blank string which we ignore
-            continue
-        unicode_query[uni_key] = [p.decode("utf-8", "ignore") for p in query[key]]
-    return unicode_query
 
 
 def _unicode_urlparse(url, encoding="utf-8", errors="ignore"):
@@ -192,7 +143,7 @@ def _get_search_engines():
     # order
     _engines = {}
 
-    for engine_name, rule_group in iteritems(matomo_engines):
+    for engine_name, rule_group in matomo_engines.items():
         defaults = {
             "extractor": None,
             "link_macro": None,
@@ -246,13 +197,8 @@ def _get_matomo_engines():
     Return the search engine parser definitions stored in this module. We don't
     cache this result since it's only supposed to be called once.
     """
-    stream = pkg_resources.resource_stream
-    with stream(__name__, "search_engines.json") as json_stream:
-        if PY3:
-            if hasattr(json_stream, "buffer"):
-                json_stream = TextIOWrapper(json_stream.buffer, encoding="utf-8")
-            else:
-                json_stream = TextIOWrapper(json_stream, encoding="utf-8")
+    search_engines_file = Path(__file__).resolve().parent / "search_engines.json"
+    with search_engines_file.open("r", encoding="utf-8") as json_stream:
         _matomo_engines = json.load(json_stream)
     return _matomo_engines
 
@@ -326,7 +272,7 @@ class SearchEngineParser(object):
                                       `/` characters.
         """
         self.engine_name = engine_name
-        if isinstance(keyword_extractor, string_types):
+        if isinstance(keyword_extractor, str):
             keyword_extractor = [keyword_extractor]
         self.keyword_extractor = keyword_extractor[:]
         for i, extractor in enumerate(self.keyword_extractor):
@@ -337,7 +283,7 @@ class SearchEngineParser(object):
                 self.keyword_extractor[i] = extractor
 
         self.link_macro = link_macro
-        if isinstance(charsets, string_types):
+        if isinstance(charsets, str):
             charsets = [charsets]
         self.charsets = [c.lower() for c in charsets]
         if hidden_keyword_paths:
@@ -380,7 +326,7 @@ class SearchEngineParser(object):
         :returns: An :class:`ExtractResult` instance.
         """
         original_query = _serp_query_string(url_parts)
-        query = _unicode_parse_qs(original_query, keep_blank_values=True)
+        query = parse_qs(original_query, keep_blank_values=True)
 
         keyword = None
         engine_name = self.engine_name
@@ -394,7 +340,7 @@ class SearchEngineParser(object):
             # e.g. &prev=/search%3Fq%3Dimages%26sa%3DX%26biw%3D320%26bih%3D416%26tbm%3Disch
             engine_name = "Google Images"
             if "prev" in query:
-                query = _unicode_parse_qs(_unicode_urlparse(query["prev"][0]).query)
+                query = parse_qs(_unicode_urlparse(query["prev"][0]).query)
         elif engine_name == "Google" and "as_" in original_query:
             # Google has many different ways to filter results.  When some of
             # these filters are applied, we can no longer just look for the q
@@ -442,7 +388,7 @@ class SearchEngineParser(object):
 
         # Otherwise we keep looking through the defined extractors
         for extractor in self.keyword_extractor:
-            if not isinstance(extractor, string_types):
+            if not isinstance(extractor, str):
                 # Regular expression extractor
                 match = extractor.search(url_parts.path)
                 if match:
@@ -471,7 +417,7 @@ class SearchEngineParser(object):
             if url_parts.fragment:
                 path_with_query_and_frag += "#{}".format(url_parts.fragment)
             for path in self.hidden_keyword_paths:
-                if not isinstance(path, string_types):
+                if not isinstance(path, str):
                     if path.search(path_with_query_and_frag):
                         keyword = False
                         break
@@ -511,7 +457,7 @@ def add_custom_parser(match_rule, parser):
     :param parser:     A custom parser.
     :type parser:      :class:`SearchEngineParser`
     """
-    assert isinstance(match_rule, text_type)
+    assert isinstance(match_rule, str)
     assert isinstance(parser, SearchEngineParser)
 
     global _engines
@@ -529,13 +475,9 @@ def get_all_query_params():
     """
     engines = _get_search_engines()
     all_params = set()
-    for parser in itervalues(engines):
+    for parser in engines.values():
         # Find non-regex params
-        params = {
-            param
-            for param in parser.keyword_extractor
-            if isinstance(param, string_types)
-        }
+        params = {param for param in parser.keyword_extractor if isinstance(param, str)}
         all_params |= params
 
     return list(all_params)
@@ -553,13 +495,9 @@ def get_all_query_params_by_domain():
         return _qs_params
     engines = _get_search_engines()
     param_dict = defaultdict(list)
-    for domain, parser in iteritems(engines):
+    for domain, parser in engines.items():
         # Find non-regex params
-        params = {
-            param
-            for param in parser.keyword_extractor
-            if isinstance(param, string_types)
-        }
+        params = {param for param in parser.keyword_extractor if isinstance(param, str)}
         tld_res = tldextract.extract(domain)
         domain = tld_res.registered_domain
         param_dict[domain] = sorted(set(param_dict[domain]) | params)
@@ -665,7 +603,7 @@ def extract(
     :param trimmed:             Trim keyword leading and trailing whitespace.
     :type trimmed:              ``True`` or ``False``
 
-    :param collapse_whitespace: Collapse 2 or more ``\s`` characters into one
+    :param collapse_whitespace: Collapse 2 or more whitespace characters into one
                                 space ``' '``.
     :type collapse_whitespace:  ``True`` or ``False``
 
@@ -695,7 +633,7 @@ def extract(
 
         # Try to use naive method of detection
         if _naive_re.search(url_parts.netloc):
-            query = _unicode_parse_qs(url_parts.query, keep_blank_values=True)
+            query = parse_qs(url_parts.query, keep_blank_values=True)
             for param in _naive_params:
                 if param in query:
                     tld_res = tldextract.extract(url_parts.netloc)
@@ -713,7 +651,7 @@ def extract(
     if trimmed:
         result.keyword = result.keyword.strip()
     if collapse_whitespace:
-        result.keyword = re.sub(r"\s+", " ", result.keyword, re.UNICODE)
+        result.keyword = re.sub(r"\s+", " ", result.keyword, flags=re.UNICODE)
 
     return result
 
@@ -726,7 +664,7 @@ def main():
     )
 
     parser.add_argument(
-        "input", metavar="url", type=text_type, nargs="*", help="A potential SERP URL"
+        "input", metavar="url", type=str, nargs="*", help="A potential SERP URL"
     )
     parser.add_argument(
         "-l",
@@ -740,7 +678,7 @@ def main():
 
     if args.list:
         engines = _get_search_engines()
-        engines = sorted(iteritems(engines), key=lambda x: x[1].engine_name)
+        engines = sorted(engines.items(), key=lambda x: x[1].engine_name)
         print("{:<30}{}".format("Fuzzy Domain", "Parser"))
         for fuzzy_domain, parser in engines:
             print("{:<30}{}".format(fuzzy_domain, parser))

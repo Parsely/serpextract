@@ -1,57 +1,69 @@
 import re
-import sys
 from setuptools import setup
+
 
 # Get version without importing, which avoids dependency issues
 def get_version():
-    with open('serpextract/__init__.py') as version_file:
-        return re.search(r"""__version__\s+=\s+(['"])(?P<version>.+?)\1""",
-                         version_file.read()).group('version')
+    with open("serpextract/__init__.py") as version_file:
+        return re.search(
+            r"""__version__\s+=\s+(['"])(?P<version>.+?)\1""", version_file.read()
+        ).group("version")
+
 
 install_requires = [
-    'iso3166 >= 0.4',
-    'pylru >= 1.0.3',
-    'tldextract >= 1.2',
-    'ruamel.yaml'
+    "iso3166 >= 0.4",
+    "pylru >= 1.0.3",
+    "tldextract >= 1.2",
+    "ruamel.yaml",
 ]
 
-with open('README.rst', 'r') as f:
+with open("README.rst", "r") as f:
     long_description = f.read()
 
 setup(
-    name='serpextract',
+    name="serpextract",
     version=get_version(),
-    author='Mike Sukmanowsky',
-    author_email='mike@parsely.com',
-    packages=['serpextract',],
-    url='http://github.com/Parsely/serpextract/',
-    license='LICENSE.txt',
-    keywords='search engines keyword extract',
-    description='Easy extraction of keywords from search engine results pages (SERPs).',
+    author="Mike Sukmanowsky",
+    author_email="mike@parsely.com",
+    packages=[
+        "serpextract",
+    ],
+    url="http://github.com/Parsely/serpextract/",
+    license="LICENSE.txt",
+    keywords="search engines keyword extract",
+    description="Easy extraction of keywords from search engine results pages (SERPs).",
     long_description=long_description,
     install_requires=install_requires,
     include_package_data=True,
-    platforms='any',
+    platforms="any",
+    python_requires=">=3.9",
     classifiers=[
         # Taken from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'Intended Audience :: End Users/Desktop',
-        'Intended Audience :: Information Technology',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: MacOS',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
-        'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Internet :: WWW/HTTP :: Indexing/Search',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Utilities',
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "Intended Audience :: End Users/Desktop",
+        "Intended Audience :: Information Technology",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Utilities",
     ],
     entry_points={
-        'console_scripts': [
-            'serpextract = serpextract.serpextract:main',
+        "console_scripts": [
+            "serpextract = serpextract.serpextract:main",
         ]
     },
 )
