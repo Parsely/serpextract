@@ -6,7 +6,7 @@ import re
 import sys
 from collections import defaultdict
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs, ParseResult
+from urllib.parse import parse_qs, urlparse, ParseResult
 
 import pylru
 import tldextract
@@ -57,18 +57,6 @@ _naive_params = (
     "keyword",
     "term",
 )
-
-
-def _unicode_parse_qs(qs, **kwargs):
-    """
-    A wrapper around ``urlparse.parse_qs`` for parsing query strings.
-
-    :param qs:       Percent-encoded query string to be parsed.
-    :type qs:        ``str``
-
-    :param kwargs:   Other keyword args passed onto ``parse_qs``.
-    """
-    return parse_qs(qs, **kwargs)
 
 
 def _unicode_urlparse(url, encoding="utf-8", errors="ignore"):
@@ -338,7 +326,7 @@ class SearchEngineParser(object):
         :returns: An :class:`ExtractResult` instance.
         """
         original_query = _serp_query_string(url_parts)
-        query = _unicode_parse_qs(original_query, keep_blank_values=True)
+        query = parse_qs(original_query, keep_blank_values=True)
 
         keyword = None
         engine_name = self.engine_name
@@ -352,7 +340,7 @@ class SearchEngineParser(object):
             # e.g. &prev=/search%3Fq%3Dimages%26sa%3DX%26biw%3D320%26bih%3D416%26tbm%3Disch
             engine_name = "Google Images"
             if "prev" in query:
-                query = _unicode_parse_qs(_unicode_urlparse(query["prev"][0]).query)
+                query = parse_qs(_unicode_urlparse(query["prev"][0]).query)
         elif engine_name == "Google" and "as_" in original_query:
             # Google has many different ways to filter results.  When some of
             # these filters are applied, we can no longer just look for the q
@@ -645,7 +633,7 @@ def extract(
 
         # Try to use naive method of detection
         if _naive_re.search(url_parts.netloc):
-            query = _unicode_parse_qs(url_parts.query, keep_blank_values=True)
+            query = parse_qs(url_parts.query, keep_blank_values=True)
             for param in _naive_params:
                 if param in query:
                     tld_res = tldextract.extract(url_parts.netloc)
