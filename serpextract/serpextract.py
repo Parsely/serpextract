@@ -5,7 +5,7 @@ import logging
 import re
 import sys
 from collections import defaultdict
-from importlib.resources import files
+from pathlib import Path
 from urllib.parse import urlparse, parse_qs, ParseResult
 
 import pylru
@@ -209,7 +209,7 @@ def _get_matomo_engines():
     Return the search engine parser definitions stored in this module. We don't
     cache this result since it's only supposed to be called once.
     """
-    search_engines_file = files(__name__).joinpath("search_engines.json")
+    search_engines_file = Path(__file__).resolve().parent / "search_engines.json"
     with search_engines_file.open("r", encoding="utf-8") as json_stream:
         _matomo_engines = json.load(json_stream)
     return _matomo_engines
