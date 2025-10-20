@@ -499,7 +499,7 @@ def get_all_query_params_by_domain():
         # Find non-regex params
         params = {param for param in parser.keyword_extractor if isinstance(param, str)}
         tld_res = tldextract.extract(domain)
-        domain = tld_res.registered_domain
+        domain = tld_res.top_domain_under_public_suffix
         param_dict[domain] = sorted(set(param_dict[domain]) | params)
     _qs_params = param_dict
     return param_dict
