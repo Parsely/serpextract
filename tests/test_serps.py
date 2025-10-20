@@ -1,7 +1,5 @@
-from __future__ import absolute_import
-
 import unittest
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from serpextract import (
     SearchEngineParser,
