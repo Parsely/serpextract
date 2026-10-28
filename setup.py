@@ -12,7 +12,6 @@ def get_version():
 
 install_requires = [
     "iso3166 >= 0.4",
-    "pylru >= 1.0.3",
     "tldextract >= 1.2",
     "ruamel.yaml",
 ]

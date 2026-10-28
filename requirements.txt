@@ -1,6 +1,5 @@
 coverage>=3.6
 iso3166>=0.4
-pylru>=1.0.3
 pytest
 ruamel.yaml
 tldextract>=1.2

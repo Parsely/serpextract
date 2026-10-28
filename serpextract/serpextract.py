@@ -8,7 +8,6 @@ from collections import defaultdict
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse, ParseResult
 
-import pylru
 import tldextract
 from iso3166 import countries
 
@@ -43,9 +42,6 @@ _second_level_domains = ["co", "com"]
 
 # Cache for querystring params returned by get_all_query_params_by_domain
 _qs_params = None
-
-# A LRUCache of domains to save us from having to do lots of regex matches
-_domain_cache = pylru.lrucache(500)
 
 # Naive search engine detection.  Look for \.?search\. in the netloc and then
 # try to extract using common query params
