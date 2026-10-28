@@ -1,4 +1,4 @@
-v0.8.0, 2026-10-28 -- Require Python 3.9+, and drop the unused pylru dependency.
+v0.8.0, 2026-10-28 -- Require Python 3.9+, drop the unused pylru dependency, and publish as serpextract-a8c on the internal index.
 v0.7.3, 2021-08-16 -- Get latest list.
 v0.7.2, 2021-02-18 -- Add Mojeek override.
 v0.7.1, 2021-02-18 -- Get latest list.

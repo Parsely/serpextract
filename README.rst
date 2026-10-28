@@ -9,9 +9,13 @@ Specifically, we make extensive use of their `list of search engines <https://ra
 
 Installation
 ------------
-Latest release on PyPI::
+Releases up to 0.7.3 are on PyPI as ``serpextract``::
 
     $ pip install serpextract
+
+Releases from 0.8.0 are published to Parse.ly's internal package index as
+``serpextract-a8c``. The import name is still ``serpextract``, so do not
+install both.
 
 Usage
 -----
