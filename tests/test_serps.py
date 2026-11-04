@@ -240,7 +240,10 @@ class TestSERPs(unittest.TestCase):
         engines = serpextract._get_search_engines()
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", DeprecationWarning)
-            expected = {tldextract.extract(domain).registered_domain for domain in engines}
+            expected = set()
+            for domain in engines:
+                res = tldextract.extract(domain)
+                expected.add(getattr(res, "top_domain_under_public_suffix", None) or res.registered_domain)
         serpextract._qs_params = None
         try:
             with warnings.catch_warnings():
