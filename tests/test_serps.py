@@ -1,6 +1,10 @@
 import unittest
+import warnings
 from urllib.parse import urlparse
 
+import tldextract
+
+from serpextract import serpextract
 from serpextract import (
     SearchEngineParser,
     extract,
@@ -230,6 +234,24 @@ class TestSERPs(unittest.TestCase):
         self.assertEqual(params_by_domain["so-net.ne.jp"], so_net_params)
         self.assertEqual(params_by_domain["goo.ne.jp"], goo_ne_jp_params)
         self.assertEqual(params_by_domain["t-online.de"], t_online_params)
+
+    def test_query_params_by_domain_keys_match_registered_domain(self):
+        """Keys equal tldextract's registered_domain without reading the deprecated property."""
+        engines = serpextract._get_search_engines()
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", DeprecationWarning)
+            expected = set()
+            for domain in engines:
+                res = tldextract.extract(domain)
+                expected.add(getattr(res, "top_domain_under_public_suffix", None) or res.registered_domain)
+        serpextract._qs_params = None
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", DeprecationWarning)
+                params_by_domain = get_all_query_params_by_domain()
+        finally:
+            serpextract._qs_params = None
+        self.assertEqual(set(params_by_domain), expected)
 
     def test_invalid_serps(self):
         invalid_serps = (
